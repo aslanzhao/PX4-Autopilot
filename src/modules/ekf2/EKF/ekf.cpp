@@ -355,7 +355,7 @@ bool Ekf::resetGlobalPosToExternalObservation(const double latitude, const doubl
 
 		ECL_INFO("reset height to external observation");
 		resetAltitudeTo(gpos_corrected.altitude(), obs_var);
-		_last_known_gpos.altitude() = gpos_corrected.altitude();
+		_last_known_gpos.setAltitude(gpos_corrected.altitude());
 	}
 
 	return true;

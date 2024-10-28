@@ -56,9 +56,8 @@ TEST(TestLatLonAlt, set)
 	ASSERT_EQ(lla.longitude_rad(), 0.0);
 	ASSERT_EQ(lla.altitude(), 0);
 
-	lla.latitude_rad() = 0.1;
-	lla.longitude_rad() = -0.5;
-	lla.altitude() = 420;
+	lla.setLatLonRad(0.1, -0.5);
+	lla.setAltitude(420);
 	ASSERT_EQ(lla.latitude_rad(), 0.1);
 	ASSERT_EQ(lla.longitude_rad(), -0.5);
 	ASSERT_EQ(lla.altitude(), 420);

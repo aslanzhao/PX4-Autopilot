@@ -185,7 +185,7 @@ void Ekf::resetHorizontalPositionTo(const Vector2f &new_pos,
 void Ekf::resetHeightTo(const float new_altitude, float new_vert_pos_var)
 {
 	const float old_altitude = _gpos.altitude();
-	_gpos.altitude() = new_altitude;
+	_gpos.setAltitude(new_altitude);
 
 	if (PX4_ISFINITE(new_vert_pos_var)) {
 		// the state variance is the same as the observation

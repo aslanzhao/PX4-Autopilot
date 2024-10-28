@@ -40,63 +40,81 @@ class LatLonAlt
 {
 public:
 	LatLonAlt() = default;
-	LatLonAlt(const double latitude_deg, const double longitude_deg,
-		  const float altitude_m) : _latitude(math::radians(latitude_deg)), _longitude(math::radians(longitude_deg)),
-		_altitude(altitude_m) {};
+	LatLonAlt(const LatLonAlt &lla)
+	{
+		_latitude_rad = lla.latitude_rad();
+		_longitude_rad = lla.longitude_rad();
+		_altitude = lla.altitude();
+	}
 
-	double latitude_deg() const { return math::degrees(_latitude); }
-	double longitude_deg() const { return math::degrees(_longitude); }
+	LatLonAlt(const double latitude_deg, const double longitude_deg, const float altitude_m)
+	{
+		_latitude_rad = math::radians(latitude_deg);
+		_longitude_rad = math::radians(longitude_deg);
+		_altitude = altitude_m;
+	}
 
-	const double &latitude_rad() const { return _latitude; }
-	const double &longitude_rad() const { return _longitude; }
-	const float &altitude() const {return _altitude; }
+	void setZero() { _latitude_rad = 0.0; _longitude_rad = 0.0; _altitude = 0.f; }
 
-	double &latitude_rad() { return _latitude; }
-	double &longitude_rad() { return _longitude; }
-	float &altitude() {return _altitude; }
+	double latitude_deg() const { return math::degrees(latitude_rad()); }
+	double longitude_deg() const { return math::degrees(longitude_rad()); }
 
-	void setLatitudeDeg(const double &latitude_deg) { _latitude = math::radians(latitude_deg); }
-	void setLongitudeDeg(const double &longitude_deg) { _longitude = math::radians(longitude_deg); }
+	const double &latitude_rad() const { return _latitude_rad; }
+	const double &longitude_rad() const { return _longitude_rad; }
+	float altitude() const { return _altitude; }
 
-	void setLatLon(const LatLonAlt &lla) { _latitude = lla.latitude_rad(); _longitude = lla.longitude_rad(); }
-	void setLatLonDeg(const double latitude, const double longitude) { _latitude = math::radians(latitude); _longitude = math::radians(longitude); }
+	void setLatitudeDeg(const double &latitude_deg) { _latitude_rad = math::radians(latitude_deg); }
+	void setLongitudeDeg(const double &longitude_deg) { _longitude_rad = math::radians(longitude_deg); }
+	void setAltitude(const float altitude) { _altitude = altitude; }
 
-	void setZero() { _latitude = 0.0; _longitude = 0.0; _altitude = 0.f; }
+	void setLatLon(const LatLonAlt &lla) { _latitude_rad = lla.latitude_rad(); _longitude_rad = lla.longitude_rad(); }
+	void setLatLonDeg(const double latitude, const double longitude) { _latitude_rad = math::radians(latitude); _longitude_rad = math::radians(longitude); }
+	void setLatLonRad(const double latitude, const double longitude) { _latitude_rad = latitude; _longitude_rad = longitude; }
 
-	void print() { printf("latitude = %f (deg), longitude = %f (deg), altitude = %f (m)\n", _latitude, _longitude, (double)_altitude); }
+	void print() { printf("latitude = %f (deg), longitude = %f (deg), altitude = %f (m)\n", _latitude_rad, _longitude_rad, (double)_altitude); }
 
 	void operator+=(const matrix::Vector3f &delta_pos)
 	{
-		matrix::Vector2d d_lat_lon_to_d_xy = deltaLatLonToDeltaXY(_latitude, _altitude);
-		_latitude = matrix::wrap_pi(_latitude + static_cast<double>(delta_pos(0)) / d_lat_lon_to_d_xy(0));
-		_longitude = matrix::wrap_pi(_longitude + static_cast<double>(delta_pos(1)) / d_lat_lon_to_d_xy(1));
+		matrix::Vector2d d_lat_lon_to_d_xy = deltaLatLonToDeltaXY(_latitude_rad, _altitude);
+		_latitude_rad = matrix::wrap_pi(_latitude_rad + static_cast<double>(delta_pos(0)) / d_lat_lon_to_d_xy(0));
+		_longitude_rad = matrix::wrap_pi(_longitude_rad + static_cast<double>(delta_pos(1)) / d_lat_lon_to_d_xy(1));
 		_altitude -= delta_pos(2);
 	}
 
 	void operator+=(const matrix::Vector2f &delta_pos)
 	{
-		matrix::Vector2d d_lat_lon_to_d_xy = deltaLatLonToDeltaXY(_latitude, _altitude);
-		_latitude = matrix::wrap_pi(_latitude + static_cast<double>(delta_pos(0)) / d_lat_lon_to_d_xy(0));
-		_longitude = matrix::wrap_pi(_longitude + static_cast<double>(delta_pos(1)) / d_lat_lon_to_d_xy(1));
+		matrix::Vector2d d_lat_lon_to_d_xy = deltaLatLonToDeltaXY(_latitude_rad, _altitude);
+		_latitude_rad = matrix::wrap_pi(_latitude_rad + static_cast<double>(delta_pos(0)) / d_lat_lon_to_d_xy(0));
+		_longitude_rad = matrix::wrap_pi(_longitude_rad + static_cast<double>(delta_pos(1)) / d_lat_lon_to_d_xy(1));
 	}
 
 	LatLonAlt operator+(const matrix::Vector3f &delta_pos) const
 	{
-		LatLonAlt lla_new{};
-		matrix::Vector2d d_lat_lon_to_d_xy = deltaLatLonToDeltaXY(_latitude, _altitude);
-		lla_new.latitude_rad() = matrix::wrap_pi(_latitude + static_cast<double>(delta_pos(0)) / d_lat_lon_to_d_xy(0));
-		lla_new.longitude_rad() = matrix::wrap_pi(_longitude + static_cast<double>(delta_pos(1)) / d_lat_lon_to_d_xy(1));
-		lla_new.altitude() = _altitude - delta_pos(2);
+		matrix::Vector2d d_lat_lon_to_d_xy = deltaLatLonToDeltaXY(latitude_rad(), altitude());
+		const double latitude_rad = matrix::wrap_pi(_latitude_rad + static_cast<double>(delta_pos(0)) / d_lat_lon_to_d_xy(0));
+		const double longitude_rad = matrix::wrap_pi(_longitude_rad + static_cast<double>(delta_pos(1)) / d_lat_lon_to_d_xy(1));
+		const float altitude = _altitude - delta_pos(2);
+
+		LatLonAlt lla_new;
+		lla_new.setLatLonRad(latitude_rad, longitude_rad);
+		lla_new.setAltitude(altitude);
 		return lla_new;
+	}
+
+	void operator=(const LatLonAlt &lla)
+	{
+		_latitude_rad = lla.latitude_rad();
+		_longitude_rad = lla.longitude_rad();
+		_altitude = lla.altitude();
 	}
 
 	matrix::Vector3f operator-(const LatLonAlt &lla) const
 	{
-		const double delta_lat = matrix::wrap_pi(_latitude - lla.latitude_rad());
-		const double delta_lon = matrix::wrap_pi(_longitude - lla.longitude_rad());
+		const double delta_lat = matrix::wrap_pi(_latitude_rad - lla.latitude_rad());
+		const double delta_lon = matrix::wrap_pi(_longitude_rad - lla.longitude_rad());
 		const float delta_alt = _altitude - lla.altitude();
 
-		const matrix::Vector2d d_lat_lon_to_d_xy = deltaLatLonToDeltaXY(_latitude, _altitude);
+		const matrix::Vector2d d_lat_lon_to_d_xy = deltaLatLonToDeltaXY(_latitude_rad, _altitude);
 		return matrix::Vector3f(static_cast<float>(delta_lat * d_lat_lon_to_d_xy(0)),
 					static_cast<float>(delta_lon * d_lat_lon_to_d_xy(1)),
 					-delta_alt);
@@ -119,7 +137,7 @@ private:
 					    double &transverse_radius_of_curvature)
 	{
 		const double tmp = 1.0 - pow(Wgs84::eccentricity * sin(latitude), 2);
-		const double sqrt_tmp = sqrt(tmp);
+		const double sqrt_tmp = std::sqrt(tmp);
 		meridian_radius_of_curvature = Wgs84::meridian_radius_of_curvature_numerator / (tmp * tmp * sqrt_tmp);
 		transverse_radius_of_curvature = Wgs84::equatorial_radius / sqrt_tmp;
 	}
@@ -130,7 +148,7 @@ private:
 		static constexpr double meridian_radius_of_curvature_numerator = equatorial_radius * (1.0 - pow(eccentricity, 2));
 	};
 
-	double _latitude{0.f};  ///< (rad)
-	double _longitude{0.f}; ///< (rad)
-	float _altitude{0.f};   ///< above ellipsoid (m)
+	double _latitude_rad{0.0};
+	double _longitude_rad{0.0};
+	float _altitude{0.0};
 };

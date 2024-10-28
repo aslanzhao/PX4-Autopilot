@@ -167,7 +167,7 @@ void OutputPredictor::resetLatLonTo(const double &new_latitude, const double &ne
 
 void OutputPredictor::resetAltitudeTo(const float new_altitude, const float vert_pos_change)
 {
-	_global_ref.altitude() = new_altitude;
+	_global_ref.setAltitude(new_altitude);
 }
 
 void OutputPredictor::calculateOutputStates(const uint64_t time_us, const Vector3f &delta_angle,
