@@ -1061,9 +1061,9 @@ private:
 	}
 
 	// helper used for populating and filtering estimator aid source struct for logging
-	template <typename T, typename S>
+	template <typename T, typename S, typename D>
 	void updateAidSourceStatus(T &status, const uint64_t &timestamp_sample,
-				   const S &observation, const S &observation_variance,
+				   const D &observation, const S &observation_variance,
 				   const S &innovation, const S &innovation_variance,
 				   float innovation_gate = 1.f) const
 	{

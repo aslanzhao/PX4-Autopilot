@@ -74,8 +74,8 @@ void AuxGlobalPosition::update(Ekf &ekf, const estimator::imuSample &imu_delayed
 		}
 
 		estimator_aid_source2d_s aid_src{};
-		const LatLonAlt position(sample.latitude, sample.longitude, 0.f); //TODO: use ekf altitude?
-		const Vector2f innovation = (ekf.getLatLonAlt() - position).xy();
+		const LatLonAlt position(sample.latitude, sample.longitude, sample.altitude_amsl);
+		const Vector2f innovation = (ekf.getLatLonAlt() - position).xy(); // altitude measurements are not used
 
 		// relax the upper observation noise limit which prevents bad measurements perturbing the position estimate
 		float pos_noise = math::max(sample.eph, _param_ekf2_agp_noise.get(), 0.01f);
@@ -83,17 +83,12 @@ void AuxGlobalPosition::update(Ekf &ekf, const estimator::imuSample &imu_delayed
 		const Vector2f pos_obs_var(pos_var, pos_var);
 
 		ekf.updateAidSourceStatus(aid_src,
-					  sample.time_us,                                    // sample timestamp
-					  Vector2f(sample.latitude, sample.longitude),       // observation //TODO: warning float
-					  pos_obs_var,                                       // observation variance
-					  innovation,                                        // innovation
-					  Vector2f(ekf.getPositionVariance()) + pos_obs_var, // innovation variance
-					  math::max(_param_ekf2_agp_gate.get(), 1.f));       // innovation gate
-
-		// Override float lat/lon to get double precision
-		// TODO: fix updateAidSourceStatus to accept double precision observations
-		aid_src.observation[0] = sample.latitude;
-		aid_src.observation[1] = sample.longitude;
+					  sample.time_us,                                      // sample timestamp
+					  matrix::Vector2d(sample.latitude, sample.longitude), // observation
+					  pos_obs_var,                                         // observation variance
+					  innovation,                                          // innovation
+					  Vector2f(ekf.getPositionVariance()) + pos_obs_var,   // innovation variance
+					  math::max(_param_ekf2_agp_gate.get(), 1.f));         // innovation gate
 
 		const bool starting_conditions = PX4_ISFINITE(sample.latitude) && PX4_ISFINITE(sample.longitude)
 						 && ekf.control_status_flags().yaw_align;
