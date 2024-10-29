@@ -14,3 +14,4 @@ PX4编译出的firmware里，以px4为后缀的文件里，含有配置信息，
 对第二个工程的修改包含三处
 1. control_allocator/module.yaml下修改Control Surface和CA_AIRFRAME
 2. 修改control_allocator的几个源文件
+3.
