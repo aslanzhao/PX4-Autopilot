@@ -15,6 +15,15 @@ then
 fi
 
 #
+# Morhping bird setup.
+#
+if [ $VEHICLE_TYPE = morphingbird ]
+then
+	# morphingbird is the same as standard fixedwing apps.
+	. ${R}etc/init.d/rc.fw_apps
+fi
+
+#
 # Multicopter setup.
 #
 if [ $VEHICLE_TYPE = mc ]

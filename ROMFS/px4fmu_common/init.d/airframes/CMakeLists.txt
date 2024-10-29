@@ -111,6 +111,7 @@ if(CONFIG_MODULES_FW_RATE_CONTROL)
 
 		# [3000, 3999] Flying wing
 		3000_generic_wing
+		22001_morphing_bird
 
 		# [17000, 17999] Autogyro
 		17002_TF-AutoG2

@@ -58,6 +58,7 @@ if(CONFIG_MODULES_FW_RATE_CONTROL)
 	px4_add_romfs_files(
 		rc.fw_apps
 		rc.fw_defaults
+		rc.mb_defaults
 	)
 endif()
 
