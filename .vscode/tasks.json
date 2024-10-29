@@ -4,6 +4,16 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "Build and Upload",
+            "type": "shell",
+            "args": [
+                "-f", "interface/stlink.cfg",
+                "-f", "target/stm32f7x.cfg",
+                "-c", "program ./build/pxf_fmu-v5_default/pxf_fmu-v5_default.bin 0x8008000 verify reset exit"
+            ],
+            "problemMatcher": []
+        },
+        {
             "label": "build",
             "type": "shell",
             "command": "/bin/bash",
