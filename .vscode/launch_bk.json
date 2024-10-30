@@ -28,14 +28,14 @@
             "gdbPath": "/opt/gcc-arm-none-eabi-9-2020-q2-update/bin/arm-none-eabi-gdb",
             "device": "STM32F765II",
             "svdFile": "STM32F7x5.svd",
-            "executable": "./build/pxf_fmu-v5_default/pxf_fmu-v5_default.elf",
+            "executable": "./build/px4_fmu-v5_default/px4_fmu-v5_default.elf",
             "request": "launch",
             "type": "cortex-debug",
             "servertype": "openocd",
             "cwd": "${workspaceFolder}",
             "internalConsoleOptions": "openOnSessionStart",
             "interface": "swd",
-            "configfiles": [
+            "configFiles": [
                 "interface/stlink.cfg",
                 "target/stm32f7x.cfg"
             ]
