@@ -55,6 +55,7 @@ static bool operator ==(const manual_control_switches_s &a, const manual_control
 		a.arm_switch == b.arm_switch &&
 		a.transition_switch == b.transition_switch &&
 		a.gear_switch == b.gear_switch &&
+		a.fold_wing_switch == b.fold_wing_switch &&
 		a.photo_switch == b.photo_switch &&
 		a.video_switch == b.video_switch &&
 		a.engage_main_motor_switch == b.engage_main_motor_switch);
