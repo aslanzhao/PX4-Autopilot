@@ -326,7 +326,7 @@ void FlightModeManager::handleCommand()
 void FlightModeManager::generateTrajectorySetpoint(const float dt,
 		const vehicle_local_position_s &vehicle_local_position)
 {
-	// If the task fails sned out empty NAN setpoints and the controller will emergency failsafe
+	// If the task fails send out empty NAN setpoints and the controller will emergency failsafe
 	trajectory_setpoint_s setpoint = FlightTask::empty_trajectory_setpoint;
 	vehicle_constraints_s constraints = FlightTask::empty_constraints;
 
