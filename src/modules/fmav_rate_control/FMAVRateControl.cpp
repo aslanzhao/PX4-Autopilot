@@ -50,8 +50,6 @@ FMAVRateControl::FMAVRateControl() :
 	_vehicle_thrust_setpoint_pub(ORB_ID(vehicle_thrust_setpoint)),
 	_loop_perf(perf_alloc(PC_ELAPSED, MODULE_NAME": cycle"))
 {
-	_vehicle_status.vehicle_type = vehicle_status_s::VEHICLE_TYPE_FLAPPING_MAV;
-
 	parameters_updated();
 	_controller_status_pub.advertise();
 }
@@ -187,9 +185,8 @@ FMAVRateControl::Run()
 		if (_vehicle_control_mode.flag_control_rates_enabled) {
 
 			// reset integral if disarmed
-			if (!_vehicle_control_mode.flag_armed || _vehicle_status.vehicle_type != vehicle_status_s::VEHICLE_TYPE_FLAPPING_MAV) {
+			if (!_vehicle_control_mode.flag_armed )
 				_rate_control.resetIntegral();
-			}
 
 			// update saturation status from control allocation feedback
 			control_allocator_status_s control_allocator_status;
@@ -258,7 +255,6 @@ FMAVRateControl::Run()
 			_vehicle_torque_setpoint_pub.publish(vehicle_torque_setpoint);
 
 			updateActuatorControlsStatus(vehicle_torque_setpoint, dt);
-
 		}
 	}
 

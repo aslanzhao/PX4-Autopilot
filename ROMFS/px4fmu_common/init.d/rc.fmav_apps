@@ -35,7 +35,5 @@ mc_pos_control start
 #
 # Start Multicopter Land Detector.
 #
-land_detector start multicopter
-
-# land_detector start flappingmav
+land_detector start flappingmav
 
