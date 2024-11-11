@@ -37,8 +37,8 @@ fi
 #
 if [ $VEHICLE_TYPE = fmav ]
 then
-	# standard multicopter apps.
-	. ${R}etc/init.d/rc.mc_apps
+	# flapping mav apps.
+	. ${R}etc/init.d/rc.fmav_apps
 fi
 
 #

@@ -287,9 +287,10 @@ parameters:
                 24: Tail Roll
                 25: Left Tail Extend
                 26: Right Tail Extend
-                27: Left Pitch
-                28: Right Pitch
-                29: COM
+                27: RollYawPitch 1
+                28: RollYawPitch 2
+                29: RollYawPitch 3
+                30: RollYawPitch 4
             num_instances: *max_num_servos
             instance_start: 0
             default: 0
@@ -760,19 +761,25 @@ mixer:
               - { 'min': -1.0, 'max': 0.0, 'default': -0.5 } # yaw
               - { 'hidden': False, 'min': -1.0, 'max': 1.0, 'default': 0} # flap
               - { 'hidden': False, 'min': -1.0, 'max': 1.0, 'default': 1} # spoiler
-            27: # Left Pitch
+            27: # RollYawPitch 1
               - { 'min': -1.0, 'max': 1.0, 'default': 0 } # roll
               - { 'min': -1.0, 'max': 1.0, 'default': 0.5 } # pitch
               - { 'min': -1.0, 'max': 1.0, 'default': 0.5 } # yaw
               - { 'hidden': False, 'min': -1.0, 'max': 1.0, 'default': 0} # flap
               - { 'hidden': False, 'min': -1.0, 'max': 1.0, 'default': 1} # spoiler
-            28: # Right Pitch
+            28: # RollYawPitch 2
               - { 'min': -1.0, 'max': 1.0, 'default': 0 } # roll
               - { 'min': -1.0, 'max': 1.0, 'default': -0.5 } # pitch
               - { 'min': -1.0, 'max': 1.0, 'default': 0.5 } # yaw
               - { 'hidden': False, 'min': -1.0, 'max': 1.0, 'default': 0} # flap
               - { 'hidden': False, 'min': -1.0, 'max': 1.0, 'default': 1} # spoiler
-            29: # COM
+            29: # RollYawPitch 3
+              - { 'min': -1.0, 'max': 1.0, 'default': 0.5 } # roll
+              - { 'min': -1.0, 'max': 1.0, 'default': 0 } # pitch
+              - { 'min': -1.0, 'max': 1.0, 'default': 0 } # yaw
+              - { 'hidden': False, 'min': -1.0, 'max': 1.0, 'default': 0} # flap
+              - { 'hidden': False, 'min': -1.0, 'max': 1.0, 'default': 1} # spoiler
+            30: # RollYawPitch 4
               - { 'min': -1.0, 'max': 1.0, 'default': 0.5 } # roll
               - { 'min': -1.0, 'max': 1.0, 'default': 0 } # pitch
               - { 'min': -1.0, 'max': 1.0, 'default': 0 } # yaw

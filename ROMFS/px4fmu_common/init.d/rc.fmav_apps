@@ -11,28 +11,31 @@
 control_allocator start
 
 #
-# Start flapping insect Rate Controller.
+# Start Multicopter Rate Controller.
 #
 fmav_rate_control start
 
 #
-# Start flapping insect Attitude Controller.
+# Start Multicopter Attitude Controller.
 #
-fmav_att_control start
+mc_att_control start
 
-#if param greater -s MC_AT_EN 0
-#then
-#	fmav_autotune_attitude_control start
-#fi
+if param greater -s MC_AT_EN 0
+then
+	mc_autotune_attitude_control start
+fi
 
 #
-# Start flappingmav Position Controller.
+# Start Multicopter Position Controller.
 #
-#fmav_hover_thrust_estimator start
+mc_hover_thrust_estimator start
 flight_mode_manager start
-#fmav_pos_control start
+mc_pos_control start
 
 #
-# Start flappingmav Land Detector.
+# Start Multicopter Land Detector.
 #
-#land_detector start flappingmav
+land_detector start multicopter
+
+# land_detector start flappingmav
+

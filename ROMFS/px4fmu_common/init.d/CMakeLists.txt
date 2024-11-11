@@ -67,10 +67,10 @@ if(CONFIG_MODULES_MC_RATE_CONTROL)
 		rc.heli_defaults
 		rc.mc_apps
 		rc.mc_defaults
-		rc.fmav_defaults
 	)
 endif()
 
+# 给Flapping insect新增加的控制模块
 if(CONFIG_MODULES_FMAV_RATE_CONTROL)
 	px4_add_romfs_files(
 		rc.fmav_apps

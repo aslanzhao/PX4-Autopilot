@@ -7,8 +7,8 @@
 
 set VEHICLE_TYPE fmav
 
-# MAV_TYPE_FLAPPING_WING 47
-param set-default MAV_TYPE 47
+# MAV_TYPE_QUADROTOR
+param set-default MAV_TYPE 2
 
 if param compare IMU_GYRO_RATEMAX 400
 then

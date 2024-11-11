@@ -6,9 +6,10 @@
 # @class Copter
 
 # @output Motor1 Thrust Motor
-# @output Servo1 Left Pitch
-# @output Servo2 Right Pitch
-# @output Servo3 Roll Servo
+# @output Servo1 RollYawPitch 1
+# @output Servo2 RollYawPitch 2
+# @output Servo3 RollYawPitch 3
+# @output Servo4 RollYawPitch 4
 #
 # @maintainer zhaoty
 
@@ -24,39 +25,49 @@ param set-default CA_ROTOR0_PX 0
 param set-default CA_ROTOR0_PY 0
 param set-default CA_ROTOR0_PZ 0
 # servos
-param set-default CA_SV_CS_COUNT 3
+param set-default CA_SV_CS_COUNT 4
+param set-default PWM_MAIN_TIM1 50
 param set-default PWM_MAIN_TIM2 50
-param set-default PWM_MAIN_TIM3 50
 param set-default PWM_MAIN_MIN5 500
 param set-default PWM_MAIN_MIN6 500
 param set-default PWM_MAIN_MIN7 500
+param set-default PWM_MAIN_MIN8 500
 param set-default PWM_MAIN_MAX5 2500
 param set-default PWM_MAIN_MAX6 2500
 param set-default PWM_MAIN_MAX7 2500
+param set-default PWM_MAIN_MAX8 2500
 param set-default PWM_MAIN_DIS5 500
 param set-default PWM_MAIN_DIS6 500
 param set-default PWM_MAIN_DIS7 500
+param set-default PWM_MAIN_DIS8 500
 
-# servo 1. left pitch
+# servo 1. RollYawPitch 1
 param set-default CA_SV_CS0_TYPE 27
 param set-default CA_SV_CS0_TRQ_P 0.5
 param set-default CA_SV_CS0_TRQ_R -0.5
 param set-default CA_SV_CS0_TRQ_Y -0.5
 param set-default CA_SV_CS0_TRIM 0
-# servo 2. right pitch
+# servo 2. RollYawPitch 2
 param set-default CA_SV_CS1_TYPE 28
 param set-default CA_SV_CS1_TRQ_P 0.5
 param set-default CA_SV_CS1_TRQ_R 0.5
 param set-default CA_SV_CS1_TRQ_Y -0.5
 param set-default CA_SV_CS1_TRIM 0
-# servo 3. adjust COM
+# servo 3. RollYawPitch 3
 param set-default CA_SV_CS2_TYPE 29
 param set-default CA_SV_CS2_TRQ_P 0.5
 param set-default CA_SV_CS2_TRQ_R 0.5
 param set-default CA_SV_CS2_TRQ_Y -0.5
 param set-default CA_SV_CS2_TRIM 0
+# servo 4. RollYawPitch 4
+param set-default CA_SV_CS3_TYPE 30
+param set-default CA_SV_CS3_TRQ_P 0.5
+param set-default CA_SV_CS3_TRQ_R 0.5
+param set-default CA_SV_CS3_TRQ_Y -0.5
+param set-default CA_SV_CS3_TRIM 0
 
 param set PWM_MAIN_FUNC1 101
 param set PWM_MAIN_FUNC5 201
 param set PWM_MAIN_FUNC6 202
 param set PWM_MAIN_FUNC7 203
+param set PWM_MAIN_FUNC8 204
