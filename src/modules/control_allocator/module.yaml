@@ -32,6 +32,7 @@ parameters:
                 12: Helicopter (Coaxial)
                 13: Rover (Mecanum)
                 14: Morphing Bird
+                15: Flapping MAV
             default: 0
 
         CA_METHOD:
@@ -286,6 +287,9 @@ parameters:
                 24: Tail Roll
                 25: Left Tail Extend
                 26: Right Tail Extend
+                27: Left Pitch
+                28: Right Pitch
+                29: COM
             num_instances: *max_num_servos
             instance_start: 0
             default: 0
@@ -756,6 +760,24 @@ mixer:
               - { 'min': -1.0, 'max': 0.0, 'default': -0.5 } # yaw
               - { 'hidden': False, 'min': -1.0, 'max': 1.0, 'default': 0} # flap
               - { 'hidden': False, 'min': -1.0, 'max': 1.0, 'default': 1} # spoiler
+            27: # Left Pitch
+              - { 'min': -1.0, 'max': 1.0, 'default': 0 } # roll
+              - { 'min': -1.0, 'max': 1.0, 'default': 0.5 } # pitch
+              - { 'min': -1.0, 'max': 1.0, 'default': 0.5 } # yaw
+              - { 'hidden': False, 'min': -1.0, 'max': 1.0, 'default': 0} # flap
+              - { 'hidden': False, 'min': -1.0, 'max': 1.0, 'default': 1} # spoiler
+            28: # Right Pitch
+              - { 'min': -1.0, 'max': 1.0, 'default': 0 } # roll
+              - { 'min': -1.0, 'max': 1.0, 'default': -0.5 } # pitch
+              - { 'min': -1.0, 'max': 1.0, 'default': 0.5 } # yaw
+              - { 'hidden': False, 'min': -1.0, 'max': 1.0, 'default': 0} # flap
+              - { 'hidden': False, 'min': -1.0, 'max': 1.0, 'default': 1} # spoiler
+            29: # COM
+              - { 'min': -1.0, 'max': 1.0, 'default': 0.5 } # roll
+              - { 'min': -1.0, 'max': 1.0, 'default': 0 } # pitch
+              - { 'min': -1.0, 'max': 1.0, 'default': 0 } # yaw
+              - { 'hidden': False, 'min': -1.0, 'max': 1.0, 'default': 0} # flap
+              - { 'hidden': False, 'min': -1.0, 'max': 1.0, 'default': 1} # spoiler
 
       - select_identifier: 'servo-type-tailsitter' # restrict torque based on servo type for tailsitters
         apply_identifiers: ['servo-torque-roll-tailsitter', 'servo-torque-pitch-tailsitter', 'servo-torque-yaw-tailsitter']
@@ -1214,6 +1236,40 @@ mixer:
 
             14: # Morphing Bird
                 title: 'Morphing Bird'
+                actuators:
+                  - actuator_type: 'motor'
+                    group_label: 'Motors'
+                    count: 'CA_ROTOR_COUNT'
+                  - actuator_type: 'servo'
+                    group_label: 'Control Surfaces'
+                    count: 'CA_SV_CS_COUNT'
+                    per_item_parameters:
+                        extra:
+                          - name: 'CA_SV_CS${i}_TYPE'
+                            label: 'Type'
+                            function: 'type'
+                            identifier: 'servo-type'
+                          - name: 'CA_SV_CS${i}_TRQ_R'
+                            label: 'Roll Torque'
+                            identifier: 'servo-torque-roll'
+                          - name: 'CA_SV_CS${i}_TRQ_P'
+                            label: 'Pitch Torque'
+                            identifier: 'servo-torque-pitch'
+                          - name: 'CA_SV_CS${i}_TRQ_Y'
+                            label: 'Yaw Torque'
+                            identifier: 'servo-torque-yaw'
+                          - name: 'CA_SV_CS${i}_TRIM'
+                            label: 'Trim'
+                          - name: 'CA_SV_CS${i}_FLAP'
+                            label: 'Flaps Scale'
+                            advanced: true
+                            identifier: 'servo-scale-flap'
+                          - name: 'CA_SV_CS${i}_SPOIL'
+                            label: 'Spoiler Scale'
+                            advanced: true
+                            identifier: 'servo-scale-spoiler'
+            15: # Flapping MAV
+                title: 'Flapping MAV'
                 actuators:
                   - actuator_type: 'motor'
                     group_label: 'Motors'

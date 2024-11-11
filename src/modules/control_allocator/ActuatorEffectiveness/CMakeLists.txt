@@ -64,6 +64,8 @@ px4_add_library(ActuatorEffectiveness
 	ActuatorEffectivenessRoverAckermann.cpp
 	ActuatorEffectivenessMorphingBird.hpp
 	ActuatorEffectivenessMorphingBird.cpp
+	ActuatorEffectivenessFlappingMAV.hpp
+	ActuatorEffectivenessFlappingMAV.cpp
 )
 
 target_compile_options(ActuatorEffectiveness PRIVATE ${MAX_CUSTOM_OPT_LEVEL})

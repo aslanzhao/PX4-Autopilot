@@ -1,0 +1,62 @@
+#!/bin/sh
+#
+# @name FMAV Tail V1
+#
+# @type Bionic Insects
+# @class Copter
+
+# @output Motor1 Thrust Motor
+# @output Servo1 Left Shoulder
+# @output Servo2 Left Wrist
+# @output Servo3 Right Shoulder
+#
+# @maintainer zhaoty
+
+
+. ${R}etc/init.d/rc.fmav_defaults
+
+# airframe is flapping MAV, referring /src/modules/controll_allocator/module.yaml
+param set-default CA_AIRFRAME 15
+
+# thrust motor
+param set-default CA_ROTOR_COUNT 1
+param set-default CA_ROTOR0_PX 0
+param set-default CA_ROTOR0_PY 0
+param set-default CA_ROTOR0_PZ 0
+# servos
+param set-default CA_SV_CS_COUNT 3
+param set-default PWM_MAIN_TIM2 50
+param set-default PWM_MAIN_TIM3 50
+param set-default PWM_MAIN_MIN5 500
+param set-default PWM_MAIN_MIN6 500
+param set-default PWM_MAIN_MIN7 500
+param set-default PWM_MAIN_MAX5 2500
+param set-default PWM_MAIN_MAX6 2500
+param set-default PWM_MAIN_MAX7 2500
+param set-default PWM_MAIN_DIS5 500
+param set-default PWM_MAIN_DIS6 500
+param set-default PWM_MAIN_DIS7 500
+
+# servo 1. left pitch
+param set-default CA_SV_CS0_TYPE 27
+param set-default CA_SV_CS0_TRQ_P 0.5
+param set-default CA_SV_CS0_TRQ_R -0.5
+param set-default CA_SV_CS0_TRQ_Y -0.5
+param set-default CA_SV_CS0_TRIM 0
+# servo 2. right pitch
+param set-default CA_SV_CS1_TYPE 28
+param set-default CA_SV_CS1_TRQ_P 0.5
+param set-default CA_SV_CS1_TRQ_R 0.5
+param set-default CA_SV_CS1_TRQ_Y -0.5
+param set-default CA_SV_CS1_TRIM 0
+# servo 3. adjust COM
+param set-default CA_SV_CS2_TYPE 29
+param set-default CA_SV_CS2_TRQ_P 0.5
+param set-default CA_SV_CS2_TRQ_R 0.5
+param set-default CA_SV_CS2_TRQ_Y -0.5
+param set-default CA_SV_CS2_TRIM 0
+
+param set PWM_MAIN_FUNC1 101
+param set PWM_MAIN_FUNC5 201
+param set PWM_MAIN_FUNC6 202
+param set PWM_MAIN_FUNC7 203

@@ -33,6 +33,15 @@ then
 fi
 
 #
+# FMAV setup.
+#
+if [ $VEHICLE_TYPE = fmav ]
+then
+	# standard multicopter apps.
+	. ${R}etc/init.d/rc.mc_apps
+fi
+
+#
 # UGV setup.
 #
 if [ $VEHICLE_TYPE = rover ]

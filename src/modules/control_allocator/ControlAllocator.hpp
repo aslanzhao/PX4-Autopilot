@@ -54,7 +54,7 @@
 #include <ActuatorEffectivenessHelicopter.hpp>
 #include <ActuatorEffectivenessHelicopterCoaxial.hpp>
 #include <ActuatorEffectivenessMorphingBird.hpp>
-
+#include <ActuatorEffectivenessFlappingMAV.hpp>
 #include <ControlAllocation.hpp>
 #include <ControlAllocationPseudoInverse.hpp>
 #include <ControlAllocationSequentialDesaturation.hpp>
@@ -160,6 +160,7 @@ private:
 		HELICOPTER_TAIL_SERVO = 11,
 		HELICOPTER_COAXIAL = 12,
 		MORPHING_BIRD = 14,
+		FLAPPING_MAV = 15,
 	};
 
 	enum class FailureMode {

@@ -250,6 +250,10 @@ ControlAllocator::update_effectiveness_source()
 			tmp = new ActuatorEffectivenessMorphingBird(this);
 			break;
 
+		case EffectivenessSource::FLAPPING_MAV:
+			tmp = new ActuatorEffectivenessFlappingMAV(this);
+			break;
+
 		case EffectivenessSource::MOTORS_6DOF: // just a different UI from MULTIROTOR
 			tmp = new ActuatorEffectivenessUUV(this);
 			break;
