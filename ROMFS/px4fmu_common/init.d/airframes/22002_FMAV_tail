@@ -6,9 +6,9 @@
 # @class Copter
 
 # @output Motor1 Thrust Motor
-# @output Servo1 Left Shoulder
-# @output Servo2 Left Wrist
-# @output Servo3 Right Shoulder
+# @output Servo1 Left Pitch
+# @output Servo2 Right Pitch
+# @output Servo3 Roll Servo
 #
 # @maintainer zhaoty
 

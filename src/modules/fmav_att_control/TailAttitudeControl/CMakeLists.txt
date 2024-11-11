@@ -1,6 +1,6 @@
 ############################################################################
 #
-#   Copyright (c) 2018 PX4 Development Team. All rights reserved.
+#   Copyright (c) 2019 PX4 Development Team. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -31,106 +31,13 @@
 #
 ############################################################################
 
-add_subdirectory(airframes)
-
-px4_add_romfs_files(
-
-	rc.autostart_ext
-
-	rcS
-	rc.sensors
-	rc.vehicle_setup
-
-	# TODO
-	rc.balloon_apps
-	rc.balloon_defaults
-	rc.sysinit
+px4_add_library(TailAttitudeControl
+	TailAttitudeControl.cpp
+	TailAttitudeControl.hpp
+	TailAttitudeControlMath.hpp
 )
+target_compile_options(TailAttitudeControl PRIVATE ${MAX_CUSTOM_OPT_LEVEL})
+target_include_directories(TailAttitudeControl PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-if(CONFIG_MODULES_AIRSHIP_ATT_CONTROL)
-	px4_add_romfs_files(
-		rc.airship_apps
-		rc.airship_defaults
-	)
-endif()
-
-if(CONFIG_MODULES_FW_RATE_CONTROL)
-	px4_add_romfs_files(
-		rc.fw_apps
-		rc.fw_defaults
-		rc.mb_defaults
-	)
-endif()
-
-if(CONFIG_MODULES_MC_RATE_CONTROL)
-	px4_add_romfs_files(
-		rc.heli_defaults
-		rc.mc_apps
-		rc.mc_defaults
-		rc.fmav_defaults
-	)
-endif()
-
-if(CONFIG_MODULES_FMAV_RATE_CONTROL)
-	px4_add_romfs_files(
-		rc.fmav_apps
-		rc.fmav_defaults
-	)
-endif()
-
-if(CONFIG_MODULES_ROVER_POS_CONTROL)
-	px4_add_romfs_files(
-		rc.rover_apps
-		rc.rover_defaults
-
-		rc.boat_defaults # hack
-	)
-endif()
-
-if(CONFIG_MODULES_ROVER_DIFFERENTIAL)
-	px4_add_romfs_files(
-		rc.rover_differential_apps
-		rc.rover_differential_defaults
-	)
-endif()
-
-if(CONFIG_MODULES_ROVER_ACKERMANN)
-	px4_add_romfs_files(
-		rc.rover_ackermann_apps
-		rc.rover_ackermann_defaults
-	)
-endif()
-
-if(CONFIG_MODULES_ROVER_MECANUM)
-	px4_add_romfs_files(
-		rc.rover_mecanum_apps
-		rc.rover_mecanum_defaults
-	)
-endif()
-
-if(CONFIG_MODULES_UUV_ATT_CONTROL)
-	px4_add_romfs_files(
-		rc.uuv_apps
-		rc.uuv_defaults
-	)
-endif()
-
-if(CONFIG_MODULES_VTOL_ATT_CONTROL)
-	px4_add_romfs_files(
-		rc.vtol_apps
-		rc.vtol_defaults
-	)
-endif()
-
-
-if(CONFIG_MODULES_LOGGER)
-	px4_add_romfs_files(
-		rc.logging
-	)
-endif()
-
-if(CONFIG_MODULES_TEMPERATURE_COMPENSATION)
-	px4_add_romfs_files(
-		rc.thermal_cal
-	)
-endif()
+px4_add_unit_gtest(SRC TailAttitudeControlTest.cpp LINKLIBS TailAttitudeControl)
+px4_add_unit_gtest(SRC TailAttitudeControlMathTest.cpp LINKLIBS TailAttitudeControl)

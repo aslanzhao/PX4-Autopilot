@@ -31,7 +31,7 @@
  *
  ****************************************************************************/
 
-#include "MulticopterRateControl.hpp"
+#include "FMAVRateControl.hpp"
 
 #include <drivers/drv_hrt.h>
 #include <circuit_breaker/circuit_breaker.h>
@@ -43,26 +43,26 @@ using namespace matrix;
 using namespace time_literals;
 using math::radians;
 
-MulticopterRateControl::MulticopterRateControl(bool vtol) :
+FMAVRateControl::FMAVRateControl() :
 	ModuleParams(nullptr),
 	WorkItem(MODULE_NAME, px4::wq_configurations::rate_ctrl),
-	_vehicle_torque_setpoint_pub(vtol ? ORB_ID(vehicle_torque_setpoint_virtual_mc) : ORB_ID(vehicle_torque_setpoint)),
-	_vehicle_thrust_setpoint_pub(vtol ? ORB_ID(vehicle_thrust_setpoint_virtual_mc) : ORB_ID(vehicle_thrust_setpoint)),
+	_vehicle_torque_setpoint_pub(ORB_ID(vehicle_torque_setpoint)),
+	_vehicle_thrust_setpoint_pub(ORB_ID(vehicle_thrust_setpoint)),
 	_loop_perf(perf_alloc(PC_ELAPSED, MODULE_NAME": cycle"))
 {
-	_vehicle_status.vehicle_type = vehicle_status_s::VEHICLE_TYPE_ROTARY_WING;
+	_vehicle_status.vehicle_type = vehicle_status_s::VEHICLE_TYPE_FLAPPING_MAV;
 
 	parameters_updated();
 	_controller_status_pub.advertise();
 }
 
-MulticopterRateControl::~MulticopterRateControl()
+FMAVRateControl::~FMAVRateControl()
 {
 	perf_free(_loop_perf);
 }
 
 bool
-MulticopterRateControl::init()
+FMAVRateControl::init()
 {
 	if (!_vehicle_angular_velocity_sub.registerCallback()) {
 		PX4_ERR("callback registration failed");
@@ -73,32 +73,32 @@ MulticopterRateControl::init()
 }
 
 void
-MulticopterRateControl::parameters_updated()
+FMAVRateControl::parameters_updated()
 {
 	// rate control parameters
 	// The controller gain K is used to convert the parallel (P + I/s + sD) form
 	// to the ideal (K * [1 + 1/sTi + sTd]) form
-	const Vector3f rate_k = Vector3f(_param_mc_rollrate_k.get(), _param_mc_pitchrate_k.get(), _param_mc_yawrate_k.get());
+	const Vector3f rate_k = Vector3f(_param_fmav_rollrate_k.get(), _param_fmav_pitchrate_k.get(), _param_fmav_yawrate_k.get());
 
 	_rate_control.setPidGains(
-		rate_k.emult(Vector3f(_param_mc_rollrate_p.get(), _param_mc_pitchrate_p.get(), _param_mc_yawrate_p.get())),
-		rate_k.emult(Vector3f(_param_mc_rollrate_i.get(), _param_mc_pitchrate_i.get(), _param_mc_yawrate_i.get())),
-		rate_k.emult(Vector3f(_param_mc_rollrate_d.get(), _param_mc_pitchrate_d.get(), _param_mc_yawrate_d.get())));
+		rate_k.emult(Vector3f(_param_fmav_rollrate_p.get(), _param_fmav_pitchrate_p.get(), _param_fmav_yawrate_p.get())),
+		rate_k.emult(Vector3f(_param_fmav_rollrate_i.get(), _param_fmav_pitchrate_i.get(), _param_fmav_yawrate_i.get())),
+		rate_k.emult(Vector3f(_param_fmav_rollrate_d.get(), _param_fmav_pitchrate_d.get(), _param_fmav_yawrate_d.get())));
 
 	_rate_control.setIntegratorLimit(
-		Vector3f(_param_mc_rr_int_lim.get(), _param_mc_pr_int_lim.get(), _param_mc_yr_int_lim.get()));
+		Vector3f(_param_fmav_rr_int_lim.get(), _param_fmav_pr_int_lim.get(), _param_fmav_yr_int_lim.get()));
 
 	_rate_control.setFeedForwardGain(
-		Vector3f(_param_mc_rollrate_ff.get(), _param_mc_pitchrate_ff.get(), _param_mc_yawrate_ff.get()));
+		Vector3f(_param_fmav_rollrate_ff.get(), _param_fmav_pitchrate_ff.get(), _param_fmav_yawrate_ff.get()));
 
 
 	// manual rate control acro mode rate limits
-	_acro_rate_max = Vector3f(radians(_param_mc_acro_r_max.get()), radians(_param_mc_acro_p_max.get()),
-				  radians(_param_mc_acro_y_max.get()));
+	_acro_rate_max = Vector3f(radians(_param_fmav_acro_r_max.get()), radians(_param_fmav_acro_p_max.get()),
+				  radians(_param_fmav_acro_y_max.get()));
 }
 
 void
-MulticopterRateControl::Run()
+FMAVRateControl::Run()
 {
 	if (should_exit()) {
 		_vehicle_angular_velocity_sub.unregisterCallback();
@@ -156,9 +156,9 @@ MulticopterRateControl::Run()
 			if (_manual_control_setpoint_sub.update(&manual_control_setpoint)) {
 				// manual rates control - ACRO mode
 				const Vector3f man_rate_sp{
-					math::superexpo(manual_control_setpoint.roll, _param_mc_acro_expo.get(), _param_mc_acro_supexpo.get()),
-					math::superexpo(-manual_control_setpoint.pitch, _param_mc_acro_expo.get(), _param_mc_acro_supexpo.get()),
-					math::superexpo(manual_control_setpoint.yaw, _param_mc_acro_expo_y.get(), _param_mc_acro_supexpoy.get())};
+					math::superexpo(manual_control_setpoint.roll, _param_fmav_acro_expo.get(), _param_fmav_acro_supexpo.get()),
+					math::superexpo(-manual_control_setpoint.pitch, _param_fmav_acro_expo.get(), _param_fmav_acro_supexpo.get()),
+					math::superexpo(manual_control_setpoint.yaw, _param_fmav_acro_expo_y.get(), _param_fmav_acro_supexpoy.get())};
 
 				_rates_setpoint = man_rate_sp.emult(_acro_rate_max);
 				_thrust_setpoint(2) = -(manual_control_setpoint.throttle + 1.f) * .5f;
@@ -187,7 +187,7 @@ MulticopterRateControl::Run()
 		if (_vehicle_control_mode.flag_control_rates_enabled) {
 
 			// reset integral if disarmed
-			if (!_vehicle_control_mode.flag_armed || _vehicle_status.vehicle_type != vehicle_status_s::VEHICLE_TYPE_ROTARY_WING) {
+			if (!_vehicle_control_mode.flag_armed || _vehicle_status.vehicle_type != vehicle_status_s::VEHICLE_TYPE_FLAPPPING_MAV) {
 				_rate_control.resetIntegral();
 			}
 
@@ -232,7 +232,7 @@ MulticopterRateControl::Run()
 			vehicle_torque_setpoint.xyz[2] = PX4_ISFINITE(att_control(2)) ? att_control(2) : 0.f;
 
 			// scale setpoints by battery status if enabled
-			if (_param_mc_bat_scale_en.get()) {
+			if (_param_fmav_bat_scale_en.get()) {
 				if (_battery_status_sub.updated()) {
 					battery_status_s battery_status;
 
@@ -265,7 +265,7 @@ MulticopterRateControl::Run()
 	perf_end(_loop_perf);
 }
 
-void MulticopterRateControl::updateActuatorControlsStatus(const vehicle_torque_setpoint_s &vehicle_torque_setpoint,
+void FMAVRateControl::updateActuatorControlsStatus(const vehicle_torque_setpoint_s &vehicle_torque_setpoint,
 		float dt)
 {
 	for (int i = 0; i < 3; i++) {
@@ -289,17 +289,9 @@ void MulticopterRateControl::updateActuatorControlsStatus(const vehicle_torque_s
 	}
 }
 
-int MulticopterRateControl::task_spawn(int argc, char *argv[])
+int FMAVRateControl::task_spawn(int argc, char *argv[])
 {
-	bool vtol = false;
-
-	if (argc > 1) {
-		if (strcmp(argv[1], "vtol") == 0) {
-			vtol = true;
-		}
-	}
-
-	MulticopterRateControl *instance = new MulticopterRateControl(vtol);
+	FMAVRateControl *instance = new FMAVRateControl();
 
 	if (instance) {
 		_object.store(instance);
@@ -320,12 +312,12 @@ int MulticopterRateControl::task_spawn(int argc, char *argv[])
 	return PX4_ERROR;
 }
 
-int MulticopterRateControl::custom_command(int argc, char *argv[])
+int FMAVRateControl::custom_command(int argc, char *argv[])
 {
 	return print_usage("unknown command");
 }
 
-int MulticopterRateControl::print_usage(const char *reason)
+int FMAVRateControl::print_usage(const char *reason)
 {
 	if (reason) {
 		PX4_WARN("%s\n", reason);
@@ -341,15 +333,14 @@ int MulticopterRateControl::print_usage(const char *reason)
 
 		)DESCR_STR");
 
-	PRINT_MODULE_USAGE_NAME("mc_rate_control", "controller");
+	PRINT_MODULE_USAGE_NAME("fmav_rate_control", "controller");
 	PRINT_MODULE_USAGE_COMMAND("start");
-	PRINT_MODULE_USAGE_ARG("vtol", "VTOL mode", true);
 	PRINT_MODULE_USAGE_DEFAULT_COMMANDS();
 
 	return 0;
 }
 
-extern "C" __EXPORT int mc_rate_control_main(int argc, char *argv[])
+extern "C" __EXPORT int fmav_rate_control_main(int argc, char *argv[])
 {
-	return MulticopterRateControl::main(argc, argv);
+	return FMAVRateControl::main(argc, argv);
 }
