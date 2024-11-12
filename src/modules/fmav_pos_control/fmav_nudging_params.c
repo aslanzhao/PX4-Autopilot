@@ -32,44 +32,34 @@
  ****************************************************************************/
 
 /**
- * @file StickTiltXY.hpp
- * @brief Generate only horizontal acceleration setpoint from stick input
- * @author Matthias Grob <maetugr@gmail.com>
+ * Enable nudging based on user input during autonomous land routine
+ *
+ * Using stick input the vehicle can be moved horizontally and yawed.
+ * The descend speed is amended:
+ * stick full up - 0
+ * stick centered - FV_LAND_SPEED
+ * stick full down - 2 * FV_LAND_SPEED
+ *
+ * Manual override during auto modes has to be disabled to use this feature (see COM_RC_OVERRIDE).
+ *
+ * @min 0
+ * @max 1
+ * @value 0 Nudging disabled
+ * @value 1 Nudging enabled
+ * @group Multicopter Position Control
  */
+PARAM_DEFINE_INT32(FV_LAND_RC_HELP, 0);
 
-#pragma once
-
-#include <lib/mathlib/math/filter/AlphaFilter.hpp>
-#include <matrix/math.hpp>
-#include <px4_platform_common/module_params.h>
-
-class StickTiltXY : public ModuleParams
-{
-public:
-	StickTiltXY(ModuleParams *parent);
-	~StickTiltXY() = default;
-
-	/**
-	 * Produce acceleration setpoint to tilt a multicopter based on stick input
-	 *
-	 * Forward pitch stick input pitches the vehicle's pitch e.g. accelerates the vehicle in its nose direction.
-	 *
-	 * @param stick_xy the raw pitch and roll stick positions as input
-	 * @param dt time in seconds since the last execution
-	 * @param yaw the current yaw estimate for frame rotation
-	 * @param yaw_setpoint the current heading setpoint used instead of the estimate if absolute yaw is locked
-	 * @return NED frame horizontal x, y axis acceleration setpoint
-	 */
-	matrix::Vector2f generateAccelerationSetpoints(matrix::Vector2f stick_xy, const float dt, const float yaw,
-			const float yaw_setpoint);
-private:
-	void updateParams() override;
-
-	float _maximum_acceleration{0.f};
-	AlphaFilter<matrix::Vector2f> _man_input_filter;
-
-	DEFINE_PARAMETERS(
-		(ParamFloat<px4::params::FV_MAN_TILT_MAX>) _param_mpc_man_tilt_max, ///< maximum tilt allowed for manual flight
-		(ParamFloat<px4::params::FV_MAN_TILT_TAU>) _param_mc_man_tilt_tau ///< time constant for stick filter
-	)
-};
+/**
+ * User assisted landing radius
+ *
+ * When nudging is enabled (see FV_LAND_RC_HELP), this controls
+ * the maximum allowed horizontal displacement from the original landing point.
+ *
+ * @unit m
+ * @min 0
+ * @decimal 0
+ * @increment 1
+ * @group Multicopter Position Control
+ */
+PARAM_DEFINE_FLOAT(FV_LAND_RADIUS, 1000.f);

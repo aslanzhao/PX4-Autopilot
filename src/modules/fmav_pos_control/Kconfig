@@ -1,0 +1,12 @@
+menuconfig MODULES_FMAV_POS_CONTROL
+	bool "fmav_pos_control"
+	default n
+	---help---
+		Enable support for fmav_pos_control
+
+menuconfig USER_FMAV_POS_CONTROL
+	bool "fmav_pos_control running as userspace module"
+	default y
+	depends on BOARD_PROTECTED && MODULES_MAV_POS_CONTROL
+	---help---
+		Put fmav_pos_control in userspace memory

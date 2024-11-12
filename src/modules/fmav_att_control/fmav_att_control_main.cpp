@@ -49,19 +49,18 @@
 #include <mathlib/math/Limits.hpp>
 #include <mathlib/math/Functions.hpp>
 
-#include "AttitudeControl/AttitudeControlMath.hpp"
+#include "TailAttitudeControl/TailAttitudeControlMath.hpp"
 
 using namespace matrix;
 
-FMAVAttitudeControl::FMAVAttitudeControl(bool vtol) :
+FMAVAttitudeControl::FMAVAttitudeControl() :
 	ModuleParams(nullptr),
 	WorkItem(MODULE_NAME, px4::wq_configurations::nav_and_controllers),
-	_vehicle_attitude_setpoint_pub(vtol ? ORB_ID(mc_virtual_attitude_setpoint) : ORB_ID(vehicle_attitude_setpoint)),
-	_loop_perf(perf_alloc(PC_ELAPSED, MODULE_NAME": cycle")),
-	_vtol(vtol)
+	_vehicle_attitude_setpoint_pub(ORB_ID(vehicle_attitude_setpoint)),
+	_loop_perf(perf_alloc(PC_ELAPSED, MODULE_NAME": cycle"))
 {
 	parameters_updated();
-	// Rate of change 5% per second -> 1.6 seconds to ramp to default 8% MPC_MANTHR_MIN
+	// Rate of change 5% per second -> 1.6 seconds to ramp to default 8% FV_MANTHR_MIN
 	_manual_throttle_minimum.setSlewRate(0.05f);
 	// Rate of change 50% per second -> 2 seconds to ramp to 100%
 	_manual_throttle_maximum.setSlewRate(0.5f);
@@ -87,15 +86,15 @@ void
 FMAVAttitudeControl::parameters_updated()
 {
 	// Store some of the parameters in a more convenient way & precompute often-used values
-	_attitude_control.setProportionalGain(Vector3f(_param_mc_roll_p.get(), _param_mc_pitch_p.get(), _param_mc_yaw_p.get()),
-					      _param_mc_yaw_weight.get());
+	_attitude_control.setProportionalGain(Vector3f(_param_fmav_roll_p.get(), _param_fmav_pitch_p.get(), _param_fmav_yaw_p.get()),
+					      _param_fmav_yaw_weight.get());
 
 	// angular rate limits
 	using math::radians;
-	_attitude_control.setRateLimit(Vector3f(radians(_param_mc_rollrate_max.get()), radians(_param_mc_pitchrate_max.get()),
-						radians(_param_mc_yawrate_max.get())));
+	_attitude_control.setRateLimit(Vector3f(radians(_param_fmav_rollrate_max.get()), radians(_param_fmav_pitchrate_max.get()),
+						radians(_param_fmav_yawrate_max.get())));
 
-	_man_tilt_max = math::radians(_param_mpc_man_tilt_max.get());
+	_man_tilt_max = math::radians(_param_fmav_man_tilt_max.get());
 }
 
 float
@@ -103,15 +102,15 @@ FMAVAttitudeControl::throttle_curve(float throttle_stick_input)
 {
 	float thrust = 0.f;
 
-	switch (_param_mpc_thr_curve.get()) {
+	switch (_param_fmav_thr_curve.get()) {
 	case 1: // no rescaling to hover throttle
 		thrust = math::interpolate(throttle_stick_input, -1.f, 1.f,
-					   _manual_throttle_minimum.getState(), _param_mpc_thr_max.get());
+					   _manual_throttle_minimum.getState(), _param_fmav_thr_max.get());
 		break;
 
 	default: // 0 or other: rescale such that a centered throttle stick corresponds to hover throttle
 		thrust = math::interpolateNXY(throttle_stick_input, {-1.f, 0.f, 1.f},
-		{_manual_throttle_minimum.getState(), _param_mpc_thr_hover.get(), _param_mpc_thr_max.get()});
+		{_manual_throttle_minimum.getState(), _param_fmav_thr_hover.get(), _param_fmav_thr_max.get()});
 		break;
 	}
 
@@ -124,10 +123,10 @@ FMAVAttitudeControl::generate_attitude_setpoint(const Quatf &q, float dt, bool r
 	vehicle_attitude_setpoint_s attitude_setpoint{};
 	const float yaw = Eulerf(q).psi();
 
-	attitude_setpoint.yaw_sp_move_rate = _manual_control_setpoint.yaw * math::radians(_param_mpc_man_y_max.get());
+	attitude_setpoint.yaw_sp_move_rate = _manual_control_setpoint.yaw * math::radians(_param_fmav_man_y_max.get());
 
 	// Avoid accumulating absolute yaw error with arming stick gesture in case heading_good_for_control stays true
-	if ((_manual_control_setpoint.throttle < -.9f) && (_param_mc_airmode.get() != 2)) {
+	if ((_manual_control_setpoint.throttle < -.9f) && (_param_fmav_airmode.get() != 2)) {
 		reset_yaw_sp = true;
 	}
 
@@ -149,8 +148,8 @@ FMAVAttitudeControl::generate_attitude_setpoint(const Quatf &q, float dt, bool r
 	 * This allows a simple limitation of the tilt angle, the vehicle flies towards the direction that the stick
 	 * points to, and changes of the stick input are linear.
 	 */
-	_man_roll_input_filter.setParameters(dt, _param_mc_man_tilt_tau.get());
-	_man_pitch_input_filter.setParameters(dt, _param_mc_man_tilt_tau.get());
+	_man_roll_input_filter.setParameters(dt, _param_fmav_man_tilt_tau.get());
+	_man_pitch_input_filter.setParameters(dt, _param_fmav_man_tilt_tau.get());
 
 	// we want to fly towards the direction of (roll, pitch)
 	Vector2f v = Vector2f(_man_roll_input_filter.update(_manual_control_setpoint.roll * _man_tilt_max),
@@ -167,15 +166,6 @@ FMAVAttitudeControl::generate_attitude_setpoint(const Quatf &q, float dt, bool r
 	//   let a := tilt angle, b := atan(y/x) (direction of maximum tilt)
 	//   yaw = atan(-2 * sin(b) * cos(b) * sin^2(a/2) / (1 - 2 * cos^2(b) * sin^2(a/2))).
 	const Quatf q_sp_yaw(cosf(_man_yaw_sp / 2.f), 0.f, 0.f, sinf(_man_yaw_sp / 2.f));
-
-	if (_vtol) {
-		// Modify the setpoints for roll and pitch such that they reflect the user's intention even
-		// if a large yaw error(yaw_sp - yaw) is present. In the presence of a yaw error constructing
-		// an attitude setpoint from the yaw setpoint will lead to unexpected attitude behaviour from
-		// the user's view as the tilt will not be aligned with the heading of the vehicle.
-
-		AttitudeControlMath::correctTiltSetpointForYawError(q_sp_rp, q, q_sp_yaw);
-	}
 
 	// Align the desired tilt with the yaw setpoint
 	Quatf q_sp = q_sp_yaw * q_sp_rp;
@@ -229,9 +219,6 @@ FMAVAttitudeControl::Run()
 
 			if (_vehicle_status_sub.copy(&vehicle_status)) {
 				_vehicle_type_rotary_wing = (vehicle_status.vehicle_type == vehicle_status_s::VEHICLE_TYPE_ROTARY_WING);
-				_vtol = vehicle_status.is_vtol;
-				_vtol_in_transition_mode = vehicle_status.in_transition_mode;
-				_vtol_tailsitter = vehicle_status.is_vtol_tailsitter;
 
 				const bool armed = (vehicle_status.arming_state == vehicle_status_s::ARMING_STATE_ARMED);
 				_spooled_up = armed && hrt_elapsed_time(&vehicle_status.armed_time) > _param_com_spoolup_time.get() * 1_s;
@@ -254,15 +241,11 @@ FMAVAttitudeControl::Run()
 			}
 		}
 
-		bool attitude_setpoint_generated = false;
+		// bool attitude_setpoint_generated = false;
 
-		const bool is_hovering = (_vehicle_type_rotary_wing && !_vtol_in_transition_mode);
+		const bool is_hovering = _vehicle_type_rotary_wing ;
 
-		// vehicle is a tailsitter in transition mode
-		const bool is_tailsitter_transition = (_vtol_tailsitter && _vtol_in_transition_mode);
-
-		const bool run_att_ctrl = _vehicle_control_mode.flag_control_attitude_enabled && (is_hovering
-					  || is_tailsitter_transition);
+		const bool run_att_ctrl = _vehicle_control_mode.flag_control_attitude_enabled && is_hovering ;
 
 		if (run_att_ctrl) {
 
@@ -273,7 +256,7 @@ FMAVAttitudeControl::Run()
 			    !_vehicle_control_mode.flag_control_position_enabled) {
 
 				generate_attitude_setpoint(q, dt, _reset_yaw_sp);
-				attitude_setpoint_generated = true;
+				// attitude_setpoint_generated = true;
 
 			} else {
 				_man_roll_input_filter.reset(0.f);
@@ -338,7 +321,7 @@ FMAVAttitudeControl::Run()
 			_manual_throttle_minimum.update(0.f, dt);
 
 		} else {
-			_manual_throttle_minimum.update(_param_mpc_manthr_min.get(), dt);
+			_manual_throttle_minimum.update(_param_fmav_manthr_min.get(), dt);
 		}
 
 		if (_spooled_up) {
@@ -350,7 +333,7 @@ FMAVAttitudeControl::Run()
 
 		// reset yaw setpoint during transitions, tailsitter.cpp generates
 		// attitude setpoint for the transition
-		_reset_yaw_sp = !attitude_setpoint_generated || !_heading_good_for_control || (_vtol && _vtol_in_transition_mode);
+		_reset_yaw_sp = false ;
 	}
 
 	perf_end(_loop_perf);
@@ -358,15 +341,7 @@ FMAVAttitudeControl::Run()
 
 int FMAVAttitudeControl::task_spawn(int argc, char *argv[])
 {
-	bool vtol = false;
-
-	if (argc > 1) {
-		if (strcmp(argv[1], "vtol") == 0) {
-			vtol = true;
-		}
-	}
-
-	FMAVAttitudeControl *instance = new FMAVAttitudeControl(vtol);
+	FMAVAttitudeControl *instance = new FMAVAttitudeControl();
 
 	if (instance) {
 		_object.store(instance);
@@ -425,9 +400,9 @@ https://www.research-collection.ethz.ch/bitstream/handle/20.500.11850/154099/eth
 
 
 /**
- * Multicopter attitude control app start / stop handling function
+ * flapping mav attitude control app start / stop handling function
  */
-extern "C" __EXPORT int mc_att_control_main(int argc, char *argv[])
+extern "C" __EXPORT int fmav_att_control_main(int argc, char *argv[])
 {
 	return FMAVAttitudeControl::main(argc, argv);
 }

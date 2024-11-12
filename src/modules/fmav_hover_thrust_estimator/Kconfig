@@ -1,0 +1,12 @@
+menuconfig MODULES_FMAV_HOVER_THRUST_ESTIMATOR
+	bool "fmav_mc_hover_thrust_estimator"
+	default n
+	---help---
+		Enable support for fmav_hover_thrust_estimator
+
+menuconfig USER_FMAV_HOVER_THRUST_ESTIMATOR
+	bool "fmav_hover_thrust_estimator running as userspace module"
+	default y
+	depends on BOARD_PROTECTED && MODULES_FMAV_HOVER_THRUST_ESTIMATOR
+	---help---
+		Put fmav_hover_thrust_estimator in userspace memory

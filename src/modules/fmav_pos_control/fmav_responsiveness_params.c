@@ -32,44 +32,49 @@
  ****************************************************************************/
 
 /**
- * @file StickTiltXY.hpp
- * @brief Generate only horizontal acceleration setpoint from stick input
- * @author Matthias Grob <maetugr@gmail.com>
+ * Responsiveness
+ *
+ * Changes the overall responsiveness of the vehicle.
+ * The higher the value, the faster the vehicle will react.
+ *
+ * If set to a value greater than zero, other parameters are automatically set (such as
+ * the acceleration or jerk limits).
+ * If set to a negative value, the existing individual parameters are used.
+ *
+ * @min -1
+ * @max 1
+ * @decimal 2
+ * @increment 0.05
+ * @group Multicopter Position Control
  */
+PARAM_DEFINE_FLOAT(SYS_FMAV_RESP, -0.4f);
 
-#pragma once
+/**
+ * Overall Horizontal Velocity Limit
+ *
+ * If set to a value greater than zero, other parameters are automatically set (such as
+ * FV_XY_VEL_MAX or FV_VEL_MANUAL).
+ * If set to a negative value, the existing individual parameters are used.
+ *
+ * @min -20
+ * @max 20
+ * @decimal 1
+ * @increment 1
+ * @group Multicopter Position Control
+ */
+PARAM_DEFINE_FLOAT(FV_XY_VEL_ALL, -10.f);
 
-#include <lib/mathlib/math/filter/AlphaFilter.hpp>
-#include <matrix/math.hpp>
-#include <px4_platform_common/module_params.h>
-
-class StickTiltXY : public ModuleParams
-{
-public:
-	StickTiltXY(ModuleParams *parent);
-	~StickTiltXY() = default;
-
-	/**
-	 * Produce acceleration setpoint to tilt a multicopter based on stick input
-	 *
-	 * Forward pitch stick input pitches the vehicle's pitch e.g. accelerates the vehicle in its nose direction.
-	 *
-	 * @param stick_xy the raw pitch and roll stick positions as input
-	 * @param dt time in seconds since the last execution
-	 * @param yaw the current yaw estimate for frame rotation
-	 * @param yaw_setpoint the current heading setpoint used instead of the estimate if absolute yaw is locked
-	 * @return NED frame horizontal x, y axis acceleration setpoint
-	 */
-	matrix::Vector2f generateAccelerationSetpoints(matrix::Vector2f stick_xy, const float dt, const float yaw,
-			const float yaw_setpoint);
-private:
-	void updateParams() override;
-
-	float _maximum_acceleration{0.f};
-	AlphaFilter<matrix::Vector2f> _man_input_filter;
-
-	DEFINE_PARAMETERS(
-		(ParamFloat<px4::params::FV_MAN_TILT_MAX>) _param_mpc_man_tilt_max, ///< maximum tilt allowed for manual flight
-		(ParamFloat<px4::params::FV_MAN_TILT_TAU>) _param_mc_man_tilt_tau ///< time constant for stick filter
-	)
-};
+/**
+ * Overall Vertical Velocity Limit
+ *
+ * If set to a value greater than zero, other parameters are automatically set (such as
+ * FV_Z_VEL_MAX_UP or FV_LAND_SPEED).
+ * If set to a negative value, the existing individual parameters are used.
+ *
+ * @min -3
+ * @max 8
+ * @decimal 1
+ * @increment 0.5
+ * @group Multicopter Position Control
+ */
+PARAM_DEFINE_FLOAT(FV_Z_VEL_ALL, -3.f);

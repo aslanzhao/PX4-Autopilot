@@ -34,7 +34,7 @@
 /**
  * @file FMAVLandDetector.cpp
  *
- *The MC land-detector goes through 3 states before it will detect landed:
+ *The FMAV land-detector goes through 3 states before it will detect landed:
  *
  *State 1 (=ground_contact):
  *ground_contact is detected once the vehicle is not moving along the NED-z direction and has
@@ -75,12 +75,12 @@ namespace land_detector
 
 FMAVLandDetector::FMAVLandDetector()
 {
-	_paramHandle.minManThrottle = param_find("MPC_MANTHR_MIN");
-	_paramHandle.minThrottle = param_find("MPC_THR_MIN");
-	_paramHandle.useHoverThrustEstimate = param_find("MPC_USE_HTE");
-	_paramHandle.hoverThrottle = param_find("MPC_THR_HOVER");
-	_paramHandle.landSpeed = param_find("MPC_LAND_SPEED");
-	_paramHandle.crawlSpeed = param_find("MPC_LAND_CRWL");
+	_paramHandle.minManThrottle = param_find("FV_MANTHR_MIN");
+	_paramHandle.minThrottle = param_find("FV_THR_MIN");
+	_paramHandle.useHoverThrustEstimate = param_find("FV_USE_HTE");
+	_paramHandle.hoverThrottle = param_find("FV_THR_HOVER");
+	_paramHandle.landSpeed = param_find("FV_LAND_SPEED");
+	_paramHandle.crawlSpeed = param_find("FV_LAND_CRWL");
 	_minimum_thrust_8s_hysteresis.set_hysteresis_time_from(false, 8_s);
 }
 
@@ -123,11 +123,11 @@ void FMAVLandDetector::_update_params()
 	param_get(_paramHandle.landSpeed, &_params.landSpeed);
 	param_get(_paramHandle.crawlSpeed, &_params.crawlSpeed);
 
-	// 1.2 corresponds to the margin between the default parameters LNDMC_Z_VEL_MAX = MPC_LAND_CRWL / 1.2
+	// 1.2 corresponds to the margin between the default parameters LNDMC_Z_VEL_MAX = FV_LAND_CRWL / 1.2
 	const float lndmc_upper_threshold = math::min(_params.crawlSpeed, _params.landSpeed) / 1.2f;
 
 	if (_param_lndmc_z_vel_max.get() > lndmc_upper_threshold) {
-		PX4_ERR("LNDMC_Z_VEL_MAX > MPC_LAND_CRWL or MPC_LAND_SPEED, updating %.3f -> %.3f",
+		PX4_ERR("LNDMC_Z_VEL_MAX > FV_LAND_CRWL or FV_LAND_SPEED, updating %.3f -> %.3f",
 			(double)_param_lndmc_z_vel_max.get(), (double)(lndmc_upper_threshold));
 
 		_param_lndmc_z_vel_max.set(lndmc_upper_threshold);

@@ -18,11 +18,19 @@
 11. vehicle_magnetometer, 20Hz
 
 # parameters
+
+## gyro rate
 IMU_GYRO_RATEMAX,  Gyro control data maximum publication rate (inner loop rate) , [100, 2000]Hz
 
-#
+## disable magnetometer
 SYS_HAS_MAG = 0, Control if the vehicle has a magnetometer
 
 Comment: Set this to 0 if the board has no magnetometer. If set to 0, the preflight checks will not check for the presence of a magnetometer, otherwise N sensors are required.
 
 Reboot required: true
+
+## Auto-Disarming
+By default vehicles will automatically disarm on landing, or if you take too long to take off after arming. The feature is configured using the following timeouts.
+
+COM_DISARM_LAND, Time-out for auto disarm after landing. Default: 2s (-1 to disable).
+COM_DISARM_PRFLT, Time-out for auto disarm if too slow to takeoff. Default: 10s (<=0 to disable).
