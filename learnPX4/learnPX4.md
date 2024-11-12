@@ -4,6 +4,19 @@
 3. upload可以用make ***_default upload，如果遇到waiting for bootloader，那是以为只有硬件只在上电的时候检查，可以重新插拔上电解决。
 4. usb线要注意有的线只是充电线，没有焊接数据线，可以用lsusb查看，如果看不到设备，大概率就意味着这根线有问题，不要浪费时间，换一根好一点的线。
 
+# nsh
+To see what is running in the work queues and at what rate, use:
+``` bash
+work_queue status
+```
+To debug uORB topics:
+``` bash
+uorb top
+```
+To inspect a specific uORB topic:
+``` bash
+listener <topic_name>
+```
 
 # controller
 A controller is a component that takes a setpoint and a measurement or estimated state (process variable) as input. Its goal is to adjust the value of the process variable such that it matches the setpoint. The output is a correction to eventually reach that setpoint. For example the position controller takes position setpoints as inputs, the process variable is the currently estimated position, and the output is an attitude and thrust setpoint that move the vehicle towards the desired position.
