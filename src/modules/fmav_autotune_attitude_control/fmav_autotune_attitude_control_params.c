@@ -32,7 +32,7 @@
  ****************************************************************************/
 
 /**
- * @file fmav_autotune_attitude_control_params.c
+ * @file mc_autotune_attitude_control_params.c
  *
  * Parameters used by the attitude auto-tuner
  *
@@ -45,7 +45,7 @@
  * @boolean
  * @group Autotune
  */
-PARAM_DEFINE_INT32(FV_AT_EN, 0);
+PARAM_DEFINE_INT32(MC_AT_EN, 0);
 
 /**
  * Start the autotuning sequence
@@ -59,12 +59,12 @@ PARAM_DEFINE_INT32(FV_AT_EN, 0);
  * Best is to perform the identification in position or
  * hold mode.
  * Increase the amplitude of the injected signal using
- * FV_AT_SYSID_AMP for more signal/noise ratio
+ * MC_AT_SYSID_AMP for more signal/noise ratio
  *
  * @boolean
  * @group Autotune
  */
-PARAM_DEFINE_INT32(FV_AT_START, 0);
+PARAM_DEFINE_INT32(MC_AT_START, 0);
 
 /**
  * Amplitude of the injected signal
@@ -74,7 +74,7 @@ PARAM_DEFINE_INT32(FV_AT_START, 0);
  * @decimal 1
  * @group Autotune
  */
-PARAM_DEFINE_FLOAT(FV_AT_SYSID_AMP, 0.7);
+PARAM_DEFINE_FLOAT(MC_AT_SYSID_AMP, 0.7);
 
 /**
  * Controls when to apply the new gains
@@ -92,7 +92,7 @@ PARAM_DEFINE_FLOAT(FV_AT_SYSID_AMP, 0.7);
  * @value 2 WARNING Apply the new gains in air
  * @group Autotune
  */
-PARAM_DEFINE_INT32(FV_AT_APPLY, 1);
+PARAM_DEFINE_INT32(MC_AT_APPLY, 1);
 
 /**
  * Desired angular rate closed-loop rise time
@@ -103,4 +103,4 @@ PARAM_DEFINE_INT32(FV_AT_APPLY, 1);
  * @unit s
  * @group Autotune
  */
-PARAM_DEFINE_FLOAT(FV_AT_RISE_TIME, 0.14);
+PARAM_DEFINE_FLOAT(MC_AT_RISE_TIME, 0.14);

@@ -41,7 +41,7 @@
  * @increment 1
  * @group Multicopter Position Control
  */
-PARAM_DEFINE_FLOAT(FV_MAN_TILT_MAX, 35.f);
+PARAM_DEFINE_FLOAT(MPC_MAN_TILT_MAX, 35.f);
 
 /**
  * Max manual yaw rate for Stabilized, Altitude, Position mode
@@ -53,7 +53,7 @@ PARAM_DEFINE_FLOAT(FV_MAN_TILT_MAX, 35.f);
  * @increment 10
  * @group Multicopter Position Control
  */
-PARAM_DEFINE_FLOAT(FV_MAN_Y_MAX, 150.f);
+PARAM_DEFINE_FLOAT(MPC_MAN_Y_MAX, 150.f);
 
 /**
  * Minimum collective thrust in Stabilized mode
@@ -70,7 +70,7 @@ PARAM_DEFINE_FLOAT(FV_MAN_Y_MAX, 150.f);
  * @increment 0.01
  * @group Multicopter Position Control
  */
-PARAM_DEFINE_FLOAT(FV_MANTHR_MIN, 0.08f);
+PARAM_DEFINE_FLOAT(MPC_MANTHR_MIN, 0.08f);
 
 /**
  * Thrust curve mapping in Stabilized Mode
@@ -79,17 +79,17 @@ PARAM_DEFINE_FLOAT(FV_MANTHR_MIN, 0.08f);
  * in Stabilized mode.
  *
  * In case the default is used ('Rescale to hover thrust'), the stick input is linearly
- * rescaled, such that a centered stick corresponds to the hover throttle (see FV_THR_HOVER).
+ * rescaled, such that a centered stick corresponds to the hover throttle (see MPC_THR_HOVER).
  *
  * Select 'No Rescale' to directly map the stick 1:1 to the output. This can be useful
  * in case the hover thrust is very low and the default would lead to too much distortion
  * (e.g. if hover thrust is set to 20%, then 80% of the upper thrust range is squeezed into the
  * upper half of the stick range).
  *
- * Note: In case FV_THR_HOVER is set to 50%, the modes 0 and 1 are the same.
+ * Note: In case MPC_THR_HOVER is set to 50%, the modes 0 and 1 are the same.
  *
  * @value 0 Rescale to hover thrust
  * @value 1 No Rescale
  * @group Multicopter Position Control
  */
-PARAM_DEFINE_INT32(FV_THR_CURVE, 0);
+PARAM_DEFINE_INT32(MPC_THR_CURVE, 0);

@@ -138,25 +138,25 @@ private:
 	uint8_t _quat_reset_counter{0};
 
 	DEFINE_PARAMETERS(
-		(ParamInt<px4::params::FV_AIRMODE>)         _param_fmav_airmode,
-		(ParamFloat<px4::params::FV_MAN_TILT_TAU>)  _param_fmav_man_tilt_tau,
+		(ParamInt<px4::params::MC_AIRMODE>)         _param_fmav_airmode,
+		(ParamFloat<px4::params::MC_MAN_TILT_TAU>)  _param_fmav_man_tilt_tau,
 
-		(ParamFloat<px4::params::FV_ROLL_P>)        _param_fmav_roll_p,
-		(ParamFloat<px4::params::FV_PITCH_P>)       _param_fmav_pitch_p,
-		(ParamFloat<px4::params::FV_YAW_P>)         _param_fmav_yaw_p,
-		(ParamFloat<px4::params::FV_YAW_WEIGHT>)    _param_fmav_yaw_weight,
+		(ParamFloat<px4::params::MC_ROLL_P>)        _param_fmav_roll_p,
+		(ParamFloat<px4::params::MC_PITCH_P>)       _param_fmav_pitch_p,
+		(ParamFloat<px4::params::MC_YAW_P>)         _param_fmav_yaw_p,
+		(ParamFloat<px4::params::MC_YAW_WEIGHT>)    _param_fmav_yaw_weight,
 
-		(ParamFloat<px4::params::FV_ROLLRATE_MAX>)  _param_fmav_rollrate_max,
-		(ParamFloat<px4::params::FV_PITCHRATE_MAX>) _param_fmav_pitchrate_max,
-		(ParamFloat<px4::params::FV_YAWRATE_MAX>)   _param_fmav_yawrate_max,
+		(ParamFloat<px4::params::MC_ROLLRATE_MAX>)  _param_fmav_rollrate_max,
+		(ParamFloat<px4::params::MC_PITCHRATE_MAX>) _param_fmav_pitchrate_max,
+		(ParamFloat<px4::params::MC_YAWRATE_MAX>)   _param_fmav_yawrate_max,
 
 		/* Stabilized mode params */
-		(ParamFloat<px4::params::FV_MAN_TILT_MAX>) _param_fmav_man_tilt_max,    /**< maximum tilt allowed for manual flight */
-		(ParamFloat<px4::params::FV_MAN_Y_MAX>)    _param_fmav_man_y_max,       /**< scaling factor from stick to yaw rate */
-		(ParamFloat<px4::params::FV_MANTHR_MIN>)   _param_fmav_manthr_min,      /**< minimum throttle for stabilized */
-		(ParamFloat<px4::params::FV_THR_MAX>)      _param_fmav_thr_max,         /**< maximum throttle for stabilized */
-		(ParamFloat<px4::params::FV_THR_HOVER>)    _param_fmav_thr_hover,       /**< throttle at stationary hover */
-		(ParamInt<px4::params::FV_THR_CURVE>)      _param_fmav_thr_curve,       /**< throttle curve behavior */
+		(ParamFloat<px4::params::MPC_MAN_TILT_MAX>) _param_fmav_man_tilt_max,    /**< maximum tilt allowed for manual flight */
+		(ParamFloat<px4::params::MPC_MAN_Y_MAX>)    _param_fmav_man_y_max,       /**< scaling factor from stick to yaw rate */
+		(ParamFloat<px4::params::MPC_MANTHR_MIN>)   _param_fmav_manthr_min,      /**< minimum throttle for stabilized */
+		(ParamFloat<px4::params::MPC_THR_MAX>)      _param_fmav_thr_max,         /**< maximum throttle for stabilized */
+		(ParamFloat<px4::params::MPC_THR_HOVER>)    _param_fmav_thr_hover,       /**< throttle at stationary hover */
+		(ParamInt<px4::params::MPC_THR_CURVE>)      _param_fmav_thr_curve,       /**< throttle curve behavior */
 
 		(ParamFloat<px4::params::COM_SPOOLUP_TIME>) _param_com_spoolup_time
 	)

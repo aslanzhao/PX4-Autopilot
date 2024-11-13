@@ -50,7 +50,7 @@
  * @increment 0.1
  * @group Multicopter Attitude Control
  */
-PARAM_DEFINE_FLOAT(FV_ROLL_P, 6.5f);
+PARAM_DEFINE_FLOAT(MC_ROLL_P, 6.5f);
 
 /**
  * Pitch P gain
@@ -63,7 +63,7 @@ PARAM_DEFINE_FLOAT(FV_ROLL_P, 6.5f);
  * @increment 0.1
  * @group Multicopter Attitude Control
  */
-PARAM_DEFINE_FLOAT(FV_PITCH_P, 6.5f);
+PARAM_DEFINE_FLOAT(MC_PITCH_P, 6.5f);
 
 /**
  * Yaw P gain
@@ -76,7 +76,7 @@ PARAM_DEFINE_FLOAT(FV_PITCH_P, 6.5f);
  * @increment 0.1
  * @group Multicopter Attitude Control
  */
-PARAM_DEFINE_FLOAT(FV_YAW_P, 2.8f);
+PARAM_DEFINE_FLOAT(MC_YAW_P, 2.8f);
 
 /**
  * Yaw weight
@@ -86,7 +86,7 @@ PARAM_DEFINE_FLOAT(FV_YAW_P, 2.8f);
  * in yaw compared to the other axes and it makes sense because yaw is not critical for
  * stable hovering or 3D navigation.
  *
- * For yaw control tuning use FV_YAW_P. This ratio has no impact on the yaw gain.
+ * For yaw control tuning use MC_YAW_P. This ratio has no impact on the yaw gain.
  *
  * @min 0.0
  * @max 1.0
@@ -94,7 +94,7 @@ PARAM_DEFINE_FLOAT(FV_YAW_P, 2.8f);
  * @increment 0.1
  * @group Multicopter Attitude Control
  */
-PARAM_DEFINE_FLOAT(FV_YAW_WEIGHT, 0.4f);
+PARAM_DEFINE_FLOAT(MC_YAW_WEIGHT, 0.4f);
 
 /**
  * Max roll rate
@@ -113,7 +113,7 @@ PARAM_DEFINE_FLOAT(FV_YAW_WEIGHT, 0.4f);
  * @increment 5
  * @group Multicopter Attitude Control
  */
-PARAM_DEFINE_FLOAT(FV_ROLLRATE_MAX, 220.0f);
+PARAM_DEFINE_FLOAT(MC_ROLLRATE_MAX, 220.0f);
 
 /**
  * Max pitch rate
@@ -132,7 +132,7 @@ PARAM_DEFINE_FLOAT(FV_ROLLRATE_MAX, 220.0f);
  * @increment 5
  * @group Multicopter Attitude Control
  */
-PARAM_DEFINE_FLOAT(FV_PITCHRATE_MAX, 220.0f);
+PARAM_DEFINE_FLOAT(MC_PITCHRATE_MAX, 220.0f);
 
 /**
  * Max yaw rate
@@ -144,7 +144,7 @@ PARAM_DEFINE_FLOAT(FV_PITCHRATE_MAX, 220.0f);
  * @increment 5
  * @group Multicopter Attitude Control
  */
-PARAM_DEFINE_FLOAT(FV_YAWRATE_MAX, 200.0f);
+PARAM_DEFINE_FLOAT(MC_YAWRATE_MAX, 200.0f);
 
 /**
  * Manual tilt input filter time constant
@@ -157,4 +157,4 @@ PARAM_DEFINE_FLOAT(FV_YAWRATE_MAX, 200.0f);
  * @decimal 2
  * @group Multicopter Position Control
  */
-PARAM_DEFINE_FLOAT(FV_MAN_TILT_TAU, 0.0f);
+PARAM_DEFINE_FLOAT(MC_MAN_TILT_TAU, 0.0f);

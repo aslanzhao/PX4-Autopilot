@@ -177,28 +177,28 @@ private:
 	perf_counter_t _cycle_perf{perf_alloc(PC_ELAPSED, MODULE_NAME": cycle time")};
 
 	DEFINE_PARAMETERS(
-		(ParamBool<px4::params::FV_AT_START>) _param_fmav_at_start,
-		(ParamFloat<px4::params::FV_AT_SYSID_AMP>) _param_fmav_at_sysid_amp,
-		(ParamInt<px4::params::FV_AT_APPLY>) _param_fmav_at_apply,
-		(ParamFloat<px4::params::FV_AT_RISE_TIME>) _param_fmav_at_rise_time,
+		(ParamBool<px4::params::MC_AT_START>) _param_fmav_at_start,
+		(ParamFloat<px4::params::MC_AT_SYSID_AMP>) _param_fmav_at_sysid_amp,
+		(ParamInt<px4::params::MC_AT_APPLY>) _param_fmav_at_apply,
+		(ParamFloat<px4::params::MC_AT_RISE_TIME>) _param_fmav_at_rise_time,
 
 		(ParamFloat<px4::params::IMU_GYRO_CUTOFF>) _param_imu_gyro_cutoff,
 
-		(ParamFloat<px4::params::FV_ROLLRATE_P>) _param_fmav_rollrate_p,
-		(ParamFloat<px4::params::FV_ROLLRATE_K>) _param_fmav_rollrate_k,
-		(ParamFloat<px4::params::FV_ROLLRATE_I>) _param_fmav_rollrate_i,
-		(ParamFloat<px4::params::FV_ROLLRATE_D>) _param_fmav_rollrate_d,
-		(ParamFloat<px4::params::FV_ROLL_P>) _param_fmav_roll_p,
-		(ParamFloat<px4::params::FV_PITCHRATE_P>) _param_fmav_pitchrate_p,
-		(ParamFloat<px4::params::FV_PITCHRATE_K>) _param_fmav_pitchrate_k,
-		(ParamFloat<px4::params::FV_PITCHRATE_I>) _param_fmav_pitchrate_i,
-		(ParamFloat<px4::params::FV_PITCHRATE_D>) _param_fmav_pitchrate_d,
-		(ParamFloat<px4::params::FV_PITCH_P>) _param_fmav_pitch_p,
-		(ParamFloat<px4::params::FV_YAWRATE_P>) _param_fmav_yawrate_p,
-		(ParamFloat<px4::params::FV_YAWRATE_K>) _param_fmav_yawrate_k,
-		(ParamFloat<px4::params::FV_YAWRATE_I>) _param_fmav_yawrate_i,
-		(ParamFloat<px4::params::FV_YAWRATE_D>) _param_fmav_yawrate_d,
-		(ParamFloat<px4::params::FV_YAW_P>) _param_fmav_yaw_p
+		(ParamFloat<px4::params::MC_ROLLRATE_P>) _param_fmav_rollrate_p,
+		(ParamFloat<px4::params::MC_ROLLRATE_K>) _param_fmav_rollrate_k,
+		(ParamFloat<px4::params::MC_ROLLRATE_I>) _param_fmav_rollrate_i,
+		(ParamFloat<px4::params::MC_ROLLRATE_D>) _param_fmav_rollrate_d,
+		(ParamFloat<px4::params::MC_ROLL_P>) _param_fmav_roll_p,
+		(ParamFloat<px4::params::MC_PITCHRATE_P>) _param_fmav_pitchrate_p,
+		(ParamFloat<px4::params::MC_PITCHRATE_K>) _param_fmav_pitchrate_k,
+		(ParamFloat<px4::params::MC_PITCHRATE_I>) _param_fmav_pitchrate_i,
+		(ParamFloat<px4::params::MC_PITCHRATE_D>) _param_fmav_pitchrate_d,
+		(ParamFloat<px4::params::MC_PITCH_P>) _param_fmav_pitch_p,
+		(ParamFloat<px4::params::MC_YAWRATE_P>) _param_fmav_yawrate_p,
+		(ParamFloat<px4::params::MC_YAWRATE_K>) _param_fmav_yawrate_k,
+		(ParamFloat<px4::params::MC_YAWRATE_I>) _param_fmav_yawrate_i,
+		(ParamFloat<px4::params::MC_YAWRATE_D>) _param_fmav_yawrate_d,
+		(ParamFloat<px4::params::MC_YAW_P>) _param_fmav_yaw_p
 	)
 
 	static constexpr float _publishing_dt_s = 100e-3f;

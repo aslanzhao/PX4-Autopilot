@@ -46,7 +46,8 @@ FMAVPositionControl::FMAVPositionControl() :
 	ScheduledWorkItem(MODULE_NAME, px4::wq_configurations::nav_and_controllers),
 	_vehicle_attitude_setpoint_pub(ORB_ID(vehicle_attitude_setpoint))
 {
-	_sample_interval_s.update(0.01f); // 100 Hz default
+	// _sample_interval_s.update(0.01f); // 100 Hz default
+	_sample_interval_s.update(0.02f); // 50 Hz default
 	parameters_update(true);
 	_tilt_limit_slew_rate.setSlewRate(.2f);
 	_takeoff_status_pub.advertise();

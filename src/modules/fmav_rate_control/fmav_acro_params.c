@@ -32,7 +32,7 @@
  ****************************************************************************/
 
 /**
- * @file fmav_acro_params.c
+ * @file mc_acro_params.c
  *
  * Parameters for Acro mode behavior
  */
@@ -49,7 +49,7 @@
  * @increment 5
  * @group Multicopter Acro Mode
  */
-PARAM_DEFINE_FLOAT(FV_ACRO_R_MAX, 100.f);
+PARAM_DEFINE_FLOAT(MC_ACRO_R_MAX, 100.f);
 
 /**
  * Acro mode maximum pitch rate
@@ -63,7 +63,7 @@ PARAM_DEFINE_FLOAT(FV_ACRO_R_MAX, 100.f);
  * @increment 5
  * @group Multicopter Acro Mode
  */
-PARAM_DEFINE_FLOAT(FV_ACRO_P_MAX, 100.f);
+PARAM_DEFINE_FLOAT(MC_ACRO_P_MAX, 100.f);
 
 /**
  * Acro mode maximum yaw rate
@@ -77,7 +77,7 @@ PARAM_DEFINE_FLOAT(FV_ACRO_P_MAX, 100.f);
  * @increment 5
  * @group Multicopter Acro Mode
  */
-PARAM_DEFINE_FLOAT(FV_ACRO_Y_MAX, 100.f);
+PARAM_DEFINE_FLOAT(MC_ACRO_Y_MAX, 100.f);
 
 /**
  * Acro mode roll, pitch expo factor
@@ -92,7 +92,7 @@ PARAM_DEFINE_FLOAT(FV_ACRO_Y_MAX, 100.f);
  * @decimal 2
  * @group Multicopter Acro Mode
  */
-PARAM_DEFINE_FLOAT(FV_ACRO_EXPO, 0.f);
+PARAM_DEFINE_FLOAT(MC_ACRO_EXPO, 0.f);
 
 /**
  * Acro mode yaw expo factor
@@ -107,12 +107,12 @@ PARAM_DEFINE_FLOAT(FV_ACRO_EXPO, 0.f);
  * @decimal 2
  * @group Multicopter Acro Mode
  */
-PARAM_DEFINE_FLOAT(FV_ACRO_EXPO_Y, 0.f);
+PARAM_DEFINE_FLOAT(MC_ACRO_EXPO_Y, 0.f);
 
 /**
  * Acro mode roll, pitch super expo factor
  *
- * "Superexponential" factor for refining the input curve shape tuned using FV_ACRO_EXPO.
+ * "Superexponential" factor for refining the input curve shape tuned using MC_ACRO_EXPO.
  *
  * 0 Pure Expo function
  * 0.7 reasonable shape enhancement for intuitive stick feel
@@ -123,12 +123,12 @@ PARAM_DEFINE_FLOAT(FV_ACRO_EXPO_Y, 0.f);
  * @decimal 2
  * @group Multicopter Acro Mode
  */
-PARAM_DEFINE_FLOAT(FV_ACRO_SUPEXPO, 0.f);
+PARAM_DEFINE_FLOAT(MC_ACRO_SUPEXPO, 0.f);
 
 /**
  * Acro mode yaw super expo factor
  *
- * "Superexponential" factor for refining the input curve shape tuned using FV_ACRO_EXPO_Y.
+ * "Superexponential" factor for refining the input curve shape tuned using MC_ACRO_EXPO_Y.
  *
  * 0 Pure Expo function
  * 0.7 reasonable shape enhancement for intuitive stick feel
@@ -139,4 +139,4 @@ PARAM_DEFINE_FLOAT(FV_ACRO_SUPEXPO, 0.f);
  * @decimal 2
  * @group Multicopter Acro Mode
  */
-PARAM_DEFINE_FLOAT(FV_ACRO_SUPEXPOY, 0.f);
+PARAM_DEFINE_FLOAT(MC_ACRO_SUPEXPOY, 0.f);

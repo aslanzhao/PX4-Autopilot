@@ -41,6 +41,12 @@ param set-default PWM_MAIN_DIS6 500
 param set-default PWM_MAIN_DIS7 500
 param set-default PWM_MAIN_DIS8 500
 
+param set-default IMU_GYRO_RATEMAX 250
+param set-default IMU_INTEG_RATE 100
+param set-default SYS_HAS_MAG 0
+param set-default COM_DISARM_LAND -1
+param set-default COM_DISARM_PRFLT -1
+
 # servo 1. RollYawPitch 1
 param set-default CA_SV_CS0_TYPE 27
 param set-default CA_SV_CS0_TRQ_P 0.5

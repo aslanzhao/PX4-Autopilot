@@ -37,8 +37,8 @@
  * Using stick input the vehicle can be moved horizontally and yawed.
  * The descend speed is amended:
  * stick full up - 0
- * stick centered - FV_LAND_SPEED
- * stick full down - 2 * FV_LAND_SPEED
+ * stick centered - MPC_LAND_SPEED
+ * stick full down - 2 * MPC_LAND_SPEED
  *
  * Manual override during auto modes has to be disabled to use this feature (see COM_RC_OVERRIDE).
  *
@@ -48,12 +48,12 @@
  * @value 1 Nudging enabled
  * @group Multicopter Position Control
  */
-PARAM_DEFINE_INT32(FV_LAND_RC_HELP, 0);
+PARAM_DEFINE_INT32(MPC_LAND_RC_HELP, 0);
 
 /**
  * User assisted landing radius
  *
- * When nudging is enabled (see FV_LAND_RC_HELP), this controls
+ * When nudging is enabled (see MPC_LAND_RC_HELP), this controls
  * the maximum allowed horizontal displacement from the original landing point.
  *
  * @unit m
@@ -62,4 +62,4 @@ PARAM_DEFINE_INT32(FV_LAND_RC_HELP, 0);
  * @increment 1
  * @group Multicopter Position Control
  */
-PARAM_DEFINE_FLOAT(FV_LAND_RADIUS, 1000.f);
+PARAM_DEFINE_FLOAT(MPC_LAND_RADIUS, 1000.f);

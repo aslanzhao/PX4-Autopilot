@@ -78,6 +78,7 @@ FMAVRateControl::parameters_updated()
 	// to the ideal (K * [1 + 1/sTi + sTd]) form
 	const Vector3f rate_k = Vector3f(_param_fmav_rollrate_k.get(), _param_fmav_pitchrate_k.get(), _param_fmav_yawrate_k.get());
 
+	// 初始化PID的值，这些值由全局的参数来定义
 	_rate_control.setPidGains(
 		rate_k.emult(Vector3f(_param_fmav_rollrate_p.get(), _param_fmav_pitchrate_p.get(), _param_fmav_yawrate_p.get())),
 		rate_k.emult(Vector3f(_param_fmav_rollrate_i.get(), _param_fmav_pitchrate_i.get(), _param_fmav_yawrate_i.get())),

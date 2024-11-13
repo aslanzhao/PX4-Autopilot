@@ -130,35 +130,35 @@ private:
 	float _control_energy[4] {};
 
 	DEFINE_PARAMETERS(
-		(ParamFloat<px4::params::FV_ROLLRATE_P>) _param_fmav_rollrate_p,
-		(ParamFloat<px4::params::FV_ROLLRATE_I>) _param_fmav_rollrate_i,
-		(ParamFloat<px4::params::FV_RR_INT_LIM>) _param_fmav_rr_int_lim,
-		(ParamFloat<px4::params::FV_ROLLRATE_D>) _param_fmav_rollrate_d,
-		(ParamFloat<px4::params::FV_ROLLRATE_FF>) _param_fmav_rollrate_ff,
-		(ParamFloat<px4::params::FV_ROLLRATE_K>) _param_fmav_rollrate_k,
+		(ParamFloat<px4::params::MC_ROLLRATE_P>) _param_fmav_rollrate_p,
+		(ParamFloat<px4::params::MC_ROLLRATE_I>) _param_fmav_rollrate_i,
+		(ParamFloat<px4::params::MC_RR_INT_LIM>) _param_fmav_rr_int_lim,
+		(ParamFloat<px4::params::MC_ROLLRATE_D>) _param_fmav_rollrate_d,
+		(ParamFloat<px4::params::MC_ROLLRATE_FF>) _param_fmav_rollrate_ff,
+		(ParamFloat<px4::params::MC_ROLLRATE_K>) _param_fmav_rollrate_k,
 
-		(ParamFloat<px4::params::FV_PITCHRATE_P>) _param_fmav_pitchrate_p,
-		(ParamFloat<px4::params::FV_PITCHRATE_I>) _param_fmav_pitchrate_i,
-		(ParamFloat<px4::params::FV_PR_INT_LIM>) _param_fmav_pr_int_lim,
-		(ParamFloat<px4::params::FV_PITCHRATE_D>) _param_fmav_pitchrate_d,
-		(ParamFloat<px4::params::FV_PITCHRATE_FF>) _param_fmav_pitchrate_ff,
-		(ParamFloat<px4::params::FV_PITCHRATE_K>) _param_fmav_pitchrate_k,
+		(ParamFloat<px4::params::MC_PITCHRATE_P>) _param_fmav_pitchrate_p,
+		(ParamFloat<px4::params::MC_PITCHRATE_I>) _param_fmav_pitchrate_i,
+		(ParamFloat<px4::params::MC_PR_INT_LIM>) _param_fmav_pr_int_lim,
+		(ParamFloat<px4::params::MC_PITCHRATE_D>) _param_fmav_pitchrate_d,
+		(ParamFloat<px4::params::MC_PITCHRATE_FF>) _param_fmav_pitchrate_ff,
+		(ParamFloat<px4::params::MC_PITCHRATE_K>) _param_fmav_pitchrate_k,
 
-		(ParamFloat<px4::params::FV_YAWRATE_P>) _param_fmav_yawrate_p,
-		(ParamFloat<px4::params::FV_YAWRATE_I>) _param_fmav_yawrate_i,
-		(ParamFloat<px4::params::FV_YR_INT_LIM>) _param_fmav_yr_int_lim,
-		(ParamFloat<px4::params::FV_YAWRATE_D>) _param_fmav_yawrate_d,
-		(ParamFloat<px4::params::FV_YAWRATE_FF>) _param_fmav_yawrate_ff,
-		(ParamFloat<px4::params::FV_YAWRATE_K>) _param_fmav_yawrate_k,
+		(ParamFloat<px4::params::MC_YAWRATE_P>) _param_fmav_yawrate_p,
+		(ParamFloat<px4::params::MC_YAWRATE_I>) _param_fmav_yawrate_i,
+		(ParamFloat<px4::params::MC_YR_INT_LIM>) _param_fmav_yr_int_lim,
+		(ParamFloat<px4::params::MC_YAWRATE_D>) _param_fmav_yawrate_d,
+		(ParamFloat<px4::params::MC_YAWRATE_FF>) _param_fmav_yawrate_ff,
+		(ParamFloat<px4::params::MC_YAWRATE_K>) _param_fmav_yawrate_k,
 
-		(ParamFloat<px4::params::FV_ACRO_R_MAX>) _param_fmav_acro_r_max,
-		(ParamFloat<px4::params::FV_ACRO_P_MAX>) _param_fmav_acro_p_max,
-		(ParamFloat<px4::params::FV_ACRO_Y_MAX>) _param_fmav_acro_y_max,
-		(ParamFloat<px4::params::FV_ACRO_EXPO>) _param_fmav_acro_expo,			/**< expo stick curve shape (roll & pitch) */
-		(ParamFloat<px4::params::FV_ACRO_EXPO_Y>) _param_fmav_acro_expo_y,				/**< expo stick curve shape (yaw) */
-		(ParamFloat<px4::params::FV_ACRO_SUPEXPO>) _param_fmav_acro_supexpo,		/**< superexpo stick curve shape (roll & pitch) */
-		(ParamFloat<px4::params::FV_ACRO_SUPEXPOY>) _param_fmav_acro_supexpoy,		/**< superexpo stick curve shape (yaw) */
+		(ParamFloat<px4::params::MC_ACRO_R_MAX>) _param_fmav_acro_r_max,
+		(ParamFloat<px4::params::MC_ACRO_P_MAX>) _param_fmav_acro_p_max,
+		(ParamFloat<px4::params::MC_ACRO_Y_MAX>) _param_fmav_acro_y_max,
+		(ParamFloat<px4::params::MC_ACRO_EXPO>) _param_fmav_acro_expo,			/**< expo stick curve shape (roll & pitch) */
+		(ParamFloat<px4::params::MC_ACRO_EXPO_Y>) _param_fmav_acro_expo_y,				/**< expo stick curve shape (yaw) */
+		(ParamFloat<px4::params::MC_ACRO_SUPEXPO>) _param_fmav_acro_supexpo,		/**< superexpo stick curve shape (roll & pitch) */
+		(ParamFloat<px4::params::MC_ACRO_SUPEXPOY>) _param_fmav_acro_supexpoy,		/**< superexpo stick curve shape (yaw) */
 
-		(ParamBool<px4::params::FV_BAT_SCALE_EN>) _param_fmav_bat_scale_en
+		(ParamBool<px4::params::MC_BAT_SCALE_EN>) _param_fmav_bat_scale_en
 	)
 };

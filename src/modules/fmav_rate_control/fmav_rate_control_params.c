@@ -32,7 +32,7 @@
  ****************************************************************************/
 
 /**
- * @file fmav_rate_control_params.c
+ * @file mc_rate_control_params.c
  *
  * Parameters for multicopter rate controller
  */
@@ -48,7 +48,7 @@
  * @increment 0.01
  * @group Multicopter Rate Control
  */
-PARAM_DEFINE_FLOAT(FV_ROLLRATE_P, 0.15f);
+PARAM_DEFINE_FLOAT(MC_ROLLRATE_P, 0.15f);
 
 /**
  * Roll rate I gain
@@ -60,7 +60,7 @@ PARAM_DEFINE_FLOAT(FV_ROLLRATE_P, 0.15f);
  * @increment 0.01
  * @group Multicopter Rate Control
  */
-PARAM_DEFINE_FLOAT(FV_ROLLRATE_I, 0.2f);
+PARAM_DEFINE_FLOAT(MC_ROLLRATE_I, 0.2f);
 
 /**
  * Roll rate integrator limit
@@ -72,7 +72,7 @@ PARAM_DEFINE_FLOAT(FV_ROLLRATE_I, 0.2f);
  * @increment 0.01
  * @group Multicopter Rate Control
  */
-PARAM_DEFINE_FLOAT(FV_RR_INT_LIM, 0.30f);
+PARAM_DEFINE_FLOAT(MC_RR_INT_LIM, 0.30f);
 
 /**
  * Roll rate D gain
@@ -85,7 +85,7 @@ PARAM_DEFINE_FLOAT(FV_RR_INT_LIM, 0.30f);
  * @increment 0.0005
  * @group Multicopter Rate Control
  */
-PARAM_DEFINE_FLOAT(FV_ROLLRATE_D, 0.003f);
+PARAM_DEFINE_FLOAT(MC_ROLLRATE_D, 0.003f);
 
 /**
  * Roll rate feedforward
@@ -96,7 +96,7 @@ PARAM_DEFINE_FLOAT(FV_ROLLRATE_D, 0.003f);
  * @decimal 4
  * @group Multicopter Rate Control
  */
-PARAM_DEFINE_FLOAT(FV_ROLLRATE_FF, 0.0f);
+PARAM_DEFINE_FLOAT(MC_ROLLRATE_FF, 0.0f);
 
 /**
  * Roll rate controller gain
@@ -104,11 +104,11 @@ PARAM_DEFINE_FLOAT(FV_ROLLRATE_FF, 0.0f);
  * Global gain of the controller.
  *
  * This gain scales the P, I and D terms of the controller:
- * output = FV_ROLLRATE_K * (FV_ROLLRATE_P * error
- * 			     + FV_ROLLRATE_I * error_integral
- * 			     + FV_ROLLRATE_D * error_derivative)
- * Set FV_ROLLRATE_P=1 to implement a PID in the ideal form.
- * Set FV_ROLLRATE_K=1 to implement a PID in the parallel form.
+ * output = MC_ROLLRATE_K * (MC_ROLLRATE_P * error
+ * 			     + MC_ROLLRATE_I * error_integral
+ * 			     + MC_ROLLRATE_D * error_derivative)
+ * Set MC_ROLLRATE_P=1 to implement a PID in the ideal form.
+ * Set MC_ROLLRATE_K=1 to implement a PID in the parallel form.
  *
  * @min 0.01
  * @max 5.0
@@ -116,7 +116,7 @@ PARAM_DEFINE_FLOAT(FV_ROLLRATE_FF, 0.0f);
  * @increment 0.0005
  * @group Multicopter Rate Control
  */
-PARAM_DEFINE_FLOAT(FV_ROLLRATE_K, 1.0f);
+PARAM_DEFINE_FLOAT(MC_ROLLRATE_K, 1.0f);
 
 /**
  * Pitch rate P gain
@@ -129,7 +129,7 @@ PARAM_DEFINE_FLOAT(FV_ROLLRATE_K, 1.0f);
  * @increment 0.01
  * @group Multicopter Rate Control
  */
-PARAM_DEFINE_FLOAT(FV_PITCHRATE_P, 0.15f);
+PARAM_DEFINE_FLOAT(MC_PITCHRATE_P, 0.15f);
 
 /**
  * Pitch rate I gain
@@ -141,7 +141,7 @@ PARAM_DEFINE_FLOAT(FV_PITCHRATE_P, 0.15f);
  * @increment 0.01
  * @group Multicopter Rate Control
  */
-PARAM_DEFINE_FLOAT(FV_PITCHRATE_I, 0.2f);
+PARAM_DEFINE_FLOAT(MC_PITCHRATE_I, 0.2f);
 
 /**
  * Pitch rate integrator limit
@@ -153,7 +153,7 @@ PARAM_DEFINE_FLOAT(FV_PITCHRATE_I, 0.2f);
  * @increment 0.01
  * @group Multicopter Rate Control
  */
-PARAM_DEFINE_FLOAT(FV_PR_INT_LIM, 0.30f);
+PARAM_DEFINE_FLOAT(MC_PR_INT_LIM, 0.30f);
 
 /**
  * Pitch rate D gain
@@ -165,7 +165,7 @@ PARAM_DEFINE_FLOAT(FV_PR_INT_LIM, 0.30f);
  * @increment 0.0005
  * @group Multicopter Rate Control
  */
-PARAM_DEFINE_FLOAT(FV_PITCHRATE_D, 0.003f);
+PARAM_DEFINE_FLOAT(MC_PITCHRATE_D, 0.003f);
 
 /**
  * Pitch rate feedforward
@@ -176,7 +176,7 @@ PARAM_DEFINE_FLOAT(FV_PITCHRATE_D, 0.003f);
  * @decimal 4
  * @group Multicopter Rate Control
  */
-PARAM_DEFINE_FLOAT(FV_PITCHRATE_FF, 0.0f);
+PARAM_DEFINE_FLOAT(MC_PITCHRATE_FF, 0.0f);
 
 /**
  * Pitch rate controller gain
@@ -184,11 +184,11 @@ PARAM_DEFINE_FLOAT(FV_PITCHRATE_FF, 0.0f);
  * Global gain of the controller.
  *
  * This gain scales the P, I and D terms of the controller:
- * output = FV_PITCHRATE_K * (FV_PITCHRATE_P * error
- * 			     + FV_PITCHRATE_I * error_integral
- * 			     + FV_PITCHRATE_D * error_derivative)
- * Set FV_PITCHRATE_P=1 to implement a PID in the ideal form.
- * Set FV_PITCHRATE_K=1 to implement a PID in the parallel form.
+ * output = MC_PITCHRATE_K * (MC_PITCHRATE_P * error
+ * 			     + MC_PITCHRATE_I * error_integral
+ * 			     + MC_PITCHRATE_D * error_derivative)
+ * Set MC_PITCHRATE_P=1 to implement a PID in the ideal form.
+ * Set MC_PITCHRATE_K=1 to implement a PID in the parallel form.
  *
  * @min 0.01
  * @max 5.0
@@ -196,7 +196,7 @@ PARAM_DEFINE_FLOAT(FV_PITCHRATE_FF, 0.0f);
  * @increment 0.0005
  * @group Multicopter Rate Control
  */
-PARAM_DEFINE_FLOAT(FV_PITCHRATE_K, 1.0f);
+PARAM_DEFINE_FLOAT(MC_PITCHRATE_K, 1.0f);
 
 /**
  * Yaw rate P gain
@@ -209,7 +209,7 @@ PARAM_DEFINE_FLOAT(FV_PITCHRATE_K, 1.0f);
  * @increment 0.01
  * @group Multicopter Rate Control
  */
-PARAM_DEFINE_FLOAT(FV_YAWRATE_P, 0.2f);
+PARAM_DEFINE_FLOAT(MC_YAWRATE_P, 0.2f);
 
 /**
  * Yaw rate I gain
@@ -221,7 +221,7 @@ PARAM_DEFINE_FLOAT(FV_YAWRATE_P, 0.2f);
  * @increment 0.01
  * @group Multicopter Rate Control
  */
-PARAM_DEFINE_FLOAT(FV_YAWRATE_I, 0.1f);
+PARAM_DEFINE_FLOAT(MC_YAWRATE_I, 0.1f);
 
 /**
  * Yaw rate integrator limit
@@ -233,7 +233,7 @@ PARAM_DEFINE_FLOAT(FV_YAWRATE_I, 0.1f);
  * @increment 0.01
  * @group Multicopter Rate Control
  */
-PARAM_DEFINE_FLOAT(FV_YR_INT_LIM, 0.30f);
+PARAM_DEFINE_FLOAT(MC_YR_INT_LIM, 0.30f);
 
 /**
  * Yaw rate D gain
@@ -245,7 +245,7 @@ PARAM_DEFINE_FLOAT(FV_YR_INT_LIM, 0.30f);
  * @increment 0.01
  * @group Multicopter Rate Control
  */
-PARAM_DEFINE_FLOAT(FV_YAWRATE_D, 0.0f);
+PARAM_DEFINE_FLOAT(MC_YAWRATE_D, 0.0f);
 
 /**
  * Yaw rate feedforward
@@ -257,7 +257,7 @@ PARAM_DEFINE_FLOAT(FV_YAWRATE_D, 0.0f);
  * @increment 0.01
  * @group Multicopter Rate Control
  */
-PARAM_DEFINE_FLOAT(FV_YAWRATE_FF, 0.0f);
+PARAM_DEFINE_FLOAT(MC_YAWRATE_FF, 0.0f);
 
 /**
  * Yaw rate controller gain
@@ -265,11 +265,11 @@ PARAM_DEFINE_FLOAT(FV_YAWRATE_FF, 0.0f);
  * Global gain of the controller.
  *
  * This gain scales the P, I and D terms of the controller:
- * output = FV_YAWRATE_K * (FV_YAWRATE_P * error
- * 			     + FV_YAWRATE_I * error_integral
- * 			     + FV_YAWRATE_D * error_derivative)
- * Set FV_YAWRATE_P=1 to implement a PID in the ideal form.
- * Set FV_YAWRATE_K=1 to implement a PID in the parallel form.
+ * output = MC_YAWRATE_K * (MC_YAWRATE_P * error
+ * 			     + MC_YAWRATE_I * error_integral
+ * 			     + MC_YAWRATE_D * error_derivative)
+ * Set MC_YAWRATE_P=1 to implement a PID in the ideal form.
+ * Set MC_YAWRATE_K=1 to implement a PID in the parallel form.
  *
  * @min 0.0
  * @max 5.0
@@ -277,7 +277,7 @@ PARAM_DEFINE_FLOAT(FV_YAWRATE_FF, 0.0f);
  * @increment 0.0005
  * @group Multicopter Rate Control
  */
-PARAM_DEFINE_FLOAT(FV_YAWRATE_K, 1.0f);
+PARAM_DEFINE_FLOAT(MC_YAWRATE_K, 1.0f);
 
 /**
  * Battery power level scaler
@@ -291,4 +291,4 @@ PARAM_DEFINE_FLOAT(FV_YAWRATE_K, 1.0f);
  * @boolean
  * @group Multicopter Rate Control
  */
-PARAM_DEFINE_INT32(FV_BAT_SCALE_EN, 0);
+PARAM_DEFINE_INT32(MC_BAT_SCALE_EN, 0);
