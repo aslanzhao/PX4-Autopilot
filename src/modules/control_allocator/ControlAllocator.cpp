@@ -351,7 +351,6 @@ ControlAllocator::Run()
 			// Check if the current flight phase is HOVER or FIXED_WING
 			if (vehicle_status.vehicle_type == vehicle_status_s::VEHICLE_TYPE_ROTARY_WING) {
 				flight_phase = ActuatorEffectiveness::FlightPhase::HOVER_FLIGHT;
-
 			} else {
 				flight_phase = ActuatorEffectiveness::FlightPhase::FORWARD_FLIGHT;
 			}
@@ -360,7 +359,6 @@ ControlAllocator::Run()
 			if (vehicle_status.is_vtol && vehicle_status.in_transition_mode) {
 				if (vehicle_status.in_transition_to_fw) {
 					flight_phase = ActuatorEffectiveness::FlightPhase::TRANSITION_HF_TO_FF;
-
 				} else {
 					flight_phase = ActuatorEffectiveness::FlightPhase::TRANSITION_FF_TO_HF;
 				}
@@ -390,10 +388,8 @@ ControlAllocator::Run()
 	// Run allocator on torque changes
 	if (_vehicle_torque_setpoint_sub.update(&vehicle_torque_setpoint)) {
 		_torque_sp = matrix::Vector3f(vehicle_torque_setpoint.xyz);
-
 		do_update = true;
 		_timestamp_sample = vehicle_torque_setpoint.timestamp_sample;
-
 	}
 
 	// Also run allocator on thrust setpoint changes if the torque setpoint

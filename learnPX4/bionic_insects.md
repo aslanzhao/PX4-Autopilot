@@ -27,12 +27,16 @@ response to vehicle_local_position,
 如果不激活位置环，那么只有attitude环和rate环被激活
 
 # fmav_att_control
-attitude controller，它订阅了vehicle_attitude（由EKF2发布），这里是通过IMU积分得到的，它的更新频率由IMU_INTEG_RATE决定。
+attitude controller，它订阅了并自动响应vehicle_attitude（由EKF2发布），这里是通过IMU积分得到的，它的更新频率由IMU_INTEG_RATE决定。
 
 在manual模式下，attitude的输入由遥控杆输入，其中遥控杆输入的pitch和roll信号是vehicle的角度，而yaw输入的则是角速度。
 
 # fmav_rate_control
-rate controller，它订阅了vehicle_thrust_setpoint, vehicle_torque_setpoint
+rate controller，它订阅并自动响应vehicle_angular_velocity（有EKF2的IMU发布），并发布vehicle_thrust_setpoint, vehicle_torque_setpoint
+
+# control_allocator
+它订阅并自动响应vehicle_thrust_setpoint, vehicle_torque_setpoint，也就是说fmav_rate_control发布了新的推力和力矩相应需求后，control_allocator就自动响应。
+
 
 # actuators
 servo接收pwm波，50Hz，脉宽从500到2500us，平均值是1500，1500被设置为中位，trim是相对于1500设置的，-1时对应500，+1时对应2500。
