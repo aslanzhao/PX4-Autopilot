@@ -20,7 +20,7 @@ fmav_rate_control start
 #
 fmav_att_control start
 
-if param greater -s FV_AT_EN 0
+if param greater -s MC_AT_EN 0
 then
 	fmav_autotune_attitude_control start
 fi
@@ -28,8 +28,8 @@ fi
 #
 # Start Multicopter Position Controller.
 #
-fmav_hover_thrust_estimator start
-flight_mode_manager start
+# fmav_hover_thrust_estimator start
+# flight_mode_manager start
 # fmav_pos_control start
 
 #

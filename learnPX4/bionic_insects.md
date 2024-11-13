@@ -22,6 +22,20 @@
 # fmav_pos_control
 pusblish vehicle_local_position_setpoint, vehicle_attitude_setpoint, takeoff_status
 response to vehicle_local_position,
+如果没有GPS信号来定位位置，只有IMU积分，位置的误差非常的大，这时候不应该激活位置控制模块，相应的flight_mode_manager，fmav_pos_control，fmav_hover_thrust_estimator这三个都可以不激活。
+
+如果不激活位置环，那么只有attitude环和rate环被激活
+
+# fmav_att_control
+attitude controller，它订阅了vehicle_attitude（由EKF2发布），这里是通过IMU积分得到的，它的更新频率由IMU_INTEG_RATE决定。
+
+在manual模式下，attitude的输入由遥控杆输入，其中遥控杆输入的pitch和roll信号是vehicle的角度，而yaw输入的则是角速度。
+
+# fmav_rate_control
+rate controller，它订阅了vehicle_thrust_setpoint, vehicle_torque_setpoint
+
+# actuators
+servo接收pwm波，50Hz，脉宽从500到2500us，平均值是1500，1500被设置为中位，trim是相对于1500设置的，-1时对应500，+1时对应2500。
 
 # parameters
 https://docs.px4.io/main/en/advanced_config/parameter_reference.html
