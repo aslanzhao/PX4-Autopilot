@@ -27,6 +27,9 @@ A mixer takes force commands (three torque, three thrust) at body reference fram
 # 名词解释
 在 px4_task_spawn_cmd() 这个函数名中，单词 spawn 的含义是“创建”或“生成”的意思。在编程和操作系统领域，spawn 通常指代创建一个新的进程或线程。
 
+# Remote controller
+src/modules/rc_update工程里发布manual_control_setpoint。对变体翼，可以在这里再定义一个表达变构型的参量，然后在control allocator里订阅，改变servos的trim值，也就是_actuator_trim。同时，是不是在这里就可以根据trim的值，改变切线刚度矩阵？
+
 # morphing wing 的参数
 
 ## CA_ROTOR0_CT (FLOAT)
