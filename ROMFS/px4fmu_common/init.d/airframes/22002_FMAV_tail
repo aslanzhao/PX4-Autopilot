@@ -49,27 +49,28 @@ param set-default COM_DISARM_PRFLT -1
 
 # servo 1. RollYawPitch 1
 param set-default CA_SV_CS0_TYPE 27
-param set-default CA_SV_CS0_TRQ_P 0.5
-param set-default CA_SV_CS0_TRQ_R -0.5
-param set-default CA_SV_CS0_TRQ_Y -0.5
+param set-default CA_SV_CS0_TRQ_R 0.2
+param set-default CA_SV_CS0_TRQ_P 0.2
+param set-default CA_SV_CS0_TRQ_Y -0.2
 param set-default CA_SV_CS0_TRIM 0
 # servo 2. RollYawPitch 2
 param set-default CA_SV_CS1_TYPE 28
-param set-default CA_SV_CS1_TRQ_P 0.5
-param set-default CA_SV_CS1_TRQ_R 0.5
-param set-default CA_SV_CS1_TRQ_Y -0.5
+param set-default CA_SV_CS1_TRQ_R -0.2
+param set-default CA_SV_CS1_TRQ_P 0.2
+param set-default CA_SV_CS1_TRQ_Y -0.2
 param set-default CA_SV_CS1_TRIM 0
 # servo 3. RollYawPitch 3
 param set-default CA_SV_CS2_TYPE 29
-param set-default CA_SV_CS2_TRQ_P 0.5
-param set-default CA_SV_CS2_TRQ_R 0.5
-param set-default CA_SV_CS2_TRQ_Y -0.5
+param set-default CA_SV_CS2_TRQ_R -0.2
+param set-default CA_SV_CS2_TRQ_P -0.2
+param set-default CA_SV_CS2_TRQ_Y -0.2
+
 param set-default CA_SV_CS2_TRIM 0
 # servo 4. RollYawPitch 4
 param set-default CA_SV_CS3_TYPE 30
-param set-default CA_SV_CS3_TRQ_P 0.5
-param set-default CA_SV_CS3_TRQ_R 0.5
-param set-default CA_SV_CS3_TRQ_Y -0.5
+param set-default CA_SV_CS3_TRQ_R 0.2
+param set-default CA_SV_CS3_TRQ_P -0.2
+param set-default CA_SV_CS3_TRQ_Y -0.2
 param set-default CA_SV_CS3_TRIM 0
 
 param set PWM_MAIN_FUNC1 101
