@@ -55,6 +55,7 @@
 #include <uORB/SubscriptionCallback.hpp>
 #include <uORB/topics/manual_control_setpoint.h>
 #include <uORB/topics/manual_control_switches.h>
+#include <uORB/topics/morphing_wing_extent.h>
 #include <uORB/topics/input_rc.h>
 #include <uORB/topics/rc_channels.h>
 #include <uORB/topics/rc_parameter_map.h>
@@ -168,6 +169,9 @@ protected:
 	uORB::Publication<rc_channels_s> _rc_channels_pub{ORB_ID(rc_channels)};
 	uORB::PublicationMulti<manual_control_setpoint_s> _manual_control_input_pub{ORB_ID(manual_control_input)};
 	uORB::Publication<manual_control_switches_s> _manual_control_switches_pub{ORB_ID(manual_control_switches)};
+
+	/// @brief for morphing wing
+	uORB::Publication<morphing_wing_extent_s> _morphing_wing_extent_pub{ORB_ID(morphing_wing_extent)};
 
 	manual_control_switches_s _manual_switches_previous{};
 	manual_control_switches_s _manual_switches_last_publish{};

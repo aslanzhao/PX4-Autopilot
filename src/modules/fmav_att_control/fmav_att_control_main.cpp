@@ -218,8 +218,6 @@ FMAVAttitudeControl::Run()
 			vehicle_status_s vehicle_status;
 
 			if (_vehicle_status_sub.copy(&vehicle_status)) {
-				_vehicle_type_rotary_wing = (vehicle_status.vehicle_type == vehicle_status_s::VEHICLE_TYPE_ROTARY_WING);
-
 				const bool armed = (vehicle_status.arming_state == vehicle_status_s::ARMING_STATE_ARMED);
 				_spooled_up = armed && hrt_elapsed_time(&vehicle_status.armed_time) > _param_com_spoolup_time.get() * 1_s;
 			}
@@ -243,11 +241,7 @@ FMAVAttitudeControl::Run()
 
 		// bool attitude_setpoint_generated = false;
 
-		const bool is_hovering = _vehicle_type_rotary_wing ;
-
-		const bool run_att_ctrl = _vehicle_control_mode.flag_control_attitude_enabled && is_hovering ;
-
-		if (run_att_ctrl) {
+		if ( _vehicle_control_mode.flag_control_attitude_enabled ) {
 
 			// Generate the attitude setpoint from stick inputs if we are in Manual/Stabilized mode
 			if (_vehicle_control_mode.flag_control_manual_enabled &&

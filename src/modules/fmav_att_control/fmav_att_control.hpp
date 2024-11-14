@@ -133,7 +133,6 @@ private:
 	bool _landed{true};
 	bool _reset_yaw_sp{true};
 	bool _heading_good_for_control{true}; ///< initialized true to have heading lock when local position never published
-	bool _vehicle_type_rotary_wing{true};
 
 	uint8_t _quat_reset_counter{0};
 

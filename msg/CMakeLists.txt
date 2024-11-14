@@ -147,6 +147,7 @@ set(msg_files
 	MissionResult.msg
 	MountOrientation.msg
 	ModeCompleted.msg
+	MorphingWingExtent.msg
 	NavigatorMissionItem.msg
 	NavigatorStatus.msg
 	NormalizedUnsignedSetpoint.msg

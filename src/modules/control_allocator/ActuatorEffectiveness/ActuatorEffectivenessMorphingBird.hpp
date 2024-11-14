@@ -47,7 +47,7 @@ public:
 
 	bool getEffectivenessMatrix(Configuration &configuration, EffectivenessUpdateReason external_update) override;
 
-	const char *name() const override { return "Fixed Wing"; }
+	const char *name() const override { return "Morphing Wing"; }
 
 	void allocateAuxilaryControls(const float dt, int matrix_index, ActuatorVector &actuator_sp) override;
 

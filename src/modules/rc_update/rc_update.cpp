@@ -63,7 +63,6 @@ static bool operator ==(const manual_control_switches_s &a, const manual_control
 
 static bool operator !=(const manual_control_switches_s &a, const manual_control_switches_s &b) { return !(a == b); }
 
-
 RCUpdate::RCUpdate() :
 	ModuleParams(nullptr),
 	WorkItem(MODULE_NAME, px4::wq_configurations::hp_default)
@@ -666,6 +665,13 @@ void RCUpdate::UpdateManualControlInput(const hrt_abstime &timestamp_sample)
 	manual_control_input.timestamp = hrt_absolute_time();
 	_manual_control_input_pub.publish(manual_control_input);
 	_last_manual_control_input_publish = manual_control_input.timestamp;
+
+	// publish morphing_wing_extent topic
+	morphing_wing_extent_s morphing_wing_extent_input{} ;
+	morphing_wing_extent_input.main_wing_extent = manual_control_input.aux1 ;
+	morphing_wing_extent_input.tail_extent = manual_control_input.aux2 ;
+	morphing_wing_extent_input.timestamp = hrt_absolute_time();
+	_morphing_wing_extent_pub.publish(morphing_wing_extent_input) ;
 }
 
 int RCUpdate::task_spawn(int argc, char *argv[])

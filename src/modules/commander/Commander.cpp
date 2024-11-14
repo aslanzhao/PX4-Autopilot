@@ -1727,12 +1727,14 @@ void Commander::updateParameters()
 	/* disable manual override for all systems that rely on electronic stabilization */
 	if (is_rotary) {
 		_vehicle_status.vehicle_type = vehicle_status_s::VEHICLE_TYPE_ROTARY_WING;
-
 	} else if (is_fixed) {
 		_vehicle_status.vehicle_type = vehicle_status_s::VEHICLE_TYPE_FIXED_WING;
-
 	} else if (is_ground) {
 		_vehicle_status.vehicle_type = vehicle_status_s::VEHICLE_TYPE_ROVER;
+	} else if ( is_morphingbird(_vehicle_status) ) {
+		_vehicle_status.vehicle_type = vehicle_status_s::VEHICLE_TYPE_MORPHING_WING;
+	} else if ( is_flappingmav(_vehicle_status) ) {
+		_vehicle_status.vehicle_type = vehicle_status_s::VEHICLE_TYPE_FLAPPING_MAV;
 	}
 
 	_vehicle_status.is_vtol = is_vtol(_vehicle_status);
