@@ -46,20 +46,71 @@ bool
 ActuatorEffectivenessMorphingBird::getEffectivenessMatrix(Configuration &configuration,
 		EffectivenessUpdateReason external_update)
 {
-	if (external_update == EffectivenessUpdateReason::NO_EXTERNAL_UPDATE) {
+	// update morphing wing configuration
+	bool is_new_config = updateMorphingWingExtent() ;
+
+	if ( (is_new_config == false ) && (external_update == EffectivenessUpdateReason::NO_EXTERNAL_UPDATE) ) {
 		return false;
 	}
+	else {
+		// Motors
+		_rotors.enablePropellerTorque(false);
+		const bool rotors_added_successfully = _rotors.addActuators(configuration);
+		_forwards_motors_mask = _rotors.getForwardsMotors();
 
-	// Motors
-	_rotors.enablePropellerTorque(false);
-	const bool rotors_added_successfully = _rotors.addActuators(configuration);
-	_forwards_motors_mask = _rotors.getForwardsMotors();
+		// Control Surfaces
+		_first_control_surface_idx = configuration.num_actuators_matrix[0];
+		const bool surfaces_added_successfully = _control_surfaces.addActuators(configuration);
 
-	// Control Surfaces
-	_first_control_surface_idx = configuration.num_actuators_matrix[0];
-	const bool surfaces_added_successfully = _control_surfaces.addActuators(configuration);
+		return (rotors_added_successfully && surfaces_added_successfully);
+	}
+}
 
-	return (rotors_added_successfully && surfaces_added_successfully);
+bool
+ActuatorEffectivenessMorphingBird::updateMorphingWingExtent()
+{
+	if ( !_morphing_wing_extent_sub.updated() )	// not new config
+		return false ;
+
+	morphing_wing_extent_s morphing_wing_extent_data ;
+	_morphing_wing_extent_sub.copy(&morphing_wing_extent_data) ;
+
+	float shoulder{-1}, wrist{-1} ;
+	if ( morphing_wing_extent_data.main_wing_extent < 0 ) {
+		shoulder = 2*morphing_wing_extent_data.main_wing_extent + 1 ;
+		wrist = -1.0f ;
+	}
+	else {
+		shoulder = 1.0f ;
+		wrist = 2*morphing_wing_extent_data.main_wing_extent - 1 ;
+	}
+
+	ActuatorEffectivenessControlSurfaces::Params* params ;
+	int icount = _control_surfaces.count() ;
+
+	for (int i = 0; i < icount; i++) {
+		params = _control_surfaces.getConfig(i) ;
+
+		switch ( params->type ) {
+			case ActuatorEffectivenessControlSurfaces::Type::LeftShoulder:
+			case ActuatorEffectivenessControlSurfaces::Type::RightShoulder:
+				params->trim = shoulder ;
+				break ;
+			case ActuatorEffectivenessControlSurfaces::Type::LeftWrist:
+			case ActuatorEffectivenessControlSurfaces::Type::RightWrist:
+				params->trim = wrist ;
+				break ;
+			case ActuatorEffectivenessControlSurfaces::Type::LeftTailExtend:
+			case ActuatorEffectivenessControlSurfaces::Type::RightTailExtend:
+				params->trim = morphing_wing_extent_data.tail_extent ;
+				break ;
+			default:
+				break ;
+
+		}
+	}
+
+	return true ;
 }
 
 void ActuatorEffectivenessMorphingBird::updateSetpoint(const matrix::Vector<float, NUM_AXES> &control_sp,

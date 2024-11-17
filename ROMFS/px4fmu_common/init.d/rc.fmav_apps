@@ -10,19 +10,25 @@
 #
 control_allocator start
 
-#
-# Start Multicopter Rate Controller.
-#
-fmav_rate_control start
-
-#
-# Start flapping micro air vehicle Attitude Controller.
-#
-fmav_att_control start
-
-if param greater -s MC_AT_EN 0
+if param greater -s MAN_SERVO_EN 0
 then
-	fmav_autotune_attitude_control start
+	manual_servo_control start
+else
+	#
+	# Start Multicopter Rate Controller.
+	#
+	fmav_rate_control start
+
+	#
+	# Start flapping micro air vehicle Attitude Controller.
+	#
+	fmav_att_control start
+
+	if param greater -s MC_AT_EN 0
+	then
+		fmav_autotune_attitude_control start
+	fi
+
 fi
 
 #
@@ -36,4 +42,3 @@ fi
 # Start Multicopter Land Detector.
 #
 land_detector start flappingmav
-

@@ -247,7 +247,6 @@ ControlAllocator::update_effectiveness_source()
 			break;
 
 		case EffectivenessSource::MORPHING_BIRD:
-			_is_morphing_wing = true ;
 			tmp = new ActuatorEffectivenessMorphingBird(this);
 			break;
 
@@ -413,6 +412,7 @@ ControlAllocator::Run()
 
 		// Set control setpoint vector(s)
 		matrix::Vector<float, NUM_AXES> c[ActuatorEffectiveness::MAX_NUM_MATRICES];
+
 		c[0](0) = _torque_sp(0);
 		c[0](1) = _torque_sp(1);
 		c[0](2) = _torque_sp(2);
@@ -431,14 +431,6 @@ ControlAllocator::Run()
 				c[1](3) = vehicle_thrust_setpoint.xyz[0];
 				c[1](4) = vehicle_thrust_setpoint.xyz[1];
 				c[1](5) = vehicle_thrust_setpoint.xyz[2];
-			}
-		}
-
-		if ( _is_morphing_wing )  {
-			morphing_wing_extent_s morphing_wing_extent_data ;
-			if ( _morphing_wing_extent_sub.updated() ) {
-				_morphing_wing_extent_sub.copy(&morphing_wing_extent_data) ;
-				setMorphingWingExtent(morphing_wing_extent_data.main_wing_extent, morphing_wing_extent_data.tail_extent) ;
 			}
 		}
 
@@ -476,13 +468,6 @@ ControlAllocator::Run()
 	}
 
 	perf_end(_loop_perf);
-}
-
-void
-ControlAllocator::setMorphingWingExtent(float main_wing_extent, float tail_extent)
-{
-	// TODO: aslan.zhao@gmail.comm, for morphing bird, adjust servos' trims
-	// (ActuatorEffectivenessMorphingBird*)(_actuator_effectiveness)->getFlightPhase() ;
 }
 
 void

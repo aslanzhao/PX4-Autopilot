@@ -147,6 +147,20 @@ void ActuatorEffectivenessControlSurfaces::updateParams()
 		case Type::RightSpoiler:
 			torque.setZero();
 			break;
+
+		case Type::LeftShoulder:
+		case Type::LeftWrist:
+		case Type::RightShoulder:
+		case Type::RightWrist:
+		case Type::LeftTailExtend:
+		case Type::RightTailExtend:
+		case Type::TailPitch:
+		case Type::TailRoll:
+		case Type::RollYawPitch1:
+		case Type::RollYawPitch2:
+		case Type::RollYawPitch3:
+		case Type::RollYawPitch4:
+			break ;
 		}
 	}
 }

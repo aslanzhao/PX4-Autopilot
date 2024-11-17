@@ -36,25 +36,21 @@
             ]
         },
         {
-            "name": "blackmagic (px4_fmu-v5)",
+            "name": "stlink_debug (px4_fmu-v5)",
             "gdbPath": "/opt/gcc-arm-none-eabi-9-2020-q2-update/bin/arm-none-eabi-gdb",
             "device": "STM32F765II",
-            "svdFile": "",
-            "executable": "${command:cmake.launchTargetPath}",
+            "svdFile": "STM32F7x5.svd",
+            "executable": "./build/px4_fmu-v5_debug/px4_fmu-v5_debug.elf",
             "request": "launch",
             "type": "cortex-debug",
-            "servertype": "bmp",
-            "BMPGDBSerialPort": "/dev/ttyACM0",
-            "interface": "swd",
+            "servertype": "openocd",
             "cwd": "${workspaceFolder}",
             "internalConsoleOptions": "openOnSessionStart",
-            "preLaunchCommands": [
-                "source ${workspaceFolder}/platforms/nuttx/Debug/PX4",
-                "source ${workspaceFolder}/platforms/nuttx/Debug/NuttX",
-                "source ${workspaceFolder}/platforms/nuttx/Debug/ARMv7M",
-                "set mem inaccessible-by-default off",
-                "set print pretty",
+            "interface": "swd",
+            "configFiles": [
+                "interface/stlink.cfg",
+                "target/stm32f7x.cfg"
             ]
-        }
+        },
     ]
 }

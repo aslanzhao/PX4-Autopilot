@@ -70,3 +70,6 @@ sudo snap install plotjuggler
 但plotjuggler没有访问sd卡的权限，需要把分析的文件拷贝到比如Download这样的文件夹下，让它能打开文件。
 
 plotjuggler有的功能不少，能对比曲线，还能分析fft。
+
+# 手动伺服
+新增加了一个manual_servo_control的工程，里面有个参数：MAN_SERVO_EN，设置为大于0的数，手柄的输入是力矩。设置为零，则手动的输入是角度。

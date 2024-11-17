@@ -667,11 +667,17 @@ void RCUpdate::UpdateManualControlInput(const hrt_abstime &timestamp_sample)
 	_last_manual_control_input_publish = manual_control_input.timestamp;
 
 	// publish morphing_wing_extent topic
-	morphing_wing_extent_s morphing_wing_extent_input{} ;
-	morphing_wing_extent_input.main_wing_extent = manual_control_input.aux1 ;
-	morphing_wing_extent_input.tail_extent = manual_control_input.aux2 ;
-	morphing_wing_extent_input.timestamp = hrt_absolute_time();
-	_morphing_wing_extent_pub.publish(morphing_wing_extent_input) ;
+	if ( ( fabs( _last_wing_extent - manual_control_input.aux1) > 0.01 ) ||
+	     ( fabs( _last_tail_extent - manual_control_input.aux2) > 0.01 ) ) {
+		morphing_wing_extent_s morphing_wing_extent_input{} ;
+		morphing_wing_extent_input.main_wing_extent = manual_control_input.aux1 ;
+		morphing_wing_extent_input.tail_extent = manual_control_input.aux2 ;
+		_last_wing_extent = manual_control_input.aux1 ;
+		_last_tail_extent = manual_control_input.aux2 ;
+		morphing_wing_extent_input.timestamp = hrt_absolute_time();
+		_morphing_wing_extent_pub.publish(morphing_wing_extent_input) ;
+	}
+
 }
 
 int RCUpdate::task_spawn(int argc, char *argv[])

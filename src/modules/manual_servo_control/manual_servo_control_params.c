@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- *   Copyright (c) 2021 PX4 Development Team. All rights reserved.
+ *   Copyright (c) 2020-2021 PX4 Development Team. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -31,44 +31,18 @@
  *
  ****************************************************************************/
 
-#pragma once
+/**
+ * @file manual_servo_control_params.c
+ *
+ * Parameters used by the attitude auto-tuner
+ *
+ * @author Zhihua Zhao <aslan.zhao@gmail.com>
+ */
 
-#include "ActuatorEffectiveness.hpp"
-#include "ActuatorEffectivenessRotors.hpp"
-#include "ActuatorEffectivenessControlSurfaces.hpp"
-
-#include <uORB/topics/normalized_unsigned_setpoint.h>
-#include <uORB/topics/morphing_wing_extent.h>
-
-class ActuatorEffectivenessMorphingBird : public ModuleParams, public ActuatorEffectiveness
-{
-public:
-	ActuatorEffectivenessMorphingBird(ModuleParams *parent);
-	virtual ~ActuatorEffectivenessMorphingBird() = default;
-
-	bool getEffectivenessMatrix(Configuration &configuration, EffectivenessUpdateReason external_update) override;
-
-	const char *name() const override { return "Morphing Wing"; }
-
-	void allocateAuxilaryControls(const float dt, int matrix_index, ActuatorVector &actuator_sp) override;
-
-	void updateSetpoint(const matrix::Vector<float, NUM_AXES> &control_sp, int matrix_index,
-			    ActuatorVector &actuator_sp, const matrix::Vector<float, NUM_ACTUATORS> &actuator_min,
-			    const matrix::Vector<float, NUM_ACTUATORS> &actuator_max) override;
-
-private:
-	ActuatorEffectivenessRotors _rotors;
-	ActuatorEffectivenessControlSurfaces _control_surfaces;
-
-	uORB::Subscription _flaps_setpoint_sub{ORB_ID(flaps_setpoint)};
-	uORB::Subscription _spoilers_setpoint_sub{ORB_ID(spoilers_setpoint)};
-
-	int _first_control_surface_idx{0}; ///< applies to matrix 1
-
-	uint32_t _forwards_motors_mask{};
-
-	/// @brief for morphing wing
-	uORB::Subscription _morphing_wing_extent_sub{ORB_ID(morphing_wing_extent)};
-	bool updateMorphingWingExtent() ; // if wing configuration is changed, return true, else return false
-
-};
+/**
+ * Manual Servo module enable
+ *
+ * @boolean
+ * @group Manual Servo
+ */
+PARAM_DEFINE_INT32(MAN_SERVO_EN, 1);
