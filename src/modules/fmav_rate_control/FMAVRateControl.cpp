@@ -148,7 +148,21 @@ FMAVRateControl::Run()
 		// use rates setpoint topic
 		vehicle_rates_setpoint_s vehicle_rates_setpoint{};
 
-		if (_vehicle_control_mode.flag_control_manual_enabled && !_vehicle_control_mode.flag_control_attitude_enabled) {
+		if ( _vehicle_control_mode.flag_control_manual_servo_enabled ) { // manual servo
+			// publish thrust and torque setpoints
+
+			manual_control_setpoint_s manual_control_setpoint;
+
+			if (_manual_control_setpoint_sub.update(&manual_control_setpoint)) {
+				vehicle_torque_setpoint_s vehicle_torque_setpoint{};
+				vehicle_torque_setpoint.xyz[0] = manual_control_setpoint.roll ;
+				vehicle_torque_setpoint.xyz[1] = manual_control_setpoint.pitch ;
+				vehicle_torque_setpoint.xyz[2] = manual_control_setpoint.yaw ;
+				vehicle_torque_setpoint.timestamp = hrt_absolute_time();
+				_vehicle_torque_setpoint_pub.publish(vehicle_torque_setpoint);
+			}
+		}
+		else if (_vehicle_control_mode.flag_control_manual_enabled && !_vehicle_control_mode.flag_control_attitude_enabled) {
 			// generate the rate setpoint from sticks
 			manual_control_setpoint_s manual_control_setpoint;
 

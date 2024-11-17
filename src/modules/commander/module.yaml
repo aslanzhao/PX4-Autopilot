@@ -27,18 +27,18 @@ parameters:
                 0: Manual
                 1: Altitude
                 2: Position
-                9: Position Slow
                 3: Mission
                 4: Hold
-                10: Takeoff
-                11: Land
                 5: Return
                 6: Acro
                 7: Offboard
                 8: Stabilized
+                9: Position Slow
+                10: Takeoff
+                11: Land
                 12: Follow Me
                 13: Precision Land
-                100: External Mode 1
+                100: Manual Servo
                 101: External Mode 2
                 102: External Mode 3
                 103: External Mode 4

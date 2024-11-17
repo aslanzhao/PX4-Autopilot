@@ -46,7 +46,7 @@ void getVehicleControlMode(uint8_t nav_state, uint8_t vehicle_type,
 			   const offboard_control_mode_s &offboard_control_mode,
 			   vehicle_control_mode_s &vehicle_control_mode)
 {
-
+	vehicle_control_mode.flag_control_manual_servo_enabled = false ;
 	switch (nav_state) {
 	case vehicle_status_s::NAVIGATION_STATE_MANUAL:
 		vehicle_control_mode.flag_control_manual_enabled = true;
@@ -60,6 +60,10 @@ void getVehicleControlMode(uint8_t nav_state, uint8_t vehicle_type,
 		vehicle_control_mode.flag_control_attitude_enabled = true;
 		vehicle_control_mode.flag_control_rates_enabled = true;
 		vehicle_control_mode.flag_control_allocation_enabled = true;
+		break;
+
+	case vehicle_status_s::NAVIGATION_STATE_MANUAL_SERVO:
+		vehicle_control_mode.flag_control_manual_servo_enabled = true ;
 		break;
 
 	case vehicle_status_s::NAVIGATION_STATE_ALTCTL:

@@ -112,8 +112,8 @@
                             "description": "VTOL Takeoff"
                         },
                         "8388608": {
-                            "name": "external1",
-                            "description": "External 1"
+                            "name": "manual_servo",
+                            "description": "Manual Servo"
                         },
                         "16777216": {
                             "name": "external2",
@@ -573,8 +573,8 @@
                             "description": "Vtol Takeoff"
                         },
                         "16": {
-                            "name": "external1",
-                            "description": "External 1"
+                            "name": "manual_servo",
+                            "description": "Manual Servo"
                         },
                         "17": {
                             "name": "external2",

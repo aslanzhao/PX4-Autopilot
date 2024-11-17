@@ -317,6 +317,10 @@ void CrsfRc::Run()
 						flight_mode = "Stabilized";
 						break;
 
+					case vehicle_status_s::NAVIGATION_STATE_MANUAL_SERVO:
+						flight_mode = "ManualServo" ;
+						break ;
+
 					default:
 						flight_mode = "Unknown";
 					}

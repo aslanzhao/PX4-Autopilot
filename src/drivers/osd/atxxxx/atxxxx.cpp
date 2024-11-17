@@ -423,6 +423,10 @@ OSDatxxxx::get_flight_mode(uint8_t nav_state)
 	case vehicle_status_s::NAVIGATION_STATE_STAB:
 		flight_mode = "STABILIZED";
 		break;
+
+	case vehicle_status_s::NAVIGATION_STATE_MANUAL_SERVO:
+		flight_mode = "MANUAL_SERVO";
+		break;
 	}
 
 	return flight_mode;

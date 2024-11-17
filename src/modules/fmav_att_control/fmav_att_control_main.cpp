@@ -241,7 +241,11 @@ FMAVAttitudeControl::Run()
 
 		// bool attitude_setpoint_generated = false;
 
-		if ( _vehicle_control_mode.flag_control_attitude_enabled ) {
+
+		if ( _vehicle_control_mode.flag_control_manual_servo_enabled ) { // manual servo
+			// pass to rate controller directly
+		}
+		else if ( _vehicle_control_mode.flag_control_attitude_enabled ) {
 
 			// Generate the attitude setpoint from stick inputs if we are in Manual/Stabilized mode
 			if (_vehicle_control_mode.flag_control_manual_enabled &&
