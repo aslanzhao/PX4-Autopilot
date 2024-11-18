@@ -78,9 +78,7 @@ static inline navigation_mode_t navigation_mode(uint8_t nav_state)
 
 	case vehicle_status_s::NAVIGATION_STATE_AUTO_VTOL_TAKEOFF: return navigation_mode_t::auto_vtol_takeoff;
 
-	// case vehicle_status_s::NAVIGATION_STATE_EXTERNAL1: return navigation_mode_t::external1;
-
-	case vehicle_status_s::NAVIGATION_STATE_MANUAL_SERVO: return navigation_mode_t::manual_servo;
+	case vehicle_status_s::NAVIGATION_STATE_EXTERNAL1: return navigation_mode_t::external1;
 
 	case vehicle_status_s::NAVIGATION_STATE_EXTERNAL2: return navigation_mode_t::external2;
 
@@ -95,9 +93,11 @@ static inline navigation_mode_t navigation_mode(uint8_t nav_state)
 	case vehicle_status_s::NAVIGATION_STATE_EXTERNAL7: return navigation_mode_t::external7;
 
 	case vehicle_status_s::NAVIGATION_STATE_EXTERNAL8: return navigation_mode_t::external8;
+
+	case vehicle_status_s::NAVIGATION_STATE_MANUAL_SERVO: return navigation_mode_t::manual_servo;
 	}
 
-	static_assert(vehicle_status_s::NAVIGATION_STATE_MAX == 31, "update navigation mode map");
+	static_assert(vehicle_status_s::NAVIGATION_STATE_MAX == 32, "update navigation mode map");
 
 	return navigation_mode_t::unknown;
 }

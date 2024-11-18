@@ -795,6 +795,9 @@ Commander::handle_command(const vehicle_command_s &cmd)
 				if (custom_main_mode == PX4_CUSTOM_MAIN_MODE_MANUAL) {
 					desired_nav_state = vehicle_status_s::NAVIGATION_STATE_MANUAL;
 
+					if ( custom_sub_mode == PX4_CUSTOM_SUB_MODE_MANUAL_SERVO )
+						desired_nav_state = vehicle_status_s::NAVIGATION_STATE_MANUAL_SERVO;
+
 				} else if (custom_main_mode == PX4_CUSTOM_MAIN_MODE_ALTCTL) {
 					desired_nav_state = vehicle_status_s::NAVIGATION_STATE_ALTCTL;
 
@@ -840,10 +843,6 @@ Commander::handle_command(const vehicle_command_s &cmd)
 
 						case PX4_CUSTOM_SUB_MODE_AUTO_PRECLAND:
 							desired_nav_state = vehicle_status_s::NAVIGATION_STATE_AUTO_PRECLAND;
-							break;
-
-						case PX4_CUSTOM_SUB_MODE_MANUAL_SERVO:
-							desired_nav_state = vehicle_status_s::NAVIGATION_STATE_MANUAL_SERVO;
 							break;
 
 						case PX4_CUSTOM_SUB_MODE_EXTERNAL2...PX4_CUSTOM_SUB_MODE_EXTERNAL8:

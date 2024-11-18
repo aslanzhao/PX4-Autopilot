@@ -64,7 +64,7 @@ static inline uint32_t getValidNavStates()
 	       (1u << vehicle_status_s::NAVIGATION_STATE_AUTO_VTOL_TAKEOFF) |
 	       (1u << vehicle_status_s::NAVIGATION_STATE_MANUAL_SERVO);
 
-	static_assert(vehicle_status_s::NAVIGATION_STATE_MAX  == 31, "update valid nav states");
+	static_assert(vehicle_status_s::NAVIGATION_STATE_MAX  == 32, "update valid nav states");
 }
 
 const char *const nav_state_names[vehicle_status_s::NAVIGATION_STATE_MAX] = {
@@ -91,7 +91,7 @@ const char *const nav_state_names[vehicle_status_s::NAVIGATION_STATE_MAX] = {
 	"Precision Landing",
 	"Orbit",
 	"VTOL Takeoff",
-	"Manual Servo", // replace "External 1"
+	"External 1"
 	"External 2",
 	"External 3",
 	"External 4",
@@ -99,6 +99,7 @@ const char *const nav_state_names[vehicle_status_s::NAVIGATION_STATE_MAX] = {
 	"External 6",
 	"External 7",
 	"External 8",
+	"Manual Servo"
 };
 
 /**

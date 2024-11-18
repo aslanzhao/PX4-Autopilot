@@ -63,7 +63,9 @@ void getVehicleControlMode(uint8_t nav_state, uint8_t vehicle_type,
 		break;
 
 	case vehicle_status_s::NAVIGATION_STATE_MANUAL_SERVO:
+		vehicle_control_mode.flag_control_manual_enabled = true;
 		vehicle_control_mode.flag_control_manual_servo_enabled = true ;
+		vehicle_control_mode.flag_control_allocation_enabled = true;
 		break;
 
 	case vehicle_status_s::NAVIGATION_STATE_ALTCTL:

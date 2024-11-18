@@ -38,7 +38,8 @@ parameters:
                 11: Land
                 12: Follow Me
                 13: Precision Land
-                100: Manual Servo
+                31: Manual Servo
+                100: External Mode 1
                 101: External Mode 2
                 102: External Mode 3
                 103: External Mode 4
