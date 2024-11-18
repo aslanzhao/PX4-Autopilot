@@ -37,7 +37,7 @@
 using namespace matrix;
 
 ActuatorEffectivenessFlappingMAV::ActuatorEffectivenessFlappingMAV(ModuleParams *parent)
-	: ModuleParams(parent), _rotors(this, ActuatorEffectivenessRotors::AxisConfiguration::FixedForward),
+	: ModuleParams(parent), _rotors(this, ActuatorEffectivenessRotors::AxisConfiguration::FixedUpwards),
 	  _control_surfaces(this)
 {
 }
@@ -53,36 +53,10 @@ ActuatorEffectivenessFlappingMAV::getEffectivenessMatrix(Configuration &configur
 	// Motors
 	_rotors.enablePropellerTorque(false);
 	const bool rotors_added_successfully = _rotors.addActuators(configuration);
-	_forwards_motors_mask = _rotors.getForwardsMotors();
 
 	// Control Surfaces
 	_first_control_surface_idx = configuration.num_actuators_matrix[0];
 	const bool surfaces_added_successfully = _control_surfaces.addActuators(configuration);
 
 	return (rotors_added_successfully && surfaces_added_successfully);
-}
-
-void ActuatorEffectivenessFlappingMAV::updateSetpoint(const matrix::Vector<float, NUM_AXES> &control_sp,
-		int matrix_index, ActuatorVector &actuator_sp, const matrix::Vector<float, NUM_ACTUATORS> &actuator_min,
-		const matrix::Vector<float, NUM_ACTUATORS> &actuator_max)
-{
-	stopMaskedMotorsWithZeroThrust(_forwards_motors_mask, actuator_sp);
-}
-
-void ActuatorEffectivenessFlappingMAV::allocateAuxilaryControls(const float dt, int matrix_index,
-		ActuatorVector &actuator_sp)
-{
-	// apply flaps
-	normalized_unsigned_setpoint_s flaps_setpoint;
-
-	if (_flaps_setpoint_sub.copy(&flaps_setpoint)) {
-		_control_surfaces.applyFlaps(flaps_setpoint.normalized_setpoint, _first_control_surface_idx, dt, actuator_sp);
-	}
-
-	// apply spoilers
-	normalized_unsigned_setpoint_s spoilers_setpoint;
-
-	if (_spoilers_setpoint_sub.copy(&spoilers_setpoint)) {
-		_control_surfaces.applySpoilers(spoilers_setpoint.normalized_setpoint, _first_control_surface_idx, dt, actuator_sp);
-	}
 }

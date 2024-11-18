@@ -47,22 +47,11 @@ public:
 
 	bool getEffectivenessMatrix(Configuration &configuration, EffectivenessUpdateReason external_update) override;
 
-	const char *name() const override { return "Fixed Wing"; }
-
-	void allocateAuxilaryControls(const float dt, int matrix_index, ActuatorVector &actuator_sp) override;
-
-	void updateSetpoint(const matrix::Vector<float, NUM_AXES> &control_sp, int matrix_index,
-			    ActuatorVector &actuator_sp, const matrix::Vector<float, NUM_ACTUATORS> &actuator_min,
-			    const matrix::Vector<float, NUM_ACTUATORS> &actuator_max) override;
+	const char *name() const override { return "Flapping MAV"; }
 
 private:
 	ActuatorEffectivenessRotors _rotors;
 	ActuatorEffectivenessControlSurfaces _control_surfaces;
 
-	uORB::Subscription _flaps_setpoint_sub{ORB_ID(flaps_setpoint)};
-	uORB::Subscription _spoilers_setpoint_sub{ORB_ID(spoilers_setpoint)};
-
 	int _first_control_surface_idx{0}; ///< applies to matrix 1
-
-	uint32_t _forwards_motors_mask{};
 };
