@@ -37,7 +37,7 @@
 #include "ActuatorEffectivenessRotors.hpp"
 #include "ActuatorEffectivenessControlSurfaces.hpp"
 
-#include <uORB/topics/normalized_unsigned_setpoint.h>
+// #include <uORB/topics/normalized_unsigned_setpoint.h>
 
 class ActuatorEffectivenessFlappingMAV : public ModuleParams, public ActuatorEffectiveness
 {

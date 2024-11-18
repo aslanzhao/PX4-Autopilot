@@ -154,22 +154,22 @@ FMAVRateControl::Run()
 			manual_control_setpoint_s manual_control_setpoint;
 
 			if (_manual_control_setpoint_sub.update(&manual_control_setpoint)) {
-				vehicle_thrust_setpoint_s vehicle_thrust_setpoint{};
-				vehicle_torque_setpoint_s vehicle_torque_setpoint{};
+				vehicle_thrust_setpoint_s thrust_setpoint{};
+				vehicle_torque_setpoint_s torque_setpoint{};
 
-				vehicle_torque_setpoint.xyz[0] = manual_control_setpoint.roll ;
-				vehicle_torque_setpoint.xyz[1] = manual_control_setpoint.pitch ;
-				vehicle_torque_setpoint.xyz[2] = manual_control_setpoint.yaw ;
-\
-				vehicle_thrust_setpoint.xyz[0] = vehicle_torque_setpoint.xyz[1] = 0.0f ;
-				vehicle_thrust_setpoint.xyz[2] = -(manual_control_setpoint.throttle + 1.0f)/2.0f ;
+				torque_setpoint.xyz[0] = manual_control_setpoint.roll * 1.0f ;
+				torque_setpoint.xyz[1] = manual_control_setpoint.pitch * 1.0f ;
+				torque_setpoint.xyz[2] = manual_control_setpoint.yaw * 1.0f ;
 
-				vehicle_thrust_setpoint.timestamp_sample = angular_velocity.timestamp_sample;
-				vehicle_thrust_setpoint.timestamp = hrt_absolute_time();
-				_vehicle_thrust_setpoint_pub.publish(vehicle_thrust_setpoint);
+				thrust_setpoint.xyz[0] = thrust_setpoint.xyz[1] = 0.0f ;
+				thrust_setpoint.xyz[2] = -(manual_control_setpoint.throttle + 1.0f)/2.0f ;
 
-				vehicle_torque_setpoint.timestamp = hrt_absolute_time();
-				_vehicle_torque_setpoint_pub.publish(vehicle_torque_setpoint);
+				thrust_setpoint.timestamp_sample = angular_velocity.timestamp_sample;
+				thrust_setpoint.timestamp = hrt_absolute_time();
+				_vehicle_thrust_setpoint_pub.publish(thrust_setpoint);
+
+				torque_setpoint.timestamp = hrt_absolute_time();
+				_vehicle_torque_setpoint_pub.publish(torque_setpoint);
 			}
 
 
