@@ -161,9 +161,9 @@ FMAVRateControl::Run()
 				vehicle_torque_setpoint.xyz[1] = manual_control_setpoint.pitch ;
 				vehicle_torque_setpoint.xyz[2] = manual_control_setpoint.yaw ;
 
-				vehicle_thrust_setpoint.xyz[0] = 0;
-				vehicle_thrust_setpoint.xyz[1] = 0;
-				vehicle_thrust_setpoint.xyz[2] = -(manual_control_setpoint.throttle + 1)/2;
+				vehicle_thrust_setpoint.xyz[0] = 6*(manual_control_setpoint.throttle + 1)/2;
+				vehicle_thrust_setpoint.xyz[1] = -6*(manual_control_setpoint.throttle + 1)/2;
+				vehicle_thrust_setpoint.xyz[2] = -6*(manual_control_setpoint.throttle + 1)/2;
 
 				vehicle_thrust_setpoint.timestamp_sample = angular_velocity.timestamp_sample;
 				vehicle_thrust_setpoint.timestamp = hrt_absolute_time();
