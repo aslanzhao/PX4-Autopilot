@@ -667,8 +667,8 @@ void RCUpdate::UpdateManualControlInput(const hrt_abstime &timestamp_sample)
 	_last_manual_control_input_publish = manual_control_input.timestamp;
 
 	// publish morphing_wing_extent topic
-	if ( ( fabs( _last_wing_extent - manual_control_input.aux1) > 0.01 ) ||
-	     ( fabs( _last_tail_extent - manual_control_input.aux2) > 0.01 ) ) {
+	if ( ( fabs( _last_wing_extent - manual_control_input.aux1) > 0.05 ) ||
+	     ( fabs( _last_tail_extent - manual_control_input.aux2) > 0.05 ) ) {
 		morphing_wing_extent_s morphing_wing_extent_input{} ;
 		morphing_wing_extent_input.main_wing_extent = manual_control_input.aux1 ;
 		morphing_wing_extent_input.tail_extent = manual_control_input.aux2 ;

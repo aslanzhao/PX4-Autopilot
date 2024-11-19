@@ -172,8 +172,8 @@ protected:
 
 	/// @brief for morphing wing
 	uORB::Publication<morphing_wing_extent_s> _morphing_wing_extent_pub{ORB_ID(morphing_wing_extent)};
-	float _last_wing_extent{-1} ;
-	float _last_tail_extent{-1} ;
+	float _last_wing_extent{-1.0f} ;
+	float _last_tail_extent{-1.0f} ;
 
 	manual_control_switches_s _manual_switches_previous{};
 	manual_control_switches_s _manual_switches_last_publish{};
