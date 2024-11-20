@@ -157,9 +157,13 @@ FMAVRateControl::Run()
 				vehicle_thrust_setpoint_s thrust_setpoint{};
 				vehicle_torque_setpoint_s torque_setpoint{};
 
-				torque_setpoint.xyz[0] = manual_control_setpoint.roll * 1.0f ;
-				torque_setpoint.xyz[1] = manual_control_setpoint.pitch * 1.0f ;
-				torque_setpoint.xyz[2] = manual_control_setpoint.yaw * 1.0f ;
+				// torque_setpoint.xyz[0] = manual_control_setpoint.roll * 1.0f ;
+				// torque_setpoint.xyz[1] = manual_control_setpoint.pitch * 1.0f ;
+				// torque_setpoint.xyz[2] = manual_control_setpoint.yaw * 1.0f ;
+
+				torque_setpoint.xyz[0] = manual_control_setpoint.roll ;
+				torque_setpoint.xyz[1] = manual_control_setpoint.pitch ;
+				torque_setpoint.xyz[2] = manual_control_setpoint.yaw ;
 
 				thrust_setpoint.xyz[0] = thrust_setpoint.xyz[1] = 0.0f ;
 				thrust_setpoint.xyz[2] = -(manual_control_setpoint.throttle + 1.0f)/2.0f ;
