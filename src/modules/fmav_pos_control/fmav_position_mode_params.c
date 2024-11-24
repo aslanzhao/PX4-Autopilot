@@ -32,6 +32,14 @@
  ****************************************************************************/
 
 /**
+ * Flapping MAV position enable
+ *
+ * @boolean
+ * @group Multicopter Position Control
+ */
+PARAM_DEFINE_INT32(MC_POS_EN, 0);
+
+/**
  * Position/Altitude mode variant
  *
  * The supported sub-modes are:
