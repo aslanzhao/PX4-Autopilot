@@ -4,6 +4,14 @@
 3. upload可以用make ***_default upload，如果遇到waiting for bootloader，那是以为只有硬件只在上电的时候检查，可以重新插拔上电解决。
 4. usb线要注意有的线只是充电线，没有焊接数据线，可以用lsusb查看，如果看不到设备，大概率就意味着这根线有问题，不要浪费时间，换一根好一点的线。
 
+# 参数文件
+microair默认把参数文件存储在片上flash上，为了把它改到sd卡里，首先需要去掉了boards/micoair/h743/board_config.h中的
+// #define FLASH_BASED_PARAMS
+这样可以在mavlink console里利用param status命令查看参数文件的位置，默认应该是/fs/mtd_params，这个mtd似乎是一个片上硬件，不知道是啥，为了把它改到sd卡上，在board/micoair/h741/default.px4board里增加
+CONFIG_BOARD_PARAM_FILE="/fs/microsd/params"
+这个配置了param_file的位置在sd卡上。
+
+
 # nsh
 To see what is running in the work queues and at what rate, use:
 ``` bash
