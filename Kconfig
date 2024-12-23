@@ -145,6 +145,9 @@ menu "Serial ports"
     config BOARD_SERIAL_URT6
         string "URT6 tty port"
 
+     config BOARD_SERIAL_URT7
+        string "URT7 tty port"
+
     config BOARD_SERIAL_GPS1
         string "GPS1 tty port"
 

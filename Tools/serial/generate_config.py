@@ -67,11 +67,11 @@ serial_ports = {
         "index": 6,
         "default_baudrate": 57600,
         },
-#     "URT7": {
-#         "label": "UART 7",
-#         "index": 7,
-#         "default_baudrate": 57600,
-#         },
+    "URT7": {
+        "label": "UART 7",
+        "index": 7,
+        "default_baudrate": 57600,
+        },
 #     "URT8": {
 #         "label": "UART 8",
 #         "index": 8,
