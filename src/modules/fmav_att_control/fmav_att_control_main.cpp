@@ -60,7 +60,7 @@ FMAVAttitudeControl::FMAVAttitudeControl() :
 	_loop_perf(perf_alloc(PC_ELAPSED, MODULE_NAME": cycle"))
 {
 	parameters_updated();
-	// Rate of change 5% per second -> 1.6 seconds to ramp to default 8% FV_MANTHR_MIN
+	// Rate of change 5% per second -> 1.6 seconds to ramp to default 8% MPC_MANTHR_MIN
 	_manual_throttle_minimum.setSlewRate(0.05f);
 	// Rate of change 50% per second -> 2 seconds to ramp to 100%
 	_manual_throttle_maximum.setSlewRate(0.5f);
