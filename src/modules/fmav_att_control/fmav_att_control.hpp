@@ -155,6 +155,7 @@ private:
 		(ParamFloat<px4::params::MPC_MANTHR_MIN>)   _param_fmav_manthr_min,      /**< minimum throttle for stabilized */
 		(ParamFloat<px4::params::MPC_THR_MAX>)      _param_fmav_thr_max,         /**< maximum throttle for stabilized */
 		(ParamFloat<px4::params::MPC_THR_HOVER>)    _param_fmav_thr_hover,       /**< throttle at stationary hover */
+		(ParamFloat<px4::params::MPC_THR_START>)    _param_fmav_thr_start,       /**< throttle at hover start*/
 		(ParamInt<px4::params::MPC_THR_CURVE>)      _param_fmav_thr_curve,       /**< throttle curve behavior */
 
 		(ParamFloat<px4::params::COM_SPOOLUP_TIME>) _param_com_spoolup_time

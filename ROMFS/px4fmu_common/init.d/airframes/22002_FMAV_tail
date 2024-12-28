@@ -81,3 +81,9 @@ param set PWM_MAIN_FUNC5 201
 param set PWM_MAIN_FUNC6 202
 param set PWM_MAIN_FUNC7 203
 param set PWM_MAIN_FUNC8 204
+
+param set-default MPC_THR_MAX 0.43
+param set-default MPC_THR_HOVER 0.4
+param set-default MPC_THR_START 0.36
+param set-default MPC_MANTHR_MIN 0.08
+param set-default MPC_THR_CURVE 2
