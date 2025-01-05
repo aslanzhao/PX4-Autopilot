@@ -71,15 +71,16 @@ public:
 		LeftShoulder = 19,
 		LeftWrist = 20,
 		RightShoulder = 21,
-		RightWrist = 22 ,
+		RightWrist = 22,
 		LeftTailExtend = 23,
 		RightTailExtend = 24,
-		TailPitch = 25 ,
+		TailPitch = 25,
 		TailRoll = 26,
 		RollYawPitch1 = 27,
 		RollYawPitch2 = 28,
 		RollYawPitch3 = 29,
-		RollYawPitch4 = 30
+		RollYawPitch4 = 30,
+		RollYawPitch5 = 31
 	};
 
 	struct Params {
@@ -102,7 +103,7 @@ public:
 
 	const Params &config(int idx) const { return _params[idx]; }
 
-	Params* getConfig(int idx) { return &(_params[idx]); }
+	Params *getConfig(int idx) { return &(_params[idx]); }
 
 	void applyFlaps(float flaps_control, int first_actuator_idx, float dt, ActuatorVector &actuator_sp);
 	void applySpoilers(float spoilers_control, int first_actuator_idx, float dt, ActuatorVector &actuator_sp);

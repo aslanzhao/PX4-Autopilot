@@ -160,6 +160,7 @@ void ActuatorEffectivenessControlSurfaces::updateParams()
 		case Type::RollYawPitch2:
 		case Type::RollYawPitch3:
 		case Type::RollYawPitch4:
+		case Type::RollYawPitch5:
 			break ;
 		}
 	}

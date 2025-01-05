@@ -10,6 +10,7 @@
 # @output Servo2 RollYawPitch 2
 # @output Servo3 RollYawPitch 3
 # @output Servo4 RollYawPitch 4
+# @output Servo4 RollYawPitch 4
 #
 # @maintainer zhaoty
 
@@ -28,25 +29,29 @@ param set-default CA_ROTOR0_AX 0
 param set-default CA_ROTOR0_AY 0
 param set-default CA_ROTOR0_AZ -1.0
 # servos
-param set-default CA_SV_CS_COUNT 4
+param set-default CA_SV_CS_COUNT 5
 param set-default PWM_MAIN_TIM1 50
 param set-default PWM_MAIN_TIM2 50
-param set-default PWM_MAIN_MIN5 500
-param set-default PWM_MAIN_MIN6 500
-param set-default PWM_MAIN_MIN7 500
-param set-default PWM_MAIN_MIN8 500
-param set-default PWM_MAIN_MAX5 2500
-param set-default PWM_MAIN_MAX6 2500
-param set-default PWM_MAIN_MAX7 2500
-param set-default PWM_MAIN_MAX8 2500
-param set-default PWM_MAIN_DIS5 500
-param set-default PWM_MAIN_DIS6 500
-param set-default PWM_MAIN_DIS7 500
-param set-default PWM_MAIN_DIS8 500
+param set-default PWM_MAIN_TIM3 50
+param set-default PWM_MAIN_MIN5 800
+param set-default PWM_MAIN_MIN6 800
+param set-default PWM_MAIN_MIN7 800
+param set-default PWM_MAIN_MIN8 800
+param set-default PWM_MAIN_MIN9 800
+param set-default PWM_MAIN_MAX5 2200
+param set-default PWM_MAIN_MAX6 2200
+param set-default PWM_MAIN_MAX7 2200
+param set-default PWM_MAIN_MAX8 2200
+param set-default PWM_MAIN_MAX9 2200
+param set-default PWM_MAIN_DIS5 1500
+param set-default PWM_MAIN_DIS6 1500
+param set-default PWM_MAIN_DIS7 1500
+param set-default PWM_MAIN_DIS8 1500
+param set-default PWM_MAIN_DIS9 1500
 
 param set-default IMU_GYRO_RATEMAX 400
 param set-default IMU_INTEG_RATE 200
-param set-default SYS_HAS_MAG 0
+param set-default SYS_HAS_MAG 1
 param set-default COM_DISARM_LAND -1
 param set-default COM_DISARM_PRFLT -1
 
@@ -67,7 +72,6 @@ param set-default CA_SV_CS2_TYPE 29
 param set-default CA_SV_CS2_TRQ_R -0.2
 param set-default CA_SV_CS2_TRQ_P -0.2
 param set-default CA_SV_CS2_TRQ_Y -0.2
-
 param set-default CA_SV_CS2_TRIM 0
 # servo 4. RollYawPitch 4
 param set-default CA_SV_CS3_TYPE 30
@@ -75,12 +79,19 @@ param set-default CA_SV_CS3_TRQ_R 0.2
 param set-default CA_SV_CS3_TRQ_P -0.2
 param set-default CA_SV_CS3_TRQ_Y -0.2
 param set-default CA_SV_CS3_TRIM 0
+# servo 4. RollYawPitch 5
+param set-default CA_SV_CS4_TYPE 31
+param set-default CA_SV_CS4_TRQ_R 0
+param set-default CA_SV_CS4_TRQ_P 0
+param set-default CA_SV_CS4_TRQ_Y 0
+param set-default CA_SV_CS4_TRIM 0
 
 param set PWM_MAIN_FUNC1 101
 param set PWM_MAIN_FUNC5 201
 param set PWM_MAIN_FUNC6 202
 param set PWM_MAIN_FUNC7 203
 param set PWM_MAIN_FUNC8 204
+param set PWM_MAIN_FUNC9 301
 
 param set-default MPC_THR_MAX 0.43
 param set-default MPC_THR_HOVER 0.4
