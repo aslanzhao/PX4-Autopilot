@@ -145,6 +145,9 @@ menu "Serial ports"
     config BOARD_SERIAL_URT6
         string "URT6 tty port"
 
+     config BOARD_SERIAL_URT7
+        string "URT7 tty port"
+
     config BOARD_SERIAL_GPS1
         string "GPS1 tty port"
 
@@ -183,6 +186,17 @@ menu "Serial ports"
 
     config BOARD_SERIAL_EXT2
         string "EXT2 tty port"
+endmenu
+
+menu "File paths"
+
+    config BOARD_ROOT_PATH
+        string "PX4 Root file path"
+        default "/fs/microsd"
+
+    config BOARD_PARAM_FILE
+        string "Parameter file"
+        default "/fs/mtd_params"
 endmenu
 
 menu "drivers"

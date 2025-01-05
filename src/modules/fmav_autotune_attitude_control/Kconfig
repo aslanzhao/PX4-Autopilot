@@ -1,0 +1,5 @@
+menuconfig MODULES_FMAV_AUTOTUNE_ATTITUDE_CONTROL
+	bool "fmav_autotune_attitude_control"
+	default n
+	---help---
+		Enable support for fmav_autotune_attitude_control

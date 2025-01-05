@@ -1,0 +1,56 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "stlink_v3 (micoair_h743)",
+            "gdbPath": "/opt/gcc-arm-none-eabi-9-2020-q2-update/bin/arm-none-eabi-gdb",
+            "device": "STM32H743VI",
+            "svdFile": "",
+            "executable": "./build/micoair_h743_default/micoair_h743_default.elf",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "openocd",
+            "cwd": "${workspaceFolder}",
+            "internalConsoleOptions": "openOnSessionStart",
+            "interface": "swd",
+            "configFiles": [
+                "interface/stlink.cfg",
+                "target/stm32h7x.cfg"
+            ]
+        },
+        {
+            "name": "stlink_v3 (px4_fmu-v5)",
+            "gdbPath": "/opt/gcc-arm-none-eabi-9-2020-q2-update/bin/arm-none-eabi-gdb",
+            "device": "STM32F765II",
+            "svdFile": "STM32F7x5.svd",
+            "executable": "./build/px4_fmu-v5_default/px4_fmu-v5_default.elf",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "openocd",
+            "cwd": "${workspaceFolder}",
+            "internalConsoleOptions": "openOnSessionStart",
+            "interface": "swd",
+            "configFiles": [
+                "interface/stlink.cfg",
+                "target/stm32f7x.cfg"
+            ]
+        },
+        {
+            "name": "stlink_debug (px4_fmu-v5)",
+            "gdbPath": "/opt/gcc-arm-none-eabi-9-2020-q2-update/bin/arm-none-eabi-gdb",
+            "device": "STM32F765II",
+            "svdFile": "STM32F7x5.svd",
+            "executable": "./build/px4_fmu-v5_debug/px4_fmu-v5_debug.elf",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "openocd",
+            "cwd": "${workspaceFolder}",
+            "internalConsoleOptions": "openOnSessionStart",
+            "interface": "swd",
+            "configFiles": [
+                "interface/stlink.cfg",
+                "target/stm32f7x.cfg"
+            ]
+        },
+    ]
+}

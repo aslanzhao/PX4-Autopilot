@@ -1,0 +1,403 @@
+#LyX 2.4 created this file. For more info see https://www.lyx.org/
+\lyxformat 620
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{ctex}
+
+
+\title{PX4 多旋翼位置控制器的控制方程}
+\author{}
+\end_preamble
+\use_default_options false
+\maintain_unincluded_children no
+\language english
+\language_package none
+\inputencoding utf8
+\fontencoding default
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_roman_osf false
+\font_sans_osf false
+\font_typewriter_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 2
+\use_package amssymb 0
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date true
+\justification true
+\use_refstyle 0
+\use_formatted_ref 0
+\use_minted 0
+\use_lineno 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tablestyle default
+\tracking_changes false
+\output_changes false
+\change_bars false
+\postpone_fragile_content true
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\docbook_table_output 0
+\docbook_mathml_prefix 1
+\end_header
+
+\begin_body
+
+\begin_layout Section
+PX4 多旋翼位置控制器的控制方程
+\end_layout
+
+\begin_layout Standard
+在 PX4 的多旋翼控制系统中，
+
+\series bold
+位置控制器
+\series default
+ 负责管理无人机在 3D 空间中的位置和速度。
+通过控制无人机的位置、速度和加速度来达到目标位置。
+PX4 的位置控制器采用
+\series bold
+串级控制
+\series default
+ 结构，
+将位置、速度和加速度控制器分层次结合。
+位置控制器的主要任务是计算无人机的
+\series bold
+期望加速度
+\series default
+，
+然后将其传递给姿态控制器。
+其核心控制方程可以分为以下几个部分：
+
+\end_layout
+
+\begin_layout Subsection
+位置误差控制（外环）
+\end_layout
+
+\begin_layout Standard
+位置控制器的第一个任务是将
+\series bold
+位置误差
+\series default
+（目标位置与当前位置之间的差值）转换为一个期望的速度。
+这通常使用一个比例控制器（P 控制器）来完成。
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\boldsymbol{v}_{\text{sp}}=K_{p}^{\text{pos}}(\boldsymbol{p}_{\text{sp}}-\boldsymbol{p}_{\text{current}})
+\end{equation}
+
+\end_inset
+
+这里和接下来的方程中，
+
+\begin_inset Formula $\boldsymbol{p},\boldsymbol{v},\boldsymbol{a}$
+\end_inset
+
+分别代表位置、速度和加速度，
+下标
+\begin_inset Formula $\mathrm{sp}$
+\end_inset
+
+代表set point，
+current代表当前状态，
+
+\begin_inset Formula $K$
+\end_inset
+
+代表比例系数。
+
+\end_layout
+
+\begin_layout Subsection
+速度误差控制（内环）
+\end_layout
+
+\begin_layout Standard
+在计算出期望速度之后，
+位置控制器会将速度误差转换为一个期望加速度（acceleration setpoint）。
+这通常通过比例-积分-微分控制器（PID 控制器）来实现。
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\boldsymbol{a}_{\text{sp}}=K_{p}^{\text{vel}}(\boldsymbol{v}_{\text{sp}}-\boldsymbol{v}_{\text{current}})+K_{i}^{\text{vel}}\int(\boldsymbol{v}_{\text{sp}}-\boldsymbol{v}_{\text{current}})\,\mathrm{d}t-K_{d}^{\text{vel}}(\boldsymbol{a}_{\text{current}})
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+期望加速度到推力的转换
+\end_layout
+
+\begin_layout Standard
+计算得出的期望加速度会结合无人机的姿态和重力来确定推力向量。
+期望加速度的方向和大小最终会被转换成期望的推力
+\begin_inset Formula $\boldsymbol{T}_{\text{sp}}$
+\end_inset
+
+（thrust setpoint），
+并作为输入传递给姿态控制器。
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\boldsymbol{T}_{\text{sp}}=m\boldsymbol{a}_{\text{sp}}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+用一维例子来理解控制方程
+\end_layout
+
+\begin_layout Standard
+为了直观理解上面控制率的影响，
+我们先采用一维的例子，
+把位置环和速度环的方程代入推力方程中，
+有：
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\ddot{x}=K_{p}^{\mathrm{vel}}\left[K_{p}^{\text{pos}}(x_{\mathrm{sp}}-x)-\dot{x}\right]+K_{i}^{\text{vel}}\int\left[K_{p}^{\text{pos}}(x_{\mathrm{sp}}-x)-\dot{x}\right]\,\mathrm{d}t-K_{d}^{\text{vel}}\ddot{x}\label{eq:1D}
+\end{equation}
+
+\end_inset
+
+不妨先取
+\begin_inset Formula $K_{i}^{\text{vel}}=0$
+\end_inset
+
+，
+那么，
+控制方程简化为
+\begin_inset Formula 
+\[
+(1+K_{d}^{\text{vel}})\ddot{x}+K_{p}^{\mathrm{vel}}\dot{x}+K_{p}^{\mathrm{vel}}K_{p}^{\text{pos}}x=K_{p}^{\mathrm{vel}}K_{p}^{\text{pos}}x_{\mathrm{sp}}
+\]
+
+\end_inset
+
+这个方程收敛的性态，
+取决于二阶微分方程的形态，
+收敛最快的时候是临界组阻尼情况，
+即：
+
+\begin_inset Formula 
+\[
+\left(K_{p}^{\mathrm{vel}}\right)^{2}-4K_{p}^{\mathrm{vel}}K_{p}^{\text{pos}}(1+K_{d}^{\text{vel}})=0
+\]
+
+\end_inset
+
+或者说
+\begin_inset Formula 
+\begin{equation}
+K_{p}^{\mathrm{vel}}-4K_{p}^{\text{pos}}(1+K_{d}^{\text{vel}})=0\label{eq:critical_damping_without_i_term}
+\end{equation}
+
+\end_inset
+
+收敛的速度二阶微分方程的特征根，
+也就是
+\begin_inset Formula 
+\[
+-\frac{K_{p}^{\mathrm{vel}}}{2(1+K_{d}^{\text{vel}})}
+\]
+
+\end_inset
+
+再利用上面的临界阻尼，
+有
+\begin_inset Formula 
+\[
+-\frac{K_{p}^{\mathrm{vel}}}{2(1+K_{d}^{\text{vel}})}=-\frac{4K_{p}^{\text{pos}}(1+K_{d}^{\text{vel}})}{2(1+K_{d}^{\text{vel}})}=-2K_{p}^{\text{pos}}
+\]
+
+\end_inset
+
+也就是说，
+要想收敛的快，
+需要位置环的比例系数
+\begin_inset Formula $K_{p}^{\text{pos}}$
+\end_inset
+
+大，
+而在速度环，
+为了减小振荡和overshot，
+需要让速度环的比例系数和微分系数满足一个关系。
+
+\end_layout
+
+\begin_layout Standard
+如果说，
+还想进一步考虑速度环的积分项。
+利用变量替换
+\begin_inset Formula 
+\[
+y=x-x_{\mathrm{sp}}
+\]
+
+\end_inset
+
+则
+\begin_inset Formula 
+\[
+\dot{y}=\dot{x},\quad\ddot{y}=\ddot{x}
+\]
+
+\end_inset
+
+且方程(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:1D"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+)变成
+\begin_inset Formula 
+\[
+\ddot{y}=K_{p}^{\mathrm{vel}}\left[-K_{p}^{\text{pos}}y-\dot{y}\right]+K_{i}^{\text{vel}}\int\left[-K_{p}^{\text{pos}}y-\dot{y}\right]\,\mathrm{d}t-K_{d}^{\text{vel}}\ddot{y}
+\]
+
+\end_inset
+
+两边同时对时间微分，
+有
+\begin_inset Formula 
+\[
+(1+K_{d}^{\text{vel}})\dddot{y}+K_{p}^{\mathrm{vel}}\ddot{y}+\left(K_{p}^{\mathrm{vel}}K_{p}^{\text{pos}}+K_{i}^{\text{vel}}\right)\dot{y}+K_{i}^{\text{vel}}K_{p}^{\text{pos}}y=0
+\]
+
+\end_inset
+
+假设它有通解
+\begin_inset Formula $y=e^{\lambda t}$
+\end_inset
+
+，
+则对应的特征方程为
+\begin_inset Formula 
+\[
+\lambda^{3}+\frac{K_{p}^{\mathrm{vel}}}{1+K_{d}^{\text{vel}}}\lambda^{2}+\frac{K_{p}^{\mathrm{vel}}K_{p}^{\text{pos}}+K_{i}^{\text{vel}}}{1+K_{d}^{\text{vel}}}\lambda+\frac{K_{i}^{\text{vel}}K_{p}^{\text{pos}}}{1+K_{d}^{\text{vel}}}=0
+\]
+
+\end_inset
+
+为了收敛的快，
+不妨假设它有三个重根
+\begin_inset Formula $\lambda=-\tau$
+\end_inset
+
+，
+其中
+\begin_inset Formula $\tau$
+\end_inset
+
+为正数，
+则
+\begin_inset Formula 
+\begin{align*}
+\left(\lambda+s\right)^{3} & =\lambda^{3}+\frac{K_{p}^{\mathrm{vel}}}{1+K_{d}^{\text{vel}}}\lambda^{2}+\frac{K_{p}^{\mathrm{vel}}K_{p}^{\text{pos}}+K_{i}^{\text{vel}}}{1+K_{d}^{\text{vel}}}\lambda+\frac{K_{i}^{\text{vel}}K_{p}^{\text{pos}}}{1+K_{d}^{\text{vel}}}\\
+ & =\lambda^{3}+3\tau\lambda^{2}+3\tau^{2}\lambda+\tau^{3}
+\end{align*}
+
+\end_inset
+
+也就是说
+\begin_inset Formula 
+\begin{align*}
+\frac{K_{i}^{\text{vel}}K_{p}^{\text{pos}}}{1+K_{d}^{\text{vel}}} & =\tau^{3}\\
+\frac{K_{p}^{\mathrm{vel}}K_{p}^{\text{pos}}+K_{i}^{\text{vel}}}{1+K_{d}^{\text{vel}}} & =3\tau^{2}\\
+\frac{K_{p}^{\mathrm{vel}}}{1+K_{d}^{\text{vel}}} & =3\tau
+\end{align*}
+
+\end_inset
+
+即使是给定了
+\begin_inset Formula $\tau$
+\end_inset
+
+，
+四个系数仍然有一个可以是自由的。
+给我的感觉是速度环的d项系数可以取为零。
+为什么保留下来了呢？
+没有想明白，
+是不是在前馈里面有反应？
+
+\end_layout
+
+\end_body
+\end_document

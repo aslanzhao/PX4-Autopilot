@@ -44,6 +44,7 @@ px4_add_romfs_files(
 	# TODO
 	rc.balloon_apps
 	rc.balloon_defaults
+	rc.sysinit
 )
 
 if(CONFIG_MODULES_AIRSHIP_ATT_CONTROL)
@@ -57,6 +58,7 @@ if(CONFIG_MODULES_FW_RATE_CONTROL)
 	px4_add_romfs_files(
 		rc.fw_apps
 		rc.fw_defaults
+		rc.mb_defaults
 	)
 endif()
 
@@ -65,6 +67,14 @@ if(CONFIG_MODULES_MC_RATE_CONTROL)
 		rc.heli_defaults
 		rc.mc_apps
 		rc.mc_defaults
+	)
+endif()
+
+# 给Flapping insect新增加的控制模块
+if(CONFIG_MODULES_FMAV_RATE_CONTROL)
+	px4_add_romfs_files(
+		rc.fmav_apps
+		rc.fmav_defaults
 	)
 endif()
 
@@ -77,10 +87,24 @@ if(CONFIG_MODULES_ROVER_POS_CONTROL)
 	)
 endif()
 
-if(CONFIG_MODULES_DIFFERENTIAL_DRIVE)
+if(CONFIG_MODULES_ROVER_DIFFERENTIAL)
 	px4_add_romfs_files(
 		rc.rover_differential_apps
 		rc.rover_differential_defaults
+	)
+endif()
+
+if(CONFIG_MODULES_ROVER_ACKERMANN)
+	px4_add_romfs_files(
+		rc.rover_ackermann_apps
+		rc.rover_ackermann_defaults
+	)
+endif()
+
+if(CONFIG_MODULES_ROVER_MECANUM)
+	px4_add_romfs_files(
+		rc.rover_mecanum_apps
+		rc.rover_mecanum_defaults
 	)
 endif()
 

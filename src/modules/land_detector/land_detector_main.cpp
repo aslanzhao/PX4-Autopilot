@@ -50,7 +50,7 @@
 #include "RoverLandDetector.h"
 #include "VtolLandDetector.h"
 #include "AirshipLandDetector.h"
-
+#include "FMAVLandDetector.h"
 
 namespace land_detector
 {
@@ -81,7 +81,9 @@ int LandDetector::task_spawn(int argc, char *argv[])
 	} else if (strcmp(argv[1], "airship") == 0) {
 		obj = new AirshipLandDetector();
 
-	} else {
+	} else if ( strcmp(argv[1], "flappingmav") == 0 )
+		obj = new FMAVLandDetector() ;
+	else {
 		print_usage("unknown mode");
 		return PX4_ERROR;
 	}

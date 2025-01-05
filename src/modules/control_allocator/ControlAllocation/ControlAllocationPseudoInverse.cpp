@@ -32,7 +32,7 @@
  ****************************************************************************/
 
 /**
- * @file ControlAllocationPseudoInverse.hpp
+ * @file ControlAllocationPseudoInverse.cpp
  *
  * Simple Control Allocation Algorithm
  *
@@ -176,6 +176,6 @@ ControlAllocationPseudoInverse::allocate()
 
 	_prev_actuator_sp = _actuator_sp;
 
-	// Allocate
+	// Allocate, _control_sp在setControlSetpoint中设置，_mix是拟矩阵，在updatePseudoInverse中设置
 	_actuator_sp = _actuator_trim + _mix * (_control_sp - _control_trim);
 }

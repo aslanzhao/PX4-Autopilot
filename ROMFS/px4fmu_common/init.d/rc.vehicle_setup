@@ -15,12 +15,30 @@ then
 fi
 
 #
+# Morhping bird setup.
+#
+if [ $VEHICLE_TYPE = morphingbird ]
+then
+	# morphingbird is the same as standard fixedwing apps.
+	. ${R}etc/init.d/rc.fw_apps
+fi
+
+#
 # Multicopter setup.
 #
 if [ $VEHICLE_TYPE = mc ]
 then
 	# Start standard multicopter apps.
 	. ${R}etc/init.d/rc.mc_apps
+fi
+
+#
+# FMAV setup.
+#
+if [ $VEHICLE_TYPE = fmav ]
+then
+	# flapping mav apps.
+	. ${R}etc/init.d/rc.fmav_apps
 fi
 
 #
@@ -39,6 +57,24 @@ if [ $VEHICLE_TYPE = rover_differential ]
 then
 	# Start differential drive rover apps.
 	. ${R}etc/init.d/rc.rover_differential_apps
+fi
+
+#
+# Ackermann Rover setup.
+#
+if [ $VEHICLE_TYPE = rover_ackermann ]
+then
+	# Start ackermann drive rover apps.
+	. ${R}etc/init.d/rc.rover_ackermann_apps
+fi
+
+#
+# Mecanum Rover setup.
+#
+if [ $VEHICLE_TYPE = rover_mecanum ]
+then
+	# Start mecanum drive rover apps.
+	. ${R}etc/init.d/rc.rover_mecanum_apps
 fi
 
 #

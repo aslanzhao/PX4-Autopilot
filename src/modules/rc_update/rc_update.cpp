@@ -55,6 +55,7 @@ static bool operator ==(const manual_control_switches_s &a, const manual_control
 		a.arm_switch == b.arm_switch &&
 		a.transition_switch == b.transition_switch &&
 		a.gear_switch == b.gear_switch &&
+		a.fold_wing_switch == b.fold_wing_switch &&
 		a.photo_switch == b.photo_switch &&
 		a.video_switch == b.video_switch &&
 		a.payload_power_switch == b.payload_power_switch &&
@@ -62,7 +63,6 @@ static bool operator ==(const manual_control_switches_s &a, const manual_control
 }
 
 static bool operator !=(const manual_control_switches_s &a, const manual_control_switches_s &b) { return !(a == b); }
-
 
 RCUpdate::RCUpdate() :
 	ModuleParams(nullptr),
@@ -163,49 +163,14 @@ void RCUpdate::updateParams()
 			     || _param_rc_map_pitch.get() > 0
 			     || _param_rc_map_yaw.get() > 0);
 
-	// deprecated parameters, will be removed post v1.12 once QGC is updated
 	{
+		// deprecated parameter, needs to be fully removed from QGC
 		int32_t rc_map_value = 0;
 
 		if (param_get(param_find("RC_MAP_MODE_SW"), &rc_map_value) == PX4_OK) {
 			if (rc_map_value != 0) {
 				PX4_WARN("RC_MAP_MODE_SW deprecated");
 				param_reset(param_find("RC_MAP_MODE_SW"));
-			}
-		}
-
-		if (param_get(param_find("RC_MAP_RATT_SW"), &rc_map_value) == PX4_OK) {
-			if (rc_map_value != 0) {
-				PX4_WARN("RC_MAP_RATT_SW deprecated");
-				param_reset(param_find("RC_MAP_RATT_SW"));
-			}
-		}
-
-		if (param_get(param_find("RC_MAP_POSCTL_SW"), &rc_map_value) == PX4_OK) {
-			if (rc_map_value != 0) {
-				PX4_WARN("RC_MAP_POSCTL_SW deprecated");
-				param_reset(param_find("RC_MAP_POSCTL_SW"));
-			}
-		}
-
-		if (param_get(param_find("RC_MAP_ACRO_SW"), &rc_map_value) == PX4_OK) {
-			if (rc_map_value != 0) {
-				PX4_WARN("RC_MAP_ACRO_SW deprecated");
-				param_reset(param_find("RC_MAP_ACRO_SW"));
-			}
-		}
-
-		if (param_get(param_find("RC_MAP_STAB_SW"), &rc_map_value) == PX4_OK) {
-			if (rc_map_value != 0) {
-				PX4_WARN("RC_MAP_STAB_SW deprecated");
-				param_reset(param_find("RC_MAP_STAB_SW"));
-			}
-		}
-
-		if (param_get(param_find("RC_MAP_MAN_SW"), &rc_map_value) == PX4_OK) {
-			if (rc_map_value != 0) {
-				PX4_WARN("RC_MAP_MAN_SW deprecated");
-				param_reset(param_find("RC_MAP_MAN_SW"));
 			}
 		}
 	}
@@ -708,6 +673,19 @@ void RCUpdate::UpdateManualControlInput(const hrt_abstime &timestamp_sample)
 	manual_control_input.timestamp = hrt_absolute_time();
 	_manual_control_input_pub.publish(manual_control_input);
 	_last_manual_control_input_publish = manual_control_input.timestamp;
+
+	// publish morphing_wing_extent topic
+	if ( ( math::abs_t<float>( _last_wing_extent - manual_control_input.aux1) > 0.05f ) ||
+	     ( math::abs_t<float>( _last_tail_extent - manual_control_input.aux2) > 0.05f ) ) {
+		morphing_wing_extent_s morphing_wing_extent_input{} ;
+		morphing_wing_extent_input.main_wing_extent = manual_control_input.aux1 ;
+		morphing_wing_extent_input.tail_extent = manual_control_input.aux2 ;
+		_last_wing_extent = manual_control_input.aux1 ;
+		_last_tail_extent = manual_control_input.aux2 ;
+		morphing_wing_extent_input.timestamp = hrt_absolute_time();
+		_morphing_wing_extent_pub.publish(morphing_wing_extent_input) ;
+	}
+
 }
 
 int RCUpdate::task_spawn(int argc, char *argv[])

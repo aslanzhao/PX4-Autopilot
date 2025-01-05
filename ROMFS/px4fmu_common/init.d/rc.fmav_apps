@@ -1,0 +1,41 @@
+#!/bin/sh
+#
+# Standard apps for multirotors. Attitude/Position estimator, Attitude/Position control.
+#
+# NOTE: Script variables are declared/initialized/unset in the rcS script.
+#
+
+#
+# Start Control Allocator
+#
+control_allocator start
+
+#
+# Start Multicopter Rate Controller.
+#
+fmav_rate_control start
+
+#
+# Start flapping micro air vehicle Attitude Controller.
+#
+fmav_att_control start
+
+if param greater -s MC_AT_EN 0
+then
+	fmav_autotune_attitude_control start
+fi
+
+#
+# Start Multicopter Position Controller.
+#
+if param greater -s MC_POS_EN 0
+then
+	fmav_hover_thrust_estimator start
+	flight_mode_manager start
+	fmav_pos_control start
+fi
+
+#
+# Start Multicopter Land Detector.
+#
+land_detector start flappingmav

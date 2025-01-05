@@ -1,0 +1,89 @@
+#!/bin/sh
+#
+# @name FMAV Tail V1
+#
+# @type Bionic Insects
+# @class Copter
+
+# @output Motor1 Thrust Motor
+# @output Servo1 RollYawPitch 1
+# @output Servo2 RollYawPitch 2
+# @output Servo3 RollYawPitch 3
+# @output Servo4 RollYawPitch 4
+#
+# @maintainer zhaoty
+
+
+. ${R}etc/init.d/rc.fmav_defaults
+
+# airframe is flapping MAV, referring /src/modules/controll_allocator/module.yaml
+param set-default CA_AIRFRAME 15
+
+# thrust motor
+param set-default CA_ROTOR_COUNT 1
+param set-default CA_ROTOR0_PX 0
+param set-default CA_ROTOR0_PY 0
+param set-default CA_ROTOR0_PZ 0
+param set-default CA_ROTOR0_AX 0
+param set-default CA_ROTOR0_AY 0
+param set-default CA_ROTOR0_AZ -1.0
+# servos
+param set-default CA_SV_CS_COUNT 4
+param set-default PWM_MAIN_TIM1 50
+param set-default PWM_MAIN_TIM2 50
+param set-default PWM_MAIN_MIN5 500
+param set-default PWM_MAIN_MIN6 500
+param set-default PWM_MAIN_MIN7 500
+param set-default PWM_MAIN_MIN8 500
+param set-default PWM_MAIN_MAX5 2500
+param set-default PWM_MAIN_MAX6 2500
+param set-default PWM_MAIN_MAX7 2500
+param set-default PWM_MAIN_MAX8 2500
+param set-default PWM_MAIN_DIS5 500
+param set-default PWM_MAIN_DIS6 500
+param set-default PWM_MAIN_DIS7 500
+param set-default PWM_MAIN_DIS8 500
+
+param set-default IMU_GYRO_RATEMAX 400
+param set-default IMU_INTEG_RATE 200
+param set-default SYS_HAS_MAG 0
+param set-default COM_DISARM_LAND -1
+param set-default COM_DISARM_PRFLT -1
+
+# servo 1. RollYawPitch 1
+param set-default CA_SV_CS0_TYPE 27
+param set-default CA_SV_CS0_TRQ_R 0.2
+param set-default CA_SV_CS0_TRQ_P 0.2
+param set-default CA_SV_CS0_TRQ_Y -0.2
+param set-default CA_SV_CS0_TRIM 0
+# servo 2. RollYawPitch 2
+param set-default CA_SV_CS1_TYPE 28
+param set-default CA_SV_CS1_TRQ_R -0.2
+param set-default CA_SV_CS1_TRQ_P 0.2
+param set-default CA_SV_CS1_TRQ_Y -0.2
+param set-default CA_SV_CS1_TRIM 0
+# servo 3. RollYawPitch 3
+param set-default CA_SV_CS2_TYPE 29
+param set-default CA_SV_CS2_TRQ_R -0.2
+param set-default CA_SV_CS2_TRQ_P -0.2
+param set-default CA_SV_CS2_TRQ_Y -0.2
+
+param set-default CA_SV_CS2_TRIM 0
+# servo 4. RollYawPitch 4
+param set-default CA_SV_CS3_TYPE 30
+param set-default CA_SV_CS3_TRQ_R 0.2
+param set-default CA_SV_CS3_TRQ_P -0.2
+param set-default CA_SV_CS3_TRQ_Y -0.2
+param set-default CA_SV_CS3_TRIM 0
+
+param set PWM_MAIN_FUNC1 101
+param set PWM_MAIN_FUNC5 201
+param set PWM_MAIN_FUNC6 202
+param set PWM_MAIN_FUNC7 203
+param set PWM_MAIN_FUNC8 204
+
+param set-default MPC_THR_MAX 0.43
+param set-default MPC_THR_HOVER 0.4
+param set-default MPC_THR_START 0.36
+param set-default MPC_MANTHR_MIN 0.08
+param set-default MPC_THR_CURVE 2

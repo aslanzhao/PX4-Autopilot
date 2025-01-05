@@ -239,11 +239,19 @@ ControlAllocator::update_effectiveness_source()
 			break;
 
 		case EffectivenessSource::ROVER_DIFFERENTIAL:
-			// differential_drive_control does allocation and publishes directly to actuator_motors topic
+			// rover_differential_control does allocation and publishes directly to actuator_motors topic
 			break;
 
 		case EffectivenessSource::FIXED_WING:
 			tmp = new ActuatorEffectivenessFixedWing(this);
+			break;
+
+		case EffectivenessSource::MORPHING_BIRD:
+			tmp = new ActuatorEffectivenessMorphingBird(this);
+			break;
+
+		case EffectivenessSource::FLAPPING_MAV:
+			tmp = new ActuatorEffectivenessFlappingMAV(this);
 			break;
 
 		case EffectivenessSource::MOTORS_6DOF: // just a different UI from MULTIROTOR
@@ -343,7 +351,6 @@ ControlAllocator::Run()
 			// Check if the current flight phase is HOVER or FIXED_WING
 			if (vehicle_status.vehicle_type == vehicle_status_s::VEHICLE_TYPE_ROTARY_WING) {
 				flight_phase = ActuatorEffectiveness::FlightPhase::HOVER_FLIGHT;
-
 			} else {
 				flight_phase = ActuatorEffectiveness::FlightPhase::FORWARD_FLIGHT;
 			}
@@ -352,7 +359,6 @@ ControlAllocator::Run()
 			if (vehicle_status.is_vtol && vehicle_status.in_transition_mode) {
 				if (vehicle_status.in_transition_to_fw) {
 					flight_phase = ActuatorEffectiveness::FlightPhase::TRANSITION_HF_TO_FF;
-
 				} else {
 					flight_phase = ActuatorEffectiveness::FlightPhase::TRANSITION_FF_TO_HF;
 				}
@@ -382,10 +388,8 @@ ControlAllocator::Run()
 	// Run allocator on torque changes
 	if (_vehicle_torque_setpoint_sub.update(&vehicle_torque_setpoint)) {
 		_torque_sp = matrix::Vector3f(vehicle_torque_setpoint.xyz);
-
 		do_update = true;
 		_timestamp_sample = vehicle_torque_setpoint.timestamp_sample;
-
 	}
 
 	// Also run allocator on thrust setpoint changes if the torque setpoint
@@ -393,7 +397,7 @@ ControlAllocator::Run()
 	if (_vehicle_thrust_setpoint_sub.update(&vehicle_thrust_setpoint)) {
 		_thrust_sp = matrix::Vector3f(vehicle_thrust_setpoint.xyz);
 
-		if (dt > 5_ms) {
+		if (dt > 0.005f) {
 			do_update = true;
 			_timestamp_sample = vehicle_thrust_setpoint.timestamp_sample;
 		}
@@ -408,6 +412,7 @@ ControlAllocator::Run()
 
 		// Set control setpoint vector(s)
 		matrix::Vector<float, NUM_AXES> c[ActuatorEffectiveness::MAX_NUM_MATRICES];
+
 		c[0](0) = _torque_sp(0);
 		c[0](1) = _torque_sp(1);
 		c[0](2) = _torque_sp(2);
