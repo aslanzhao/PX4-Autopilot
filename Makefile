@@ -324,19 +324,13 @@ px4io_update:
 	git status
 
 bootloaders_update: \
-<<<<<<< HEAD
-=======
 	3dr_ctrl-zero-h7-oem-revg_bootloader \
->>>>>>> b56187d32a568a2bd5d65d5203461b092563bf8e
 	ark_fmu-v6x_bootloader \
 	ark_fpv_bootloader \
 	ark_pi6x_bootloader \
 	cuav_nora_bootloader \
 	cuav_x7pro_bootloader \
-<<<<<<< HEAD
-=======
 	cuav_7-nano_bootloader \
->>>>>>> b56187d32a568a2bd5d65d5203461b092563bf8e
 	cubepilot_cubeorange_bootloader \
 	cubepilot_cubeorangeplus_bootloader \
 	hkust_nxt-dual_bootloader \
@@ -348,11 +342,8 @@ bootloaders_update: \
 	matek_h743_bootloader \
 	matek_h743-mini_bootloader \
 	matek_h743-slim_bootloader \
-<<<<<<< HEAD
-=======
         micoair_h743_bootloader \
         micoair_h743-aio_bootloader \
->>>>>>> b56187d32a568a2bd5d65d5203461b092563bf8e
 	modalai_fc-v2_bootloader \
 	mro_ctrl-zero-classic_bootloader \
 	mro_ctrl-zero-h7_bootloader \

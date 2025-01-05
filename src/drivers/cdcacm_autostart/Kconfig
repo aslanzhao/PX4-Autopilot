@@ -3,8 +3,4 @@ menuconfig DRIVERS_CDCACM_AUTOSTART
 	default n
 	depends on MODULES_MAVLINK
 	---help---
-<<<<<<< HEAD
 		Enable support for cdcacm_autostart
-=======
-		Enable support for cdcacm_autostart
->>>>>>> b56187d32a568a2bd5d65d5203461b092563bf8e

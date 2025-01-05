@@ -303,14 +303,6 @@ static int flexio_irq_handler(int irq, void *context, void *arg)
 
 int up_dshot_init(uint32_t channel_mask, unsigned dshot_pwm_freq, bool enable_bidirectional_dshot)
 {
-<<<<<<< HEAD
-	uint32_t timer_compare = 0x2F00 | (((BOARD_FLEXIO_PREQ / (dshot_pwm_freq * 3) / 2) - 1) & 0xFF);
-
-
-	/* Init FlexIO peripheral */
-
-	flexio_s = imxrt_flexio_initialize(1);
-=======
 	/* Calculate dshot timings based on dshot_pwm_freq */
 	dshot_tcmp = 0x2F00 | (((BOARD_FLEXIO_PREQ / (dshot_pwm_freq * 3) / 2) - 1) & 0xFF);
 	bdshot_tcmp = 0x2900 | (((BOARD_FLEXIO_PREQ / (dshot_pwm_freq * 5 / 4) / 2) - 3) & 0xFF);
@@ -334,7 +326,6 @@ int up_dshot_init(uint32_t channel_mask, unsigned dshot_pwm_freq, bool enable_bi
 			    FLEXIO_CTRL_FLEXEN(0)));
 
 	/* FlexIO IRQ handling */
->>>>>>> b56187d32a568a2bd5d65d5203461b092563bf8e
 	up_enable_irq(IMXRT_IRQ_FLEXIO1);
 	irq_attach(IMXRT_IRQ_FLEXIO1, flexio_irq_handler, 0);
 
