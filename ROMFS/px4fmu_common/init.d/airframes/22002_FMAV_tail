@@ -10,7 +10,7 @@
 # @output Servo2 RollYawPitch 2
 # @output Servo3 RollYawPitch 3
 # @output Servo4 RollYawPitch 4
-# @output Servo4 RollYawPitch 4
+# @output Servo4 RollYawPitch 5
 #
 # @maintainer zhaoty
 
@@ -91,7 +91,7 @@ param set PWM_MAIN_FUNC5 201
 param set PWM_MAIN_FUNC6 202
 param set PWM_MAIN_FUNC7 203
 param set PWM_MAIN_FUNC8 204
-param set PWM_MAIN_FUNC9 301
+param set PWM_MAIN_FUNC9 205
 
 param set-default MPC_THR_MAX 0.43
 param set-default MPC_THR_HOVER 0.4
