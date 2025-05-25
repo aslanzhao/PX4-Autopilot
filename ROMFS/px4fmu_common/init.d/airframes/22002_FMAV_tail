@@ -6,11 +6,9 @@
 # @class Copter
 
 # @output Motor1 Thrust Motor
+# @output Motor2 Thrust Motor
 # @output Servo1 RollYawPitch 1
 # @output Servo2 RollYawPitch 2
-# @output Servo3 RollYawPitch 3
-# @output Servo4 RollYawPitch 4
-# @output Servo4 RollYawPitch 5
 #
 # @maintainer zhaoty
 
@@ -21,80 +19,83 @@
 param set-default CA_AIRFRAME 15
 
 # thrust motor
-param set-default CA_ROTOR_COUNT 1
-param set-default CA_ROTOR0_PX 0
+param set-default CA_ROTOR_COUNT 2
+param set-default CA_ROTOR0_PX 1.0
 param set-default CA_ROTOR0_PY 0
 param set-default CA_ROTOR0_PZ 0
 param set-default CA_ROTOR0_AX 0
 param set-default CA_ROTOR0_AY 0
 param set-default CA_ROTOR0_AZ -1.0
+param set-default CA_ROTOR1_PX -1.0
+param set-default CA_ROTOR1_PY 0
+param set-default CA_ROTOR1_PZ 0
+param set-default CA_ROTOR1_AX 0
+param set-default CA_ROTOR1_AY 0
+param set-default CA_ROTOR1_AZ -1.0
 # servos
-param set-default CA_SV_CS_COUNT 5
+param set-default CA_SV_CS_COUNT 2
 param set-default PWM_MAIN_TIM1 50
 param set-default PWM_MAIN_TIM2 50
-param set-default PWM_MAIN_TIM3 50
-param set-default PWM_MAIN_MIN5 800
-param set-default PWM_MAIN_MIN6 800
-param set-default PWM_MAIN_MIN7 800
-param set-default PWM_MAIN_MIN8 800
-param set-default PWM_MAIN_MIN9 800
-param set-default PWM_MAIN_MAX5 2200
-param set-default PWM_MAIN_MAX6 2200
-param set-default PWM_MAIN_MAX7 2200
-param set-default PWM_MAIN_MAX8 2200
-param set-default PWM_MAIN_MAX9 2200
+param set-default PWM_MAIN_MIN5 1250
+param set-default PWM_MAIN_MIN6 1250
+param set-default PWM_MAIN_MAX5 1750
+param set-default PWM_MAIN_MAX6 1750
 param set-default PWM_MAIN_DIS5 1500
 param set-default PWM_MAIN_DIS6 1500
-param set-default PWM_MAIN_DIS7 1500
-param set-default PWM_MAIN_DIS8 1500
-param set-default PWM_MAIN_DIS9 1500
 
 param set-default IMU_GYRO_RATEMAX 400
 param set-default IMU_INTEG_RATE 200
-param set-default SYS_HAS_MAG 1
+param set-default SYS_HAS_MAG 0
 param set-default COM_DISARM_LAND -1
 param set-default COM_DISARM_PRFLT -1
 
 # servo 1. RollYawPitch 1
 param set-default CA_SV_CS0_TYPE 27
-param set-default CA_SV_CS0_TRQ_R 0.2
-param set-default CA_SV_CS0_TRQ_P 0.2
-param set-default CA_SV_CS0_TRQ_Y -0.2
+param set-default CA_SV_CS0_TRQ_R 1.0
+param set-default CA_SV_CS0_TRQ_P 0
+param set-default CA_SV_CS0_TRQ_Y 1.0
 param set-default CA_SV_CS0_TRIM 0
 # servo 2. RollYawPitch 2
 param set-default CA_SV_CS1_TYPE 28
-param set-default CA_SV_CS1_TRQ_R -0.2
-param set-default CA_SV_CS1_TRQ_P 0.2
-param set-default CA_SV_CS1_TRQ_Y -0.2
+param set-default CA_SV_CS1_TRQ_R -1.0
+param set-default CA_SV_CS1_TRQ_P 0
+param set-default CA_SV_CS1_TRQ_Y 1.0
 param set-default CA_SV_CS1_TRIM 0
-# servo 3. RollYawPitch 3
-param set-default CA_SV_CS2_TYPE 29
-param set-default CA_SV_CS2_TRQ_R -0.2
-param set-default CA_SV_CS2_TRQ_P -0.2
-param set-default CA_SV_CS2_TRQ_Y -0.2
-param set-default CA_SV_CS2_TRIM 0
-# servo 4. RollYawPitch 4
-param set-default CA_SV_CS3_TYPE 30
-param set-default CA_SV_CS3_TRQ_R 0.2
-param set-default CA_SV_CS3_TRQ_P -0.2
-param set-default CA_SV_CS3_TRQ_Y -0.2
-param set-default CA_SV_CS3_TRIM 0
-# servo 4. RollYawPitch 5
-param set-default CA_SV_CS4_TYPE 31
-param set-default CA_SV_CS4_TRQ_R 0
-param set-default CA_SV_CS4_TRQ_P 0
-param set-default CA_SV_CS4_TRQ_Y 0
-param set-default CA_SV_CS4_TRIM 0
 
 param set PWM_MAIN_FUNC1 101
+param set PWM_MAIN_FUNC2 102
 param set PWM_MAIN_FUNC5 201
 param set PWM_MAIN_FUNC6 202
-param set PWM_MAIN_FUNC7 203
-param set PWM_MAIN_FUNC8 204
-param set PWM_MAIN_FUNC9 205
 
-param set-default MPC_THR_MAX 0.43
-param set-default MPC_THR_HOVER 0.4
+param set-default MPC_THR_MAX 0.95
+param set-default MPC_THR_HOVER 0.50
 param set-default MPC_THR_START 0.36
 param set-default MPC_MANTHR_MIN 0.08
 param set-default MPC_THR_CURVE 2
+# PID parameters
+# Rates control
+param set-default MC_PITCHRATE_P 0.3
+param set-default MC_PITCHRATE_I 0.2
+param set-default MC_PITCHRATE_D 0.001
+
+param set-default MC_ROLLRATE_P 0.3
+param set-default MC_ROLLRATE_I 0.1
+param set-default MC_ROLLRATE_D 0.001
+
+param set-default MC_YAWRATE_P 0.2
+param set-default MC_YAWRATE_I 0.1
+# Attitude control
+param set-default MC_PITCH_P 6.28
+param set-default MC_ROLL_P 6.28
+param set-default MC_YAW_P 2.8
+# Velocity control
+param set-default MPC_XY_VEL_P_ACC 0.1
+param set-default MPC_XY_VEL_I_ACC 0.0
+param set-default MPC_XY_VEL_D_ACC 0.05
+
+param set-default MPC_Z_VEL_P_ACC 0.1
+param set-default MPC_Z_VEL_I_ACC 0.1
+param set-default MPC_Z_VEL_D_ACC 0.05
+# Position control
+param set-default MPC_XY_P 0.1
+param set-default MPC_Z_P 0.1

@@ -43,7 +43,7 @@
  * Roll rate proportional gain, i.e. control output for angular speed error 1 rad/s.
  *
  * @min 0.01
- * @max 0.5
+ * @max 1.0
  * @decimal 3
  * @increment 0.01
  * @group Multicopter Rate Control
