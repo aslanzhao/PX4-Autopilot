@@ -1,5 +1,5 @@
 __max_num_mc_motors: &max_num_mc_motors 12
-__max_num_servos: &max_num_servos 8
+__max_num_servos: &max_num_servos 12
 __max_num_tilts: &max_num_tilts 4
 
 module_name: Control Allocation
@@ -254,6 +254,10 @@ parameters:
                 6: '6'
                 7: '7'
                 8: '8'
+                9: '9'
+                10: '10'
+                11: '11'
+                12: '12'
             default: 0
         CA_SV_CS${i}_TYPE:
             description:
@@ -279,19 +283,19 @@ parameters:
                 16: Steering Wheel
                 17: Left Spoiler
                 18: Right Spoiler
-                19: Left Shoulder
-                20: Left Wrist
-                21: Right Shoulder
-                22: Right Wrist
-                23: Tail Pitch
-                24: Tail Roll
-                25: Left Tail Extend
-                26: Right Tail Extend
-                27: RollYawPitch 1
-                28: RollYawPitch 2
-                29: RollYawPitch 3
-                30: RollYawPitch 4
-                31: RollYawPitch 5
+                19: Left Shoulder AoA
+                20: Left Shoulder Flap
+                21: Left Shoulder Extend
+                22: Right Shoulder AoA
+                23: Right Shoulder Flap
+                24: Right Shoulder Extend
+                25: Left Wrist
+                26: Right Wrist
+                27: Tail Roll
+                28: Tail Pitch
+                29: Tail Yaw
+                30: Tail Extend
+
             num_instances: *max_num_servos
             instance_start: 0
             default: 0
@@ -782,12 +786,6 @@ mixer:
               - { 'hidden': False, 'min': -1.0, 'max': 1.0, 'default': 1} # spoiler
             30: # RollYawPitch 4
               - { 'min': -1.0, 'max': 1.0, 'default': 0.5 } # roll
-              - { 'min': -1.0, 'max': 1.0, 'default': 0 } # pitch
-              - { 'min': -1.0, 'max': 1.0, 'default': 0 } # yaw
-              - { 'hidden': False, 'min': -1.0, 'max': 1.0, 'default': 0} # flap
-              - { 'hidden': False, 'min': -1.0, 'max': 1.0, 'default': 1} # spoiler
-            31: # RollYawPitch 5
-              - { 'min': -1.0, 'max': 1.0, 'default': 0 } # roll
               - { 'min': -1.0, 'max': 1.0, 'default': 0 } # pitch
               - { 'min': -1.0, 'max': 1.0, 'default': 0 } # yaw
               - { 'hidden': False, 'min': -1.0, 'max': 1.0, 'default': 0} # flap

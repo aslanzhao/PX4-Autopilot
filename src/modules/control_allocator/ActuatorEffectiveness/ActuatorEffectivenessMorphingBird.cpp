@@ -92,17 +92,19 @@ ActuatorEffectivenessMorphingBird::updateMorphingWingExtent()
 		params = _control_surfaces.getConfig(i) ;
 
 		switch ( params->type ) {
-			case ActuatorEffectivenessControlSurfaces::Type::LeftShoulder:
-			case ActuatorEffectivenessControlSurfaces::Type::RightShoulder:
+			case ActuatorEffectivenessControlSurfaces::Type::LeftShoulderSweep:
+			case ActuatorEffectivenessControlSurfaces::Type::RightShoulderSweep:
 				params->trim = shoulder ;
 				break ;
 			case ActuatorEffectivenessControlSurfaces::Type::LeftWrist:
 			case ActuatorEffectivenessControlSurfaces::Type::RightWrist:
 				params->trim = wrist ;
 				break ;
-			case ActuatorEffectivenessControlSurfaces::Type::LeftTailExtend:
-			case ActuatorEffectivenessControlSurfaces::Type::RightTailExtend:
+			case ActuatorEffectivenessControlSurfaces::Type::TailExtend:
 				params->trim = morphing_wing_extent_data.tail_extent ;
+				break ;
+			case ActuatorEffectivenessControlSurfaces::Type::TailPitch:
+				params->trim = morphing_wing_extent_data.tail_pitch ;
 				break ;
 			default:
 				break ;

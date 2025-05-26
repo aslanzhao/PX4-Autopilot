@@ -148,19 +148,18 @@ void ActuatorEffectivenessControlSurfaces::updateParams()
 			torque.setZero();
 			break;
 
-		case Type::LeftShoulder:
+		case Type::LeftShoulderAoA:
+		case Type::LeftShoulderFlap:
+		case Type::LeftShoulderSweep:
+		case Type::RightShoulderAoA:
+		case Type::RightShoulderFlap:
+		case Type::RightShoulderSweep:
 		case Type::LeftWrist:
-		case Type::RightShoulder:
 		case Type::RightWrist:
-		case Type::LeftTailExtend:
-		case Type::RightTailExtend:
-		case Type::TailPitch:
 		case Type::TailRoll:
-		case Type::RollYawPitch1:
-		case Type::RollYawPitch2:
-		case Type::RollYawPitch3:
-		case Type::RollYawPitch4:
-		case Type::RollYawPitch5:
+		case Type::TailPitch:
+		case Type::TailYaw:
+		case Type::TailExtend:
 			break ;
 		}
 	}

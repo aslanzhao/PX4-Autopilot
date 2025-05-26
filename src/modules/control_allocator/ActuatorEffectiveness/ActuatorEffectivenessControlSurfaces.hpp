@@ -45,7 +45,7 @@ class ActuatorEffectivenessControlSurfaces : public ModuleParams, public Actuato
 {
 public:
 
-	static constexpr int MAX_COUNT = 8;
+	static constexpr int MAX_COUNT = 12;
 
 	enum class Type : int32_t {
 		// This matches with the parameter
@@ -68,19 +68,18 @@ public:
 		LeftSpoiler = 17,
 		RightSpoiler = 18,
 
-		LeftShoulder = 19,
-		LeftWrist = 20,
-		RightShoulder = 21,
-		RightWrist = 22,
-		LeftTailExtend = 23,
-		RightTailExtend = 24,
-		TailPitch = 25,
-		TailRoll = 26,
-		RollYawPitch1 = 27,
-		RollYawPitch2 = 28,
-		RollYawPitch3 = 29,
-		RollYawPitch4 = 30,
-		RollYawPitch5 = 31
+		LeftShoulderAoA = 19,
+		LeftShoulderFlap = 20,
+		LeftShoulderSweep = 21,
+		RightShoulderAoA = 22,
+		RightShoulderFlap = 23,
+		RightShoulderSweep = 24,
+		LeftWrist = 25 ,
+		RightWrist = 26 ,
+		TailRoll = 27,
+		TailPitch = 28,
+		TailYaw = 29 ,
+		TailExtend = 30
 	};
 
 	struct Params {

@@ -29,7 +29,7 @@ param set-default CA_AIRFRAME 14
 param set-default CA_ROTOR_COUNT 1
 param set-default CA_ROTOR0_PX 0.15
 # servos
-param set-default CA_SV_CS_COUNT 8
+param set-default CA_SV_CS_COUNT 12
 param set-default PWM_AUX_TIM0 50
 param set-default PWM_AUX_TIM1 50
 param set-default PWM_AUX_TIM2 50
@@ -58,54 +58,105 @@ param set-default PWM_AUX_DIS6 500
 param set-default PWM_AUX_DIS7 500
 param set-default PWM_AUX_DIS8 500
 
+param set-default PWM_MAIN_TIM0 50
+param set-default PWM_MAIN_TIM1 50
+param set-default PWM_MAIN_TIM2 50
+param set-default PWM_MAIN_MIN1 500
+param set-default PWM_MAIN_MIN2 500
+param set-default PWM_MAIN_MIN3 1100
+param set-default PWM_MAIN_MIN4 1000
+param set-default PWM_MAIN_MIN5 900
+param set-default PWM_MAIN_MAX1 2500
+param set-default PWM_MAIN_MAX2 1500
+param set-default PWM_MAIN_MAX3 2200
+param set-default PWM_MAIN_MAX4 1800
+param set-default PWM_MAIN_MAX5 2500
+param set-default PWM_MAIN_DIS1 500
+param set-default PWM_MAIN_DIS2 500
+param set-default PWM_MAIN_DIS3 1100
+param set-default PWM_MAIN_DIS4 1000
+param set-default PWM_MAIN_DIS5 900
+
 # servo 1. left shoulder
 param set-default CA_SV_CS0_TYPE 19
-param set-default CA_SV_CS0_TRQ_P 0.5
-param set-default CA_SV_CS0_TRQ_R -0.5
-param set-default CA_SV_CS0_TRQ_Y -0.5
+param set-default CA_SV_CS0_TRQ_P 0
+param set-default CA_SV_CS0_TRQ_R -0
+param set-default CA_SV_CS0_TRQ_Y -0
 param set-default CA_SV_CS0_TRIM 0
 # servo 2. left wrist
 param set-default CA_SV_CS1_TYPE 20
-param set-default CA_SV_CS1_TRQ_P 0.5
-param set-default CA_SV_CS1_TRQ_R 0.5
-param set-default CA_SV_CS1_TRQ_Y -0.5
+param set-default CA_SV_CS1_TRQ_P 0
+param set-default CA_SV_CS1_TRQ_R 0
+param set-default CA_SV_CS1_TRQ_Y -0
 param set-default CA_SV_CS1_TRIM 0
 # servo 3. right shoulder
 param set-default CA_SV_CS2_TYPE 21
-param set-default CA_SV_CS2_TRQ_P 0.5
-param set-default CA_SV_CS2_TRQ_R 0.5
-param set-default CA_SV_CS2_TRQ_Y -0.5
+param set-default CA_SV_CS2_TRQ_P 0
+param set-default CA_SV_CS2_TRQ_R 0
+param set-default CA_SV_CS2_TRQ_Y -0
 param set-default CA_SV_CS2_TRIM 0
 # servo 4. right wrist
 param set-default CA_SV_CS3_TYPE 22
-param set-default CA_SV_CS3_TRQ_P 0.5
-param set-default CA_SV_CS3_TRQ_R 0.5
-param set-default CA_SV_CS3_TRQ_Y -0.5
+param set-default CA_SV_CS3_TRQ_P 0
+param set-default CA_SV_CS3_TRQ_R 0
+param set-default CA_SV_CS3_TRQ_Y -0
 param set-default CA_SV_CS3_TRIM 0
 # servo 5. tail pitch
 param set-default CA_SV_CS4_TYPE 23
-param set-default CA_SV_CS4_TRQ_P 0.5
-param set-default CA_SV_CS4_TRQ_R 0.5
-param set-default CA_SV_CS4_TRQ_Y -0.5
+param set-default CA_SV_CS4_TRQ_P 0
+param set-default CA_SV_CS4_TRQ_R 0
+param set-default CA_SV_CS4_TRQ_Y -0
 param set-default CA_SV_CS4_TRIM 0
 # servo 6. tail roll
 param set-default CA_SV_CS5_TYPE 24
-param set-default CA_SV_CS5_TRQ_P 0.5
-param set-default CA_SV_CS5_TRQ_R 0.5
-param set-default CA_SV_CS5_TRQ_Y -0.5
+param set-default CA_SV_CS5_TRQ_P 0
+param set-default CA_SV_CS5_TRQ_R 0
+param set-default CA_SV_CS5_TRQ_Y -0
 param set-default CA_SV_CS5_TRIM 0
 # servo 7. left tail extend
 param set-default CA_SV_CS6_TYPE 25
-param set-default CA_SV_CS6_TRQ_P 0.5
-param set-default CA_SV_CS6_TRQ_R 0.5
-param set-default CA_SV_CS6_TRQ_Y -0.5
+param set-default CA_SV_CS6_TRQ_P 0
+param set-default CA_SV_CS6_TRQ_R 0
+param set-default CA_SV_CS6_TRQ_Y -0
 param set-default CA_SV_CS6_TRIM 0
 # servo 8. right tail extend
 param set-default CA_SV_CS7_TYPE 26
-param set-default CA_SV_CS7_TRQ_P 0.5
-param set-default CA_SV_CS7_TRQ_R 0.5
-param set-default CA_SV_CS7_TRQ_Y -0.5
+param set-default CA_SV_CS7_TRQ_P 0
+param set-default CA_SV_CS7_TRQ_R 0
+param set-default CA_SV_CS7_TRQ_Y -0
 param set-default CA_SV_CS7_TRIM 0
+
+param set-default CA_SV_CS8_TYPE 27
+param set-default CA_SV_CS8_TRQ_P 0
+param set-default CA_SV_CS8_TRQ_R 0
+param set-default CA_SV_CS8_TRQ_Y -0
+param set-default CA_SV_CS8_TRIM 0
+param set-default CA_SV_CS8_FLAP 0
+param set-default CA_SV_CS8_SPOIL 0
+
+param set-default CA_SV_CS9_TYPE 28
+param set-default CA_SV_CS9_TRQ_P 0
+param set-default CA_SV_CS9_TRQ_R 0
+param set-default CA_SV_CS9_TRQ_Y 0
+param set-default CA_SV_CS9_TRIM 0
+param set-default CA_SV_CS9_FLAP 0
+param set-default CA_SV_CS9_SPOIL 0
+
+param set-default CA_SV_CS10_TYPE 29
+param set-default CA_SV_CS10_TRQ_P 0
+param set-default CA_SV_CS10_TRQ_R 0
+param set-default CA_SV_CS10_TRQ_Y 0
+param set-default CA_SV_CS10_TRIM 0
+param set-default CA_SV_CS10_FLAP 0
+param set-default CA_SV_CS10_SPOIL 0
+
+param set-default CA_SV_CS11_TYPE 30
+param set-default CA_SV_CS11_TRQ_P 0
+param set-default CA_SV_CS11_TRQ_R 0
+param set-default CA_SV_CS11_TRQ_Y 0
+param set-default CA_SV_CS11_TRIM 0
+param set-default CA_SV_CS11_FLAP 0
+param set-default CA_SV_CS11_SPOIL 0
 
 param set-default PWM_MAIN_FUNC1 101
 param set-default PWM_AUX_FUNC1 201
@@ -116,3 +167,7 @@ param set-default PWM_AUX_FUNC5 205
 param set-default PWM_AUX_FUNC6 206
 param set-default PWM_AUX_FUNC7 207
 param set-default PWM_AUX_FUNC8 208
+param set-default PWM_MAIN_FUNC2 209
+param set-default PWM_MAIN_FUNC3 210
+param set-default PWM_MAIN_FUNC4 211
+param set-default PWM_MAIN_FUNC5 212
